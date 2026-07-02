@@ -1,0 +1,37 @@
+name: Biwenger Agent
+
+# 1. ¿CUÁNDO SE EJECUTA?
+on:
+  # Disparador manual (El botón "Run Workflow" para hacerlo a tu antojo)
+  workflow_dispatch:
+
+  # Disparador automático (Reloj)
+  schedule:
+    # Las 06:00 UTC son las 08:00 AM en España (horario de verano).
+    - cron: '0 6 * * *'
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    
+    # Sistema de reintentos nativo por si Biwenger falla
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar herramientas
+        run: npm install
+
+      - name: Despertar al Agente Biwenger
+        # Le pasamos las contraseñas desde la caja fuerte de GitHub
+        env:
+          BIWENGER_TOKEN: ${{ secrets.BIWENGER_TOKEN }}
+          BIWENGER_LEAGUE_ID: ${{ secrets.BIWENGER_LEAGUE_ID }}
+          FECHA_INICIO_PUJAS: ${{ vars.FECHA_INICIO_PUJAS }}
+          MAX_JUGADORES_PLANTILLA: ${{ vars.MAX_JUGADORES_PLANTILLA }}
+        run: npm start
