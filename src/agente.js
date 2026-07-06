@@ -39,7 +39,8 @@ async function ejecutarAgente() {
     // 1. Comprobar que tenemos conexión y leer saldo
     const estado = await obtenerEstadoEquipo();
     if (!estado) {
-        console.log("❌ No se ha podido conectar. Revisa el Token en el archivo .env");
+        registrarAccion("❌", "No se ha podido conectar. Revisa el Token en el archivo .env o en los Secrets de GitHub.");
+        generarHTML(registroAcciones, 0, 0);
         return;
     }
     
@@ -47,11 +48,11 @@ async function ejecutarAgente() {
     const jugadoresEnPlantilla = estado.team ? estado.team.length : 0;
     const maxJugadores = parseInt(process.env.MAX_JUGADORES_PLANTILLA || "25");
     
-    console.log(`✅ Conectado. Plantilla actual: ${jugadoresEnPlantilla}/${maxJugadores} jugadores.`);
+    registrarAccion("✅", `Conectado. Plantilla actual: ${jugadoresEnPlantilla}/${maxJugadores} jugadores.`);
     
     // Si la plantilla está llena, tenemos que decidir qué hacer
     if (jugadoresEnPlantilla >= maxJugadores) {
-        console.log("⚠️ ¡Plantilla llena! El agente no hará pujas a menos que decidas vender a alguien.");
+        registrarAccion("⚠️", "¡Plantilla llena! El agente no hará pujas a menos que decidas vender a alguien.");
     }
     
     // NUEVA REGLA (Biwenger Optimizer 3.0): ESPECULACIÓN DIARIA
