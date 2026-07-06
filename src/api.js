@@ -52,9 +52,67 @@ async function obtenerPlantillasRivales() {
     }
 }
 
+// Función para poner un jugador en venta
+async function ponerJugadorEnVenta(idJugador, precio) {
+    try {
+        const payload = {
+            type: "player",
+            player: idJugador,
+            price: precio
+        };
+        const response = await biwengerApi.post('/market/sales', payload);
+        return response.data;
+    } catch (error) {
+        console.error(`Error al poner en venta al jugador ${idJugador}:`, error.response ? error.response.data : error.message);
+        return null;
+    }
+}
+
+// Función para pujar por un jugador
+async function pujarPorJugador(idJugador, monto) {
+    try {
+        const payload = {
+            type: "player",
+            player: idJugador,
+            amount: monto
+        };
+        const response = await biwengerApi.post('/market/bids', payload);
+        return response.data;
+    } catch (error) {
+        console.error(`Error al pujar por el jugador ${idJugador}:`, error.response ? error.response.data : error.message);
+        return null;
+    }
+}
+
+// Función para obtener ofertas recibidas
+async function obtenerOfertas() {
+    try {
+        const response = await biwengerApi.get('/market/offers');
+        return response.data.data;
+    } catch (error) {
+        console.error("Error al obtener ofertas:", error.response ? error.response.data : error.message);
+        return null;
+    }
+}
+
+// Función para aceptar una oferta
+async function aceptarOferta(idOferta) {
+    try {
+        const response = await biwengerApi.put(`/market/offers/${idOferta}/accept`);
+        return response.data;
+    } catch (error) {
+        console.error(`Error al aceptar oferta ${idOferta}:`, error.response ? error.response.data : error.message);
+        return null;
+    }
+}
+
 // Exportamos las funciones para usarlas en el agente
 module.exports = {
     obtenerEstadoEquipo,
     obtenerMercado,
-    obtenerPlantillasRivales
+    obtenerPlantillasRivales,
+    ponerJugadorEnVenta,
+    pujarPorJugador,
+    obtenerOfertas,
+    aceptarOferta
 };
