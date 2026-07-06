@@ -9,11 +9,21 @@ const {
 } = require('./api');
 const { detectarNecesidadesPlantilla, evaluarJugador } = require('./analista');
 
+const fs = require('fs');
+const path = require('path');
+
 // Función auxiliar para dormir entre peticiones
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function ejecutarAgente() {
-    console.log(`[${new Date().toLocaleString()}] Iniciando el Agente Biwenger...`);
+    const registroAcciones = [];
+    const registrarAccion = (icono, texto) => {
+        const accion = `${icono} ${texto}`;
+        console.log(accion);
+        registroAcciones.push({ hora: new Date().toLocaleTimeString(), texto: accion });
+    };
+
+    registrarAccion("🚀", `[${new Date().toLocaleString()}] Iniciando el Agente Biwenger...`);
     
 // Comprobar si ya estamos en la fecha de inicio permitida
     const fechaInicio = process.env.FECHA_INICIO_PUJAS;
@@ -45,27 +55,24 @@ async function ejecutarAgente() {
     }
     
     // NUEVA REGLA (Biwenger Optimizer 3.0): ESPECULACIÓN DIARIA
-    console.log("📈 Aplicando rutina de especulación: Poniendo a toda la plantilla a la venta...");
+    registrarAccion("📈", "Aplicando rutina de especulación: Poniendo a toda la plantilla a la venta...");
     if (estado.team && estado.team.length > 0) {
         for (const jugador of estado.team) {
-            // Ponemos en venta un poco por encima del VM para no perder dinero si nos compran por cláusula (si aplica)
-            // Si la regla de la liga es venta al mercado libre, el precio no importa tanto, computer hará oferta.
-            // Biwenger requiere precio, pongamos su precio de mercado como base.
             await ponerJugadorEnVenta(jugador.id, jugador.price);
             await sleep(1000); // Pausa para no saturar la API
         }
-        console.log("✅ Toda la plantilla ha sido puesta a la venta para recibir ofertas.");
+        registrarAccion("✅", "Toda la plantilla ha sido puesta a la venta para recibir ofertas.");
     }
     
     // GUARDARRAÍLES DE SEGURIDAD (Reglas de Supervivencia)
-    console.log("🛡️ Comprobando salvaguardas y saldo...");
+    registrarAccion("🛡️", "Comprobando salvaguardas y saldo...");
     let saldoActual = estado.balance || 0;
     const valorEquipo = estado.teamValue || 0;
     
-    console.log(`💰 Saldo Actual: ${saldoActual}€ | Valor Equipo: ${valorEquipo}€`);
+    registrarAccion("💰", `Saldo Actual: ${saldoActual}€ | Valor Equipo: ${valorEquipo}€`);
     
     if (saldoActual < 0) {
-        console.log("⚠️ ¡SALDO NEGATIVO! Procediendo a cuadrar cuentas...");
+        registrarAccion("⚠️", "¡SALDO NEGATIVO! Procediendo a cuadrar cuentas...");
         const ofertas = await obtenerOfertas();
         if (ofertas && ofertas.length > 0) {
             // Ordenar jugadores de nuestro equipo de peor a mejor (para vender primero a los peores)
@@ -76,37 +83,38 @@ async function ejecutarAgente() {
                 const ofertaComputer = ofertas.find(o => o.player === jugador.id && o.type === 'computer');
                 
                 if (ofertaComputer) {
-                    console.log(`💸 Vendiendo a ${jugador.name} por ${ofertaComputer.amount}€ para cuadrar cuentas.`);
+                    registrarAccion("💸", `Vendiendo a ${jugador.name} por ${ofertaComputer.amount}€ para cuadrar cuentas.`);
                     await aceptarOferta(ofertaComputer.id);
                     saldoActual += ofertaComputer.amount;
                     await sleep(1000);
                     
                     if (saldoActual >= 0) {
-                        console.log("✅ ¡Saldo vuelto a positivo! Deteniendo ventas de emergencia.");
+                        registrarAccion("✅", "¡Saldo vuelto a positivo! Deteniendo ventas de emergencia.");
                         break;
                     }
                 }
             }
             if (saldoActual < 0) {
-                console.log("❌ Sigue habiendo saldo negativo tras aceptar ofertas. Hacen falta más ventas o mejores ofertas.");
+                registrarAccion("❌", "Sigue habiendo saldo negativo tras aceptar ofertas. Hacen falta más ventas o mejores ofertas.");
             }
         } else {
-            console.log("❌ No hay ofertas disponibles para cuadrar el saldo negativo.");
+            registrarAccion("❌", "No hay ofertas disponibles para cuadrar el saldo negativo.");
         }
     }
     
     // 2. Leer el mercado
     const mercado = await obtenerMercado();
     if (!mercado || !mercado.sales) {
-        console.log("❌ No se ha podido leer el mercado.");
+        registrarAccion("❌", "No se ha podido leer el mercado.");
+        generarHTML(registroAcciones, saldoActual, valorEquipo);
         return;
     }
     
-    console.log(`🛒 Se han encontrado ${mercado.sales.length} jugadores en el mercado hoy.`);
+    registrarAccion("🛒", `Se han encontrado ${mercado.sales.length} jugadores en el mercado hoy.`);
     
     // 3. Lógica de pujas
     const necesidades = detectarNecesidadesPlantilla(estado.team || []);
-    console.log("📊 Necesidades actuales detectadas:", necesidades);
+    registrarAccion("📊", `Necesidades actuales detectadas: PT:${necesidades.PT} DF:${necesidades.DF} MC:${necesidades.MC} DL:${necesidades.DL}`);
     
     for (const venta of mercado.sales) {
         // En Biwenger, el mercado tiene ventas directas (usuario 'computer' o sin user) o de otros usuarios
@@ -167,7 +175,7 @@ async function ejecutarAgente() {
                 // confiando en que la rutina de "Cuadrar Cuentas" del día siguiente lo arreglará.
                 puedePujar = (saldoActual + valorEquipo * 0.10) >= puja;
                 if (puedePujar && saldoActual < puja) {
-                    console.log(`⚠️ Aviso de Jornada: Pujando en negativo a menos de 48h. Se confiará en vender suplentes mañana para cuadrar.`);
+                    registrarAccion("⚠️", `Aviso de Jornada: Pujando en negativo a menos de 48h. Se confiará en vender suplentes mañana para cuadrar.`);
                 }
             } else {
                 // Lunes a Miércoles: Podemos especular más (20% del valor del equipo)
@@ -175,18 +183,74 @@ async function ejecutarAgente() {
             }
 
             if (puedePujar) { 
-                console.log(`🤑 Realizando puja por ${jugadorObj.name} de ${puja}€`);
+                registrarAccion("🤑", `Realizando puja por ${jugadorObj.name} de ${puja}€`);
                 await pujarPorJugador(jugadorObj.id, puja);
                 // Restamos la puja del saldo actual simulado para no sobre-endeudarnos en la misma ejecución
                 saldoActual -= puja; 
                 await sleep(1500);
             } else {
-                console.log(`😞 No hay suficiente margen financiero para pujar por ${jugadorObj.name}`);
+                registrarAccion("😞", `No hay suficiente margen financiero para pujar por ${jugadorObj.name}`);
             }
         }
     }
     
-    console.log(`[${new Date().toLocaleString()}] Tarea del Agente finalizada.\n`);
+    registrarAccion("🏁", `[${new Date().toLocaleString()}] Tarea del Agente finalizada.`);
+    
+    // Generar el reporte HTML al terminar
+    generarHTML(registroAcciones, saldoActual, valorEquipo);
+}
+
+function generarHTML(registro, saldo, valor) {
+    const dirDocs = path.join(__dirname, '..', 'docs');
+    if (!fs.existsSync(dirDocs)) {
+        fs.mkdirSync(dirDocs);
+    }
+
+    const fecha = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    let listaHTML = registro.map(r => `<li><span class="hora">${r.hora}</span> - ${r.texto}</li>`).join('\n');
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Diario - Biwenger Bot</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background-color: #1e1e1e; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+        h1 { color: #4caf50; border-bottom: 2px solid #4caf50; padding-bottom: 10px; }
+        .stats { display: flex; justify-content: space-between; background-color: #2c2c2c; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .stat-box { text-align: center; }
+        .stat-value { font-size: 1.5em; font-weight: bold; color: #4fc3f7; }
+        ul { list-style: none; padding: 0; }
+        li { background-color: #2a2a2a; margin-bottom: 10px; padding: 15px; border-radius: 5px; border-left: 4px solid #4caf50; }
+        .hora { color: #aaa; font-size: 0.8em; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Informe del Bot - ${fecha}</h1>
+        <div class="stats">
+            <div class="stat-box">
+                <div>Saldo Estimado Fin del Día</div>
+                <div class="stat-value">${saldo} €</div>
+            </div>
+            <div class="stat-box">
+                <div>Valor del Equipo</div>
+                <div class="stat-value">${valor} €</div>
+            </div>
+        </div>
+        <h2>Registro de Acciones</h2>
+        <ul>
+            ${listaHTML}
+        </ul>
+    </div>
+</body>
+</html>`;
+
+    fs.writeFileSync(path.join(dirDocs, 'index.html'), htmlContent);
+    console.log("📄 Reporte HTML generado en docs/index.html");
 }
 
 module.exports = {

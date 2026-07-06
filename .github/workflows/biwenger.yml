@@ -35,3 +35,11 @@ jobs:
           FECHA_INICIO_PUJAS: ${{ vars.FECHA_INICIO_PUJAS }}
           MAX_JUGADORES_PLANTILLA: ${{ vars.MAX_JUGADORES_PLANTILLA }}
         run: npm start
+
+      - name: Publicar reporte HTML en GitHub Pages
+        run: |
+          git config --global user.name "Biwenger Bot"
+          git config --global user.email "bot@biwenger.local"
+          git add docs/index.html
+          git commit -m "docs: actualizar reporte diario [skip ci]" || echo "No hay cambios que reportar"
+          git push
