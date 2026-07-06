@@ -142,14 +142,31 @@ async function ejecutarAgente() {
                 puja = jugadorObj.clause; // Clausula es fija
             }
             
-            // Comprobamos que nos llega el dinero
-            if (saldoActual >= puja || (saldoActual + valorEquipo * 0.25) >= puja) { 
+            // CONTROL DE RIESGO DE JORNADA
+            // Las jornadas suelen empezar los viernes. Si pujamos el jueves, fichamos el viernes por la mañana.
+            // Si nos pasamos, amanecemos en negativo el viernes y podemos comernos un rosco (0 puntos).
+            const diaSemana = new Date().getDay();
+            const esRiesgoJornada = (diaSemana === 4 || diaSemana === 5); // 4=Jueves, 5=Viernes
+            
+            let puedePujar = false;
+            if (esRiesgoJornada) {
+                // Jueves y Viernes: ESTRICTAMENTE prohibido pujar dinero que no tenemos (entrar en negativo)
+                puedePujar = saldoActual >= puja;
+                if (!puedePujar) {
+                    console.log(`🛑 Bloqueo por Jornada: No pujamos ${puja}€ por ${jugadorObj.name} para no arriesgarnos a estar en negativo el fin de semana.`);
+                }
+            } else {
+                // Lunes a Miércoles: Podemos especular y pujar en negativo (con un límite) porque hay tiempo de vender
+                puedePujar = (saldoActual + valorEquipo * 0.20) >= puja;
+            }
+
+            if (puedePujar) { 
                 console.log(`🤑 Realizando puja por ${jugadorObj.name} de ${puja}€`);
                 await pujarPorJugador(jugadorObj.id, puja);
-                // Restamos saldo (aproximado) para no pujar por encima de nuestras posibilidades reales en el mismo bucle
+                // Restamos la puja del saldo actual simulado para no sobre-endeudarnos en la misma ejecución
                 saldoActual -= puja; 
                 await sleep(1500);
-            } else {
+            } else if (!esRiesgoJornada) {
                 console.log(`😞 No hay suficiente margen financiero para pujar por ${jugadorObj.name}`);
             }
         }
