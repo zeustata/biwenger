@@ -106,6 +106,33 @@ async function aceptarOferta(idOferta) {
     }
 }
 
+// Función para obtener la fecha de la próxima jornada (usando los datos de la liga)
+async function obtenerInicioProximaJornada() {
+    try {
+        // En Biwenger, a veces la información de la ronda actual viene en /league o en un endpoint de rondas
+        // Intentaremos sacar la info del campeonato.
+        const response = await biwengerApi.get('/league?include=all');
+        const leagueData = response.data.data;
+        
+        // Normalmente la API de Biwenger devuelve la info de las jornadas
+        // en algún objeto relacionado con la competición. Buscamos propiedades como "round" o "activeEvents"
+        if (leagueData && leagueData.round && leagueData.round.start) {
+            return new Date(leagueData.round.start * 1000); // Unix timestamp
+        }
+        
+        // Fallback: intentamos ver si viene en estado de usuario
+        const userRes = await biwengerApi.get('/user');
+        if (userRes.data.data && userRes.data.data.round && userRes.data.data.round.start) {
+            return new Date(userRes.data.data.round.start * 1000);
+        }
+        
+        return null; // Fallback
+    } catch (error) {
+        console.error("Error al obtener inicio de próxima jornada:", error.response ? error.response.data : error.message);
+        return null;
+    }
+}
+
 // Exportamos las funciones para usarlas en el agente
 module.exports = {
     obtenerEstadoEquipo,
@@ -114,5 +141,6 @@ module.exports = {
     ponerJugadorEnVenta,
     pujarPorJugador,
     obtenerOfertas,
-    aceptarOferta
+    aceptarOferta,
+    obtenerInicioProximaJornada
 };

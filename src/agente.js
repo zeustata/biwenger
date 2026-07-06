@@ -4,7 +4,8 @@ const {
     ponerJugadorEnVenta,
     pujarPorJugador,
     obtenerOfertas,
-    aceptarOferta
+    aceptarOferta,
+    obtenerInicioProximaJornada
 } = require('./api');
 const { detectarNecesidadesPlantilla, evaluarJugador } = require('./analista');
 
@@ -142,11 +143,27 @@ async function ejecutarAgente() {
                 puja = jugadorObj.clause; // Clausula es fija
             }
             
-            // CONTROL DE RIESGO DE JORNADA
-            // Las jornadas suelen empezar los viernes. Si pujamos el jueves, fichamos el viernes por la mañana.
-            // Si nos pasamos, amanecemos en negativo el viernes y podemos comernos un rosco (0 puntos).
-            const diaSemana = new Date().getDay();
-            const esRiesgoJornada = (diaSemana === 4 || diaSemana === 5); // 4=Jueves, 5=Viernes
+            // CONTROL DE RIESGO DE JORNADA DINÁMICO
+            // Comprobamos la fecha de la próxima jornada. Si empieza en menos de 48 horas,
+            // no pujamos en negativo porque el fichaje se efectúa al día siguiente y corremos
+            // el riesgo de no tener tiempo para cuadrar el balance.
+            let esRiesgoJornada = false;
+            const fechaJornada = await obtenerInicioProximaJornada();
+            
+            if (fechaJornada) {
+                const msHastaJornada = fechaJornada.getTime() - new Date().getTime();
+                const horasHastaJornada = msHastaJornada / (1000 * 60 * 60);
+                
+                // Si la jornada empieza en menos de 48 horas (es decir, pujamos hoy, fichamos mañana 
+                // y la jornada es mañana o pasado), es un riesgo inaceptable.
+                if (horasHastaJornada > 0 && horasHastaJornada <= 48) {
+                    esRiesgoJornada = true;
+                }
+            } else {
+                // Fallback si falla la API: Asumir que Jueves y Viernes son peligrosos
+                const diaSemana = new Date().getDay();
+                esRiesgoJornada = (diaSemana === 4 || diaSemana === 5); // 4=Jueves, 5=Viernes
+            }
             
             let puedePujar = false;
             if (esRiesgoJornada) {
