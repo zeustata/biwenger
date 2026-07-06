@@ -144,9 +144,7 @@ async function ejecutarAgente() {
             }
             
             // CONTROL DE RIESGO DE JORNADA DINÁMICO
-            // Comprobamos la fecha de la próxima jornada. Si empieza en menos de 48 horas,
-            // no pujamos en negativo porque el fichaje se efectúa al día siguiente y corremos
-            // el riesgo de no tener tiempo para cuadrar el balance.
+            // Comprobamos la fecha de la próxima jornada.
             let esRiesgoJornada = false;
             const fechaJornada = await obtenerInicioProximaJornada();
             
@@ -154,26 +152,25 @@ async function ejecutarAgente() {
                 const msHastaJornada = fechaJornada.getTime() - new Date().getTime();
                 const horasHastaJornada = msHastaJornada / (1000 * 60 * 60);
                 
-                // Si la jornada empieza en menos de 48 horas (es decir, pujamos hoy, fichamos mañana 
-                // y la jornada es mañana o pasado), es un riesgo inaceptable.
                 if (horasHastaJornada > 0 && horasHastaJornada <= 48) {
                     esRiesgoJornada = true;
                 }
             } else {
-                // Fallback si falla la API: Asumir que Jueves y Viernes son peligrosos
                 const diaSemana = new Date().getDay();
                 esRiesgoJornada = (diaSemana === 4 || diaSemana === 5); // 4=Jueves, 5=Viernes
             }
             
             let puedePujar = false;
             if (esRiesgoJornada) {
-                // Jueves y Viernes: ESTRICTAMENTE prohibido pujar dinero que no tenemos (entrar en negativo)
-                puedePujar = saldoActual >= puja;
-                if (!puedePujar) {
-                    console.log(`🛑 Bloqueo por Jornada: No pujamos ${puja}€ por ${jugadorObj.name} para no arriesgarnos a estar en negativo el fin de semana.`);
+                // MODO RELAJADO (A la espera de las reglas de agosto):
+                // Permitimos endeudarnos un 10% del equipo incluso si estamos cerca de la jornada,
+                // confiando en que la rutina de "Cuadrar Cuentas" del día siguiente lo arreglará.
+                puedePujar = (saldoActual + valorEquipo * 0.10) >= puja;
+                if (puedePujar && saldoActual < puja) {
+                    console.log(`⚠️ Aviso de Jornada: Pujando en negativo a menos de 48h. Se confiará en vender suplentes mañana para cuadrar.`);
                 }
             } else {
-                // Lunes a Miércoles: Podemos especular y pujar en negativo (con un límite) porque hay tiempo de vender
+                // Lunes a Miércoles: Podemos especular más (20% del valor del equipo)
                 puedePujar = (saldoActual + valorEquipo * 0.20) >= puja;
             }
 
@@ -183,7 +180,7 @@ async function ejecutarAgente() {
                 // Restamos la puja del saldo actual simulado para no sobre-endeudarnos en la misma ejecución
                 saldoActual -= puja; 
                 await sleep(1500);
-            } else if (!esRiesgoJornada) {
+            } else {
                 console.log(`😞 No hay suficiente margen financiero para pujar por ${jugadorObj.name}`);
             }
         }
