@@ -13,6 +13,8 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     # Sistema de reintentos nativo por si Biwenger falla
     steps:
