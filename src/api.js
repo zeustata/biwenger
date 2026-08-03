@@ -7,6 +7,7 @@ const biwengerApi = axios.create({
     headers: {
         'Authorization': `Bearer ${process.env.BIWENGER_TOKEN}`,
         'X-League': process.env.BIWENGER_LEAGUE_ID,
+        'X-User': process.env.BIWENGER_USER_ID,
         'Content-Type': 'application/json',
         // Simulamos ser un navegador normal para evitar bloqueos
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
@@ -16,6 +17,17 @@ const biwengerApi = axios.create({
 
 // Función para simular comportamiento humano y no saturar el servidor
 const pausaHumana = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Interceptor Anti-Baneo: Fuerza una pausa aleatoria antes de CADA petición
+biwengerApi.interceptors.request.use(async (config) => {
+    // Retraso aleatorio entre 1000ms y 3000ms (1s - 3s)
+    const delay = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
+    console.log(`🛡️ [Anti-Baneo] Pausa táctica de ${delay}ms simulando lectura humana...`);
+    await pausaHumana(delay);
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
 
 // Función para obtener el estado del equipo y saldo actual
 async function obtenerEstadoEquipo() {
@@ -52,36 +64,16 @@ async function obtenerPlantillasRivales() {
     }
 }
 
-// Función para poner un jugador en venta
+// Función para poner un jugador en venta (DESACTIVADA EN MODO ASESOR)
 async function ponerJugadorEnVenta(idJugador, precio) {
-    try {
-        const payload = {
-            type: "player",
-            player: idJugador,
-            price: precio
-        };
-        const response = await biwengerApi.post('/market/sales', payload);
-        return response.data;
-    } catch (error) {
-        console.error(`Error al poner en venta al jugador ${idJugador}:`, error.response ? error.response.data : error.message);
-        return null;
-    }
+    console.warn(`[MODO ASESOR] Acción bloqueada: Intento de poner en venta al jugador ${idJugador}.`);
+    return null;
 }
 
-// Función para pujar por un jugador
+// Función para pujar por un jugador (DESACTIVADA EN MODO ASESOR)
 async function pujarPorJugador(idJugador, monto) {
-    try {
-        const payload = {
-            type: "player",
-            player: idJugador,
-            amount: monto
-        };
-        const response = await biwengerApi.post('/market/bids', payload);
-        return response.data;
-    } catch (error) {
-        console.error(`Error al pujar por el jugador ${idJugador}:`, error.response ? error.response.data : error.message);
-        return null;
-    }
+    console.warn(`[MODO ASESOR] Acción bloqueada: Intento de pujar ${monto}€ por el jugador ${idJugador}.`);
+    return null;
 }
 
 // Función para obtener ofertas recibidas
@@ -95,15 +87,10 @@ async function obtenerOfertas() {
     }
 }
 
-// Función para aceptar una oferta
+// Función para aceptar una oferta (DESACTIVADA EN MODO ASESOR)
 async function aceptarOferta(idOferta) {
-    try {
-        const response = await biwengerApi.put(`/market/offers/${idOferta}/accept`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error al aceptar oferta ${idOferta}:`, error.response ? error.response.data : error.message);
-        return null;
-    }
+    console.warn(`[MODO ASESOR] Acción bloqueada: Intento de aceptar la oferta ${idOferta}.`);
+    return null;
 }
 
 // Función para obtener la fecha de la próxima jornada (usando los datos de la liga)
@@ -133,6 +120,19 @@ async function obtenerInicioProximaJornada() {
     }
 }
 
+// Función para obtener los últimos movimientos del mercado (tablón)
+async function obtenerUltimosMovimientos() {
+    try {
+        // En Biwenger el tablón se consulta en /league/board o /events
+        // Pedimos los últimos eventos para analizar fichajes (tipo transfer)
+        const response = await biwengerApi.get('/league/board?type=transfer,market&limit=100');
+        return response.data.data;
+    } catch (error) {
+        console.error("Error al obtener últimos movimientos:", error.response ? error.response.data : error.message);
+        return [];
+    }
+}
+
 // Exportamos las funciones para usarlas en el agente
 module.exports = {
     obtenerEstadoEquipo,
@@ -142,5 +142,6 @@ module.exports = {
     pujarPorJugador,
     obtenerOfertas,
     aceptarOferta,
-    obtenerInicioProximaJornada
+    obtenerInicioProximaJornada,
+    obtenerUltimosMovimientos
 };

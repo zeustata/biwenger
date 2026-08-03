@@ -7,8 +7,8 @@ on:
 
   # Disparador automático (Reloj)
   schedule:
-    # Las 06:00 UTC son las 08:00 AM en España (horario de verano).
-    - cron: '0 6 * * *'
+    # 06:00, 12:00, 17:00, 21:00 UTC (Equivale aprox a 08:00, 14:00, 19:00 y 23:00 en España verano)
+    - cron: '0 6,12,17,21 * * *'
 
 jobs:
   run-bot:
@@ -32,14 +32,18 @@ jobs:
         env:
           BIWENGER_TOKEN: ${{ secrets.BIWENGER_TOKEN }}
           BIWENGER_LEAGUE_ID: ${{ secrets.BIWENGER_LEAGUE_ID }}
+          BIWENGER_USER_ID: ${{ secrets.BIWENGER_USER_ID }}
           FECHA_INICIO_PUJAS: ${{ vars.FECHA_INICIO_PUJAS }}
           MAX_JUGADORES_PLANTILLA: ${{ vars.MAX_JUGADORES_PLANTILLA }}
-        run: npm start
+        run: |
+          echo "🛡️ [Anti-Baneo] Iniciando ofuscación de horario (margen de 10 minutos)..."
+          sleep $((RANDOM % 600 + 1))
+          npm start
 
       - name: Publicar reporte HTML en GitHub Pages
         run: |
           git config --global user.name "Biwenger Bot"
           git config --global user.email "bot@biwenger.local"
-          git add docs/index.html
-          git commit -m "docs: actualizar reporte diario [skip ci]" || echo "No hay cambios que reportar"
+          git add docs/index.html docs/stats.json
+          git commit -m "docs: actualizar reporte diario e inteligencia [skip ci]" || echo "No hay cambios que reportar"
           git push
