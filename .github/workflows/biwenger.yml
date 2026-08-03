@@ -46,6 +46,6 @@ jobs:
         run: |
           git config --global user.name "Biwenger Bot"
           git config --global user.email "bot@biwenger.local"
-          git add docs/
+          git add .
           git commit -m "docs: actualizar reporte diario e inteligencia [skip ci]" || echo "No hay cambios que reportar"
           git push
