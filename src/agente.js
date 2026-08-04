@@ -509,9 +509,8 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
         </div>`;
         
-        // Sobrescribir las secciones normales ya que no hay mercado aún
+        // Mantener mercado visible si hay ofertas activas
         htmlVentas = '';
-        htmlMercado = '';
     }
 
     let htmlDetective = '';
@@ -1162,6 +1161,24 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             }).join('');
         }
 
+        let jugRivalHTML = '<div style="color: #94a3b8; font-size: 0.85rem;">Plantilla en oculto o sin jugadores.</div>';
+        if (rival.team && rival.team.length > 0) {
+            jugRivalHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">' +
+                rival.team.map(function(j) {
+                    const precio = j.price || j.precio || 0;
+                    const posStr = j.position === 1 ? '🧤 PT' : j.position === 2 ? '🛡️ DF' : j.position === 3 ? '⚙️ MC' : '⚽ DL';
+                    let badgeClass = 'badge-emerald';
+                    let badgeText = '🟢 Titular';
+                    if (precio < 800000) { badgeClass = 'badge-danger'; badgeText = '🔴 Suplente'; }
+                    else if (precio < 2500000) { badgeClass = 'badge-warning'; badgeText = '🟡 Rotación'; }
+                    return '<div style="background: rgba(30, 41, 59, 0.6); padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">' +
+                        '<div style="font-weight: bold; font-size: 0.95rem; color: #fff;">' + j.name + ' <span class="badge ' + badgeClass + '">' + badgeText + '</span></div>' +
+                        '<div style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">' + posStr + ' | ' + formatoEuroJS(precio) + '</div>' +
+                    '</div>';
+                }).join('') +
+            '</div>';
+        }
+
         panel.innerHTML = 
             '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">' +
                 '<div>' +
@@ -1182,6 +1199,10 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             '<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">' +
                 '<div style="font-size: 0.9rem; font-weight: bold; color: #c084fc; margin-bottom: 8px;">🥷 Vulnerabilidad a Clausulazo en su Equipo:</div>' +
                 robosHTML +
+            '</div>' +
+            '<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">' +
+                '<div style="font-size: 0.9rem; font-weight: bold; color: #60a5fa; margin-bottom: 8px;">📋 Plantilla de ' + rival.nombre + ' (' + (rival.team ? rival.team.length : 0) + ' Jugadores):</div>' +
+                jugRivalHTML +
             '</div>';
     }
 
