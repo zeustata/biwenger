@@ -817,6 +817,30 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .badge-emerald {
+            background: rgba(16, 185, 129, 0.25) !important;
+            color: #34d399 !important;
+            border: 1px solid #10b981 !important;
+        }
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.25) !important;
+            color: #fbbf24 !important;
+            border: 1px solid #f59e0b !important;
+        }
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.25) !important;
+            color: #f87171 !important;
+            border: 1px solid #ef4444 !important;
+        }
         :root {
             --bg-color: #0b0f19;
             --text-main: #f8fafc;

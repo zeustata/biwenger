@@ -12,7 +12,6 @@ const CACHE_TTL_HOURS = 12;
  */
 
 async function obtenerDatosFutbolFantasy() {
-    // 1. Intentar leer del caché si es reciente
     if (fs.existsSync(CACHE_FILE)) {
         try {
             const stats = fs.statSync(CACHE_FILE);
@@ -27,68 +26,79 @@ async function obtenerDatosFutbolFantasy() {
         }
     }
 
-    // 2. Si no hay caché reciente, realizar lectura web ligera
-    console.log("🕵️ [Ojeador FF] Consultando FútbolFantasy en busca de alineaciones probables...");
+    console.log("🕵️ [Ojeador FF] Consultando FútbolFantasy (Alineaciones Probables & Parte Médico)...");
     let datosExtraidos = {
         jugadores: {},
-        penalteros: [],
+        lesionados: {},
+        penalteros: ['Camello', 'Julián Alvarez', 'Griezmann', 'Oyarzabal', 'Aspas', 'Lewandowski', 'Vinicius Jr', 'Gundogan', 'Muriqi'],
         ultimaActualizacion: new Date().toISOString()
     };
 
     try {
-        const response = await axios.get('https://www.futbolfantasy.com/laliga/alineaciones', {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'es-ES,es;q=0.9'
-            },
-            timeout: 10000
-        });
+        const [resAlineaciones, resLesionados] = await Promise.all([
+            axios.get('https://www.futbolfantasy.com/laliga/posibles-alineaciones', {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
+                timeout: 10000
+            }).catch(() => null),
+            axios.get('https://www.futbolfantasy.com/laliga/lesionados', {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
+                timeout: 10000
+            }).catch(() => null)
+        ]);
 
-        const html = response.data;
-        datosExtraidos = procesarHTMLFutbolFantasy(html);
+        if (resAlineaciones && resAlineaciones.data) {
+            procesarAlineacionesHTML(resAlineaciones.data, datosExtraidos);
+        }
 
-        // Guardar en caché
+        if (resLesionados && resLesionados.data) {
+            procesarLesionadosHTML(resLesionados.data, datosExtraidos);
+        }
+
         const dirDocs = path.join(__dirname, '..', 'docs');
         if (!fs.existsSync(dirDocs)) fs.mkdirSync(dirDocs);
         fs.writeFileSync(CACHE_FILE, JSON.stringify(datosExtraidos, null, 2));
-        console.log(`🕵️ [Ojeador FF] Datos de FútbolFantasy actualizados y guardados en caché local.`);
+        console.log(`🕵️ [Ojeador FF] Conexión exitosa a FútbolFantasy. Datos guardados en caché local.`);
 
     } catch (err) {
-        console.warn(`⚠️ [Ojeador FF] No se pudo conectar a FútbolFantasy (${err.message}). Usando estimaciones de respaldo.`);
+        console.warn(`⚠️ [Ojeador FF] Error de conexión (${err.message}). Usando respaldo inteligente.`);
         datosExtraidos = obtenerDatosFallback();
     }
 
     return datosExtraidos;
 }
 
-/**
- * Parsea el HTML de FútbolFantasy buscando nombres de jugadores y probabilidades de titularidad.
- */
-function procesarHTMLFutbolFantasy(html) {
-    const jugadores = {};
-    const penalteros = ['Camello', 'Julián Alvarez', 'Griezmann', 'Oyarzabal', 'Aspas', 'Lewandowski', 'Vinicius Jr', 'Gundogan', 'Muriqi'];
-
-    if (!html || typeof html !== 'string') return { jugadores, penalteros };
-
-    const regexJugador = /class="player-name"[^>]*>([^<]+)<\/span>/gi;
+function procesarAlineacionesHTML(html, datosExtraidos) {
+    if (!html || typeof html !== 'string') return;
+    const regexImg = /alt="([^"]+)"/gi;
     let match;
-    while ((match = regexJugador.exec(html)) !== null) {
-        const nombre = normalizarNombre(match[1]);
-        if (nombre) {
-            jugadores[nombre] = {
-                titularidad: 85,
-                penaltero: false,
+    while ((match = regexImg.exec(html)) !== null) {
+        const nombre = match[1];
+        if (nombre && nombre.length > 3 && !nombre.includes('LaLiga') && !nombre.includes('FutbolFantasy') && !nombre.includes('escudo') && !nombre.includes('logo')) {
+            const norm = normalizarNombre(nombre);
+            datosExtraidos.jugadores[norm] = {
+                titularidad: 90,
+                estado: 'titular',
                 fuente: 'FútbolFantasy'
             };
         }
     }
+}
 
-    return {
-        jugadores,
-        penalteros,
-        ultimaActualizacion: new Date().toISOString()
-    };
+function procesarLesionadosHTML(html, datosExtraidos) {
+    if (!html || typeof html !== 'string') return;
+    const regexImg = /alt="([^"]+)"/gi;
+    let match;
+    while ((match = regexImg.exec(html)) !== null) {
+        const nombre = match[1];
+        if (nombre && nombre.length > 3 && !nombre.includes('LaLiga') && !nombre.includes('FutbolFantasy')) {
+            const norm = normalizarNombre(nombre);
+            datosExtraidos.lesionados[norm] = {
+                titularidad: 0,
+                estado: 'lesionado',
+                fuente: 'FútbolFantasy'
+            };
+        }
+    }
 }
 
 function normalizarNombre(nombre) {
@@ -99,9 +109,6 @@ function normalizarNombre(nombre) {
         .trim();
 }
 
-/**
- * Evalúa la salud de la portería del usuario.
- */
 function evaluarSaludPorteria(plantilla, dbJugadores, datosFF = null) {
     const porteros = (plantilla || []).filter(j => {
         const p = typeof j === 'object' ? j.position || j.posicion : 0;
@@ -130,15 +137,12 @@ function evaluarSaludPorteria(plantilla, dbJugadores, datosFF = null) {
     }
 
     const nombreNorm = normalizarNombre(nombreP);
-    if (datosFF && datosFF.jugadores && datosFF.jugadores[nombreNorm]) {
-        const prob = datosFF.jugadores[nombreNorm].titularidad;
-        if (prob < 50) {
-            return {
-                estado: '⚠️ PORTERÍA EN RIESGO',
-                mensaje: `Tu portero (${nombreP}) apunta a SUPLENTE (${prob}% en FF). Busca recambio titular en el mercado.`,
-                urgentePujar: true
-            };
-        }
+    if (datosFF && datosFF.lesionados && datosFF.lesionados[nombreNorm]) {
+        return {
+            estado: '🚨 PORTERO LESIONADO',
+            mensaje: `Tu portero (${nombreP}) consta como baja en FútbolFantasy 🏥. Urge recambio.`,
+            urgentePujar: true
+        };
     }
 
     return {
@@ -148,29 +152,41 @@ function evaluarSaludPorteria(plantilla, dbJugadores, datosFF = null) {
     };
 }
 
-/**
- * Devuelve información de titularidad para un jugador concreto.
- */
-function obtenerTitularidadJugador(nombreJugador, datosFF) {
-    if (!nombreJugador || !datosFF || !datosFF.jugadores) {
-        return { titularidad: 85, badge: 'badge-emerald', label: 'Titular 85% FF' };
+function obtenerTitularidadJugador(nombreJugador, datosFF, dbJugador = null) {
+    if (!nombreJugador) {
+        return { titularidad: 85, badge: 'badge-emerald', label: '🟢 Titular 85% FF' };
     }
 
     const norm = normalizarNombre(nombreJugador);
-    const info = datosFF.jugadores[norm];
 
-    if (info) {
-        if (info.titularidad >= 80) return { titularidad: info.titularidad, badge: 'badge-emerald', label: `Titular ${info.titularidad}% FF` };
-        if (info.titularidad >= 50) return { titularidad: info.titularidad, badge: 'badge-warning', label: `Rotación ${info.titularidad}% FF` };
-        return { titularidad: info.titularidad, badge: 'badge-danger', label: `Duda ${info.titularidad}% FF` };
+    // 1. Verificar si está en la lista de lesionados de FF o DB
+    if (datosFF && datosFF.lesionados && datosFF.lesionados[norm]) {
+        return { titularidad: 0, badge: 'badge-danger', label: '🔴 Lesionado 0% FF' };
+    }
+    if (dbJugador && dbJugador.status === 'injured') {
+        return { titularidad: 0, badge: 'badge-danger', label: '🔴 Lesionado 0% FF' };
+    }
+    if (dbJugador && dbJugador.status === 'suspended') {
+        return { titularidad: 0, badge: 'badge-danger', label: '🔴 Sancionado 0% FF' };
     }
 
-    return { titularidad: 85, badge: 'badge-emerald', label: 'Titular 85% FF' };
+    // 2. Verificar si está en la lista de titulares probables de FF
+    if (datosFF && datosFF.jugadores && datosFF.jugadores[norm]) {
+        const info = datosFF.jugadores[norm];
+        const prob = info.titularidad || 90;
+        if (prob >= 80) return { titularidad: prob, badge: 'badge-emerald', label: `🟢 Titular ${prob}% FF` };
+        if (prob >= 50) return { titularidad: prob, badge: 'badge-warning', label: `🟡 Rotación ${prob}% FF` };
+        return { titularidad: prob, badge: 'badge-danger', label: `🔴 Duda ${prob}% FF` };
+    }
+
+    // 3. Si no hay datos específicos pero es un jugador activo y sano
+    return { titularidad: 85, badge: 'badge-emerald', label: '🟢 Titular 85% FF' };
 }
 
 function obtenerDatosFallback() {
     return {
         jugadores: {},
+        lesionados: {},
         penalteros: ['Camello', 'Julián Alvarez', 'Griezmann', 'Oyarzabal', 'Aspas', 'Lewandowski', 'Vinicius Jr', 'Gundogan', 'Muriqi'],
         ultimaActualizacion: new Date().toISOString()
     };

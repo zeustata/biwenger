@@ -1,0 +1,1623 @@
+{
+  "jugadores": {
+    "futbolfantasy": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "menu": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fantasy✨": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mis equipos": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "predicted11": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alaves": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "athletic": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "atletico": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "barcelona": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "betis": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "celta": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "deportivo": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "elche": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "espanyol": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "getafe": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "levante": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "malaga": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "osasuna": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "racing": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "rayo": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "real madrid": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "real sociedad": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sevilla": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "valencia": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "villarreal": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "premier league": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "serie a": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "champions": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "europa league": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "altas y bajas": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pretemporada": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alineaciones": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mercados": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lesionados": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sancionados": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jerarquias": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dazn": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dazn abierto": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "clasificacion": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "amistoso": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pau fc": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "leganes": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juv. torremolinos": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "derio": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sheff united": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "reading": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "benfica": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "hearts": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sportfreunde lotte": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "petro de luanda": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "eibar": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "olot": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kaizer chiefs": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "leioa": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "compostela": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "braga": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ks cracovia": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sestao": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "eldense": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "recreativo": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tenerife": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "cordoba": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alcorcon": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "johor": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "europa": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sabadell": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "girona": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "wolves": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sporting": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "valladolid": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "leicester": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "real oviedo": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "granada": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "castellon": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "al qadsiah": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "feyenoord": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ceuta": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "derby county": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "al ain": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aston villa": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ac. de viseu": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "al-ula sc": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lugo": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "o. lyon": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ipswich town": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "burnley": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "como": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "al ittihad": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "toulouse": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "birmingham city": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "albacete": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "man united": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "norwich": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "middlesbrough": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fiorentina": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "st. pauli": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "burgos": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "charleroi": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "stoke": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lens": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "almeria": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "utrecht": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "napoli": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sassuolo": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "arsenal": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "al arabi": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "monaco": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "colonia": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "b. leverkusen": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tottenham": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "coventry city": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ferencvaros": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "galatasaray": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "bournemouth": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "genoa": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "nott. forest": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "newcastle": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "udinese": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "man city": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "o. marsella": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fulham": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "atalanta": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "chelsea": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "inter": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "schalke 04": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "al-ahly": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "cadiz": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "celta fortuna": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "andorra": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mallorca": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "r. sociedad b": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "las palmas": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "hull city": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "everton": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "crystal palace": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sunderland": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "leeds united": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "brentford": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "brighton": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "liverpool": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "roma": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "bologna": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lazio": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "frosinone": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juventus": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "monza": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "parma": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "cagliari": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "venezia": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lecce": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "torino": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "milan": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "facebook": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "twitter": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "youtube": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "telegram": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "telegram chat": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tiktok": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "apple store": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "play store": {
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    }
+  },
+  "lesionados": {
+    "futbolfantasy": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "menu": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "fantasy✨": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "mis equipos": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "predicted11": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "logo campeonato": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "alaves": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "athletic": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "atletico": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "barcelona": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "betis": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "celta": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "deportivo": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "elche": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "espanyol": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "getafe": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "levante": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "malaga": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "osasuna": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "racing": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "rayo": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "real madrid": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "real sociedad": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sevilla": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "valencia": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "villarreal": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "premier league": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "serie a": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "champions": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "europa league": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "altas y bajas": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "pretemporada": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "alineaciones": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "mercados": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "lesionados": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sancionados": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "jerarquias": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "amistoso": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "pau fc": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "leganes": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "juv. torremolinos": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "derio": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sheff united": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "reading": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "benfica": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "hearts": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sportfreunde lotte": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "petro de luanda": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "eibar": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "olot": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "kaizer chiefs": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "leioa": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "compostela": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "braga": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "ks cracovia": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sestao": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "eldense": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "recreativo": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "tenerife": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "cordoba": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "alcorcon": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "johor": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "europa": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sabadell": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "girona": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "wolves": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sporting": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "valladolid": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "leicester": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "real oviedo": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "granada": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "castellon": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "al qadsiah": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "feyenoord": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "ceuta": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "derby county": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "al ain": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "aston villa": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "ac. de viseu": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "al-ula sc": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "lugo": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "o. lyon": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "ipswich town": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "burnley": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "como": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "al ittihad": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "toulouse": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "birmingham city": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "albacete": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "man united": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "norwich": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "middlesbrough": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "fiorentina": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "st. pauli": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "burgos": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "charleroi": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "stoke": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "lens": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "almeria": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "utrecht": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "napoli": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sassuolo": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "arsenal": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "al arabi": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "monaco": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "colonia": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "b. leverkusen": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "tottenham": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "coventry city": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "ferencvaros": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "galatasaray": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "bournemouth": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "genoa": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "nott. forest": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "newcastle": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "udinese": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "man city": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "o. marsella": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "fulham": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "atalanta": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "chelsea": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "inter": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "schalke 04": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "al-ahly": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "dazn": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "dazn abierto": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "cadiz": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "celta fortuna": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "andorra": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "mallorca": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "r. sociedad b": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "las palmas": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "hull city": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "everton": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "crystal palace": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "sunderland": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "leeds united": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "brentford": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "brighton": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "liverpool": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "roma": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "bologna": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "lazio": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "frosinone": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "juventus": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "monza": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "parma": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "cagliari": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "venezia": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "lecce": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "torino": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "milan": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "clasificacion": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "facebook": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "twitter": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "youtube": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "telegram": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "telegram chat": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "tiktok": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "apple store": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    },
+    "play store": {
+      "titularidad": 0,
+      "estado": "lesionado",
+      "fuente": "FútbolFantasy"
+    }
+  },
+  "penalteros": [
+    "Camello",
+    "Julián Alvarez",
+    "Griezmann",
+    "Oyarzabal",
+    "Aspas",
+    "Lewandowski",
+    "Vinicius Jr",
+    "Gundogan",
+    "Muriqi"
+  ],
+  "ultimaActualizacion": "2026-08-04T23:26:29.842Z"
+}
