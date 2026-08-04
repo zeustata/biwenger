@@ -154,7 +154,8 @@ async function ejecutarAgente() {
     }
 
     // Superagente Especulador (Trading)
-    const oportunidadesTrading = mercado && mercado.sales ? detectarOportunidadesTrading(mercado.sales, dbJugadores) : [];
+    const MAX_JUGADORES = process.env.MAX_JUGADORES_PLANTILLA ? parseInt(process.env.MAX_JUGADORES_PLANTILLA) : 14;
+    const oportunidadesTrading = mercado && mercado.sales ? detectarOportunidadesTrading(mercado.sales, dbJugadores, jugadoresEnPlantilla, MAX_JUGADORES) : [];
     const activosToxicos = evaluarActivosToxicos(estado.players || [], dbJugadores);
     if (oportunidadesTrading.length > 0) {
         registrarAccion("🚀", `Superagente Especulador: Detectadas ${oportunidadesTrading.length} oportunidades de trading rápido.`);

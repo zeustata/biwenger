@@ -3,9 +3,11 @@
  * Analiza activos en subida libre para obtener liquidez rápida.
  */
 
-function detectarOportunidadesTrading(sales, dbJugadores = {}) {
+function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlantilla = 0, maxJugadores = 14) {
     const oportunidades = [];
     if (!sales || !Array.isArray(sales)) return oportunidades;
+
+    const tieneHueco = jugadoresEnPlantilla < maxJugadores;
 
     sales.forEach(sale => {
         const idJugador = typeof sale.player === 'object' ? sale.player.id : sale.player;
@@ -21,6 +23,11 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}) {
 
         if (esChollo) {
             const gananciaEstimada3Dias = Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 3);
+            
+            let avisoHueco = tieneHueco 
+                ? `🚀 Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.` 
+                : `⚠️ Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. (Ojo: Plantilla llena ${jugadoresEnPlantilla}/${maxJugadores}. Debes vender a un suplente primero).`;
+
             oportunidades.push({
                 id: idJugador,
                 nombre: jDatos.name || `Jugador #${idJugador}`,
@@ -28,7 +35,7 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}) {
                 subidaDiaria: incrementoPrecio,
                 gananciaEstimada3Dias,
                 vendedor: sale.user ? sale.user.name : 'Computer',
-                recomendacion: `🚀 Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.`
+                recomendacion: avisoHueco
             });
         }
     });
