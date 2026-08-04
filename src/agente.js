@@ -605,7 +605,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             <p>Jugadores en subida libre recomendados strictly para ganar dinero limpio en 3-4 días:</p>
             <div class="grid-cards">
                 ${oportunidadesTrading.map(t => {
-                    const infoFF = obtenerTitularidadJugador(t.nombre, datosFF);
+                    const infoFF = obtenerTitularidadJugador(t.nombre, datosFF, t);
                     return `
                     <div class="card" style="border-left: 3px solid #10b981;">
                         <div class="card-title" style="color: #34d399;">${t.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
@@ -686,16 +686,18 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             <h2>💎 Radar de Titulares Chollo (< 2.000.000€)</h2>
             <p>Jugadores económicos recomendados para completar los 14 puestos de tu plantilla sin arruinarte:</p>
             <div class="grid-cards">
-                ${chollosBaratos.map(c => `
+                ${chollosBaratos.map(c => {
+                    const infoFF = obtenerTitularidadJugador(c.nombre, datosFF, c);
+                    return `
                     <div class="card" style="border-left: 3px solid #06b6d4;">
-                        <div class="card-title" style="color: #67e8f9;">${c.nombre}</div>
+                        <div class="card-title" style="color: #67e8f9;">${c.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
                         <div class="card-detail">Precio: ${formatoEuro(c.precio)}</div>
                         <div style="color: #a5f3fc; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(c.subida/1000).toFixed(0)}k€/día</div>
                         <div class="card-alert" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; margin-top: 10px; font-size: 0.85rem;">
                             ${c.recomendacion}
                         </div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
         </div>`;
     }
