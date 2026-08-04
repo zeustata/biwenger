@@ -62,11 +62,10 @@ async function ejecutarAgente() {
     
     registrarAccion("💰", `Saldo Actual: ${saldoActual}€ | Valor Equipo: ${valorEquipo}€`);
     
+    let analisisPretemporada = null;
     if (modoPretemporada) {
-        const analisisPretemporada = evaluarPlantillaInicial(estado.players || []);
+        analisisPretemporada = evaluarPlantillaInicial(estado.players || []);
         registrarAccion("✅", `Análisis de pretemporada completado. Se han detectado ${analisisPretemporada.vender.length} descartes claros.`);
-        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, [], jugadoresEnPlantilla, 999, []);
-        return;
     }
 
     
@@ -319,7 +318,7 @@ async function ejecutarAgente() {
     const horasCuentaAtras = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
 
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras);
 }
 
 function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0) {
