@@ -1,33 +1,49 @@
-# Memoria del Proyecto: Biwenger Advisor Dashboard
+# Memoria del Proyecto: Biwenger Advisor Dashboard (Superagentes VIP)
 
-**Fecha de la última sesión:** Agosto 2026 (Transformación a Modo Asesor y creación del Modo Pretemporada)
-**Próximo hito:** Inicio de La Liga en Agosto (Reseteo de liga y asignación de presupuesto/plantilla aleatoria).
+**Fecha de la última sesión:** Agosto 2026 (Creación de Superagentes, Modo Liga Premium, Rediseño Glassmorphism y Guardián de Reglas)
+**Enlace Público Dashboard:** https://zeustata.github.io/biwenger/
 
-## Estado Actual de la Arquitectura
-1. **Infraestructura:** El bot corre en GitHub Actions (`.github/workflows/biwenger.yml`) todos los días a las 08:00 AM.
-2. **Despliegue Web:** Integrado con Vercel para visualizar un Dashboard HTML interactivo y premium (`docs/index.html`) generado automáticamente. El repositorio se mantiene privado.
-3. **Identidad (NUEVO):** El bot ha pasado de ser un "Bot Automático Activo" a un **"Asesor Pasivo"**. **Bajo ninguna circunstancia** realiza acciones destructivas (ni pujas, ni ventas, ni acepta ofertas) en la cuenta del usuario. Las llamadas `POST/PUT` a la API están capadas y bloqueadas. Esto se mantiene estrictamente incluso una vez que el usuario proporciona sus credenciales (`BIWENGER_TOKEN` y `BIWENGER_LEAGUE_ID`).
-4. **Prevención de Errores:** Si el token falla o no hay conexión, el bot genera un Dashboard con un mensaje de error y sale limpiamente.
+---
 
-## Lógica y Reglas de Negocio Implementadas (Como Recomendaciones)
-* **Modo Pretemporada (NUEVO):** Antes de la fecha oficial de inicio (`FECHA_INICIO_PUJAS`), el bot se conecta y genera un análisis exclusivo de la plantilla inicial. Clasifica a los jugadores aleatorios asignados en: 'Mantener' (estrellas o especulación al alza), 'Vender' (bajando de valor, sin potencial, lesionados) o 'Dudas' (parches baratos).
-* **Reglas Específicas 26-27:**
-  - **Límite de Plantilla:** Configurable por el usuario en las variables (MAX_JUGADORES_PLANTILLA).
-  - **Sistema de Puntuación (Ingresos):** 10.000€ por punto + Bonus Posicional compensatorio (100k al 12º hasta 900k al 20º).
-  - **Goles (+3 Extra):** Los goleadores valen oro.
-  - **Cláusulas (Robos):** Máximo 2 hechos y 2 recibidos cada 7 días. PROHIBIDO robar desde 48h antes del primer partido de la jornada.
-  - **Mercado:** Exclusivo Computer. No hay cesiones, préstamos ni traspasos entre mánagers.
-  - **Alineaciones:** NO hay Capitán ni Once Ideal. SÍ hay Reservas y se permite 1 cambio manual en jornada activa.
-* **Cuadrar Cuentas:** Si el saldo es negativo, el bot analiza la plantilla y las ofertas recibidas por el *computer*, y genera una lista visual recomendando qué suplentes o peores jugadores vender para salir del negativo.
-* **Pujas Agresivas (Adaptadas a Economía Pobre):** 
-  - Base: +5% a 10% de su valor (antes 15%).
-  - Delanteros / Top: hasta +20%.
-* **Riesgo de Jornada:** A menos de 48 horas de empezar la jornada, si la puja recomendada deja al usuario en negativo, el Dashboard arroja una **Alerta de Riesgo** ⚠️.
-* **Modo Detective (ACTIVO):** Cruza las urgencias de las plantillas rivales con sus historiales de sobrepuja (`stats.json`) para recomendar pujas exactas.
+## 1. Reglas de la Comunidad y de la Liga del Usuario
+- **Rol del Bot:** ASESOR PASIVO EXCLUSIVO. Jamás realiza pujas ni ventas automáticas. Todo se muestra en el Dashboard para decisión del mánager.
+- **Liga Premium:** Comunidad Premium en Biwenger con Capitán 🌟 (x2 puntos), Ariete 🎯 (+3 pts extra por gol), cambios en jornada activa, etc.
+- **Límite de Plantilla:** Máximo 14 jugadores (`MAX_JUGADORES_PLANTILLA=14`). Si la plantilla está en 14/14 y se recomienda fichar, se exige indicar qué suplente vender para hacer hueco.
+- **Mecánica de Rivales:** Se puede espiar las plantillas de todos los rivales aunque sus jugadores no estén a la venta.
+- **Clausulazos Tácticos:** Búsqueda activa de robos de jugadores en plantillas rivales analizando perfil psicológico y sobreprecio de cláusula.
 
-## Tareas Pendientes para Agosto
-1. **Configurar Credenciales:** El usuario proporcionará el token de Biwenger y el ID de su liga (`BIWENGER_TOKEN` y `BIWENGER_LEAGUE_ID`) en el `.env` local o secrets de GitHub.
-2. **Operativa Manual:** El usuario usará el Dashboard diariamente a partir del reseteo para tomar decisiones financieras informadas, aplicando manualmente las ventas y fichajes sugeridos.
+---
 
-## Reglas de Comportamiento del Agente
-* **Gestión de Git:** Siempre que el agente modifique código a nivel local o genere archivos importantes (como el Dashboard HTML al ejecutar el script), DEBE realizar obligatoriamente un `git add .`, `git commit` y `git push` sin necesidad de que el usuario se lo recuerde. El repositorio remoto debe estar siempre actualizado con los cambios locales.
+## 2. Arquitectura de Superagentes (Modo Premium)
+- **`src/agente.js` (Orquestador Principal):** Coordina los módulos, calcula la Trilogía de Pretemporada y genera el HTML interactivo `docs/index.html`.
+- **`src/especulador.js` (Superagente Financiero & Trading):** 
+  - Trading de alta frecuencia (>40k€/día de subida).
+  - Cálculo del Índice de Inflación de Mercado de La Liga.
+  - Radar de Titulares Chollo (< 2.000.000€).
+  - Control estricto de la regla de 14 jugadores en plantilla.
+- **`src/alineador.js` (Superagente Táctico):** 
+  - Cálculo de la mejor formación (4-3-3, 3-4-3, 4-4-2, 3-5-2, 5-3-2).
+  - Selección del 11 Titular, Capitán 🌟 (x2) y Ariete 🎯.
+- **`src/analista.js` (Superagente Psicológico & Médico):** 
+  - Perfilador psicológico de rivales (🔥 *Kamikaze*, 💼 *Especulador*, ⚖️ *Conservador*).
+  - Expediente de urgencias rivales.
+  - Parte médico completo (Lesionados, Dudas, Sancionados).
+- **`src/guardiaReglas.js` (Superagente Guardián de Reglas Oficiales):**
+  - **Escudo de Único Portero:** Bloquea la recomendación de venta del único portero de la plantilla (ej. Pablo Campos) para evitar la penalización oficial de -4 puntos por casilla vacía en el 11.
+  - Asegura que el mánager cumpla tanto las reglas comunitarias como las reglas oficiales de Biwenger.
+
+---
+
+## 3. Trilogía de Pretemporada & Interfaz Visual VIP
+- **Contador Regresivo Táctico "Jornada 1":** Muestra días y horas restantes hasta el pitido inicial (fijado oficialmente en 14 de agosto de 2026 a las 21:00h).
+- **Índice de Inflación de Mercado:** Analiza el ritmo de subida diaria global del mercado de La Liga (ej. 🔥 Hiper-Alcista).
+- **Radar de Titulares Chollo (< 2M€):** Tarjetas de jugadores económicos y rentables para rellenar la plantilla de 14.
+- **Diseño Glassmorphism VIP:** 
+  - Rejilla de Tarjetas de Acción (`Action Cards Grid`) con insignias neon.
+  - Tipografía moderna Google Fonts (`Outfit` & `Inter`).
+  - Fondo cósmico azul/púrpura con efectos cristal (`backdrop-filter: blur`).
+
+---
+
+## 4. Regla Inquebrantable de Despliegue Git
+- **Auto-Push Obligatorio:** Cualquier modificación de código o ejecución de script que regenere `docs/index.html` DEBE subirse inmediatamente a GitHub ejecutando `git add .`, `git commit` y `git push` para desplegar la última versión en GitHub Pages.
