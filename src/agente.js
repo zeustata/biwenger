@@ -11,6 +11,7 @@ const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, a
 const { detectarOportunidadesTrading, evaluarActivosToxicos, calcularIndiceInflacion, buscarChollosBaratos } = require('./especulador');
 const { seleccionarOnceOptimo } = require('./alineador');
 const { verificarUnicoPortero } = require('./guardiaReglas');
+const { generarPlanDiario } = require('./directorTecnico');
 
 const fs = require('fs');
 const path = require('path');
@@ -593,60 +594,59 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>`;
     }
 
-    // Sintetizar Ordenes del Día para el Resumen Ejecutivo en formato Tarjetas VIP
-    const ordenesPujas = recomMercado.map(m => `<div class="action-item"><strong>${m.nombre}</strong> <span class="badge badge-blue">Puja ${formatoEuro(m.puja)}</span></div>`);
-    const ordenesVentas = recomVenta.map(v => `<div class="action-item"><strong>${v.nombre}</strong> <span class="badge badge-red">Oferta ${formatoEuro(v.oferta)}</span></div>`);
-    const ordenesTrading = oportunidadesTrading.map(t => `<div class="action-item"><strong>${t.nombre}</strong> <span class="badge badge-emerald">+${(t.subidaDiaria/1000).toFixed(0)}k€/día</span></div>`);
-    const ordenesClausulazos = robosSugeridos.map(r => `<div class="action-item"><strong>${r.nombre}</strong> (${r.equipoRival}) <span class="badge badge-purple">${formatoEuro(r.clausula)}</span></div>`);
+    // Sintetizar Plan de Acción Diario con el Superagente Director Técnico
+    const planDiario = generarPlanDiario({
+        recomMercado,
+        recomVenta,
+        oportunidadesTrading,
+        robosSugeridos,
+        analisisOnce,
+        plantilla: [],
+        saldoActual: saldo,
+        diasCuentaAtras
+    });
 
     let htmlOrdenesDia = `
-    <div class="executive-banner">
+    <div class="executive-banner" style="border-color: #3b82f6; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.35) 100%);">
         <div class="banner-header">
-            <h2>📋 Órdenes del Día de tus Superagentes</h2>
-            <span class="live-pill">⚡ EN DIRECTO</span>
+            <h2 style="color: #60a5fa; display: flex; align-items: center; gap: 10px; margin: 0;">
+                <span>👔</span> PLAN DE ACCIÓN DIARIO DE TU DIRECTOR TÉCNICO
+            </h2>
+            <span class="live-pill" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-color: #60a5fa;">📋 HOY TIENES QUE HACER ESTO</span>
+        </div>
+        <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
+            ${planDiario.consejo}
         </div>
         <div class="action-grid">
-            <div class="action-card card-pujas">
+            <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
                 <div class="action-icon">🛒</div>
-                <div class="action-title">Pujas del Día</div>
+                <div class="action-title">Hoy Puja Por</div>
                 <div class="action-body">
-                    ${ordenesPujas.length > 0 ? ordenesPujas.join('') : '<div class="action-empty">Sin pujas necesarias hoy</div>'}
+                    ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
                 </div>
             </div>
 
-            <div class="action-card card-trading">
-                <div class="action-icon">🚀</div>
-                <div class="action-title">Trading Rápido</div>
-                <div class="action-body">
-                    ${ordenesTrading.length > 0 ? ordenesTrading.join('') : '<div class="action-empty">Sin activos de trading hoy</div>'}
-                </div>
-            </div>
-
-            <div class="action-card card-ventas">
+            <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
                 <div class="action-icon">💵</div>
-                <div class="action-title">Ventas Requeridas</div>
+                <div class="action-title">Hoy Vende A</div>
                 <div class="action-body">
-                    ${ordenesVentas.length > 0 ? ordenesVentas.join('') : '<div class="action-empty">Cuentas saneadas ✅</div>'}
+                    ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
                 </div>
             </div>
 
-            <div class="action-card card-clausulas">
+            <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
                 <div class="action-icon">🥷</div>
-                <div class="action-title">Clausulazos</div>
+                <div class="action-title">Hoy Paga Cláusula</div>
                 <div class="action-body">
-                    ${ordenesClausulazos.length > 0 ? ordenesClausulazos.join('') : '<div class="action-empty">Sin robos recomendados hoy</div>'}
+                    ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
                 </div>
             </div>
 
-            <div class="action-card card-alineacion">
+            <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
                 <div class="action-icon">⚽</div>
-                <div class="action-title">Alineación & Capitán</div>
+                <div class="action-title">Hoy Alinea Esto</div>
                 <div class="action-body">
-                    ${analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0 ? `
-                        <div class="action-item">Formación: <strong>${analisisOnce.formacion}</strong></div>
-                        ${analisisOnce.capitan ? `<div class="action-item">🌟 <strong>${analisisOnce.capitan.nombre}</strong> (Capitán)</div>` : ''}
-                        ${analisisOnce.ariete ? `<div class="action-item">🎯 <strong>${analisisOnce.ariete.nombre}</strong> (Ariete)</div>` : ''}
-                    ` : '<div class="action-empty">Sin cambios de 11 requeridos</div>'}
+                    ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
                 </div>
             </div>
         </div>
