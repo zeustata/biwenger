@@ -66,7 +66,79 @@ function evaluarActivosToxicos(plantilla, dbJugadores = {}) {
     return toxicos;
 }
 
+/**
+ * Calcula el índice de inflación global del mercado.
+ */
+function calcularIndiceInflacion(dbJugadores = {}) {
+    const lista = Object.values(dbJugadores);
+    if (lista.length === 0) return { estado: '📈 Estable', cambioMedio: 0, consejo: 'Mercado en estado neutro.' };
+
+    let sumaIncrementos = 0;
+    let contador = 0;
+
+    lista.forEach(j => {
+        if (j.priceIncrement !== undefined) {
+            sumaIncrementos += j.priceIncrement;
+            contador++;
+        }
+    });
+
+    const promedio = contador > 0 ? Math.round(sumaIncrementos / contador) : 0;
+
+    if (promedio >= 20000) {
+        return {
+            estado: '🔥 Hiper-Alcista',
+            cambioMedio: promedio,
+            consejo: 'Pretemporada desatada. El dinero invertido sube solo de valor. Mantén tu capital en jugadores.'
+        };
+    } else if (promedio >= 5000) {
+        return {
+            estado: '📈 Alcista Moderado',
+            cambioMedio: promedio,
+            consejo: 'Subida sostenida del mercado. Ficha chollos en revalorización.'
+        };
+    } else {
+        return {
+            estado: '📉 Estabilización / Bajista',
+            cambioMedio: promedio,
+            consejo: 'El mercado se frena. Guarda saldo para cuando salgan los cracks.'
+        };
+    }
+}
+
+/**
+ * Busca jugadores en el mercado por debajo de 2M€ que sean parches de garantías.
+ */
+function buscarChollosBaratos(sales, dbJugadores = {}) {
+    const chollos = [];
+    if (!sales || !Array.isArray(sales)) return chollos;
+
+    sales.forEach(sale => {
+        const id = typeof sale.player === 'object' ? sale.player.id : sale.player;
+        const jDatos = dbJugadores[id] || (sale.player && typeof sale.player === 'object' ? sale.player : null);
+
+        if (jDatos && jDatos.price <= 2000000 && jDatos.status !== 'injured' && jDatos.status !== 'suspended') {
+            const subida = jDatos.priceIncrement || 0;
+            if (subida >= 10000 || (jDatos.points && jDatos.points > 20)) {
+                chollos.push({
+                    id,
+                    nombre: jDatos.name,
+                    precio: jDatos.price,
+                    posicion: jDatos.position || 2,
+                    subida,
+                    vendedor: sale.user ? sale.user.name : 'Computer',
+                    recomendacion: `💎 Chollo por ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(jDatos.price)}. Ideal para completar plantilla de 14.`
+                });
+            }
+        }
+    });
+
+    return chollos.sort((a, b) => b.subida - a.subida).slice(0, 4);
+}
+
 module.exports = {
     detectarOportunidadesTrading,
-    evaluarActivosToxicos
+    evaluarActivosToxicos,
+    calcularIndiceInflacion,
+    buscarChollosBaratos
 };

@@ -8,7 +8,7 @@ const {
     obtenerBaseDatosJugadores
 } = require('./api');
 const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos, generarParteMedico } = require('./analista');
-const { detectarOportunidadesTrading, evaluarActivosToxicos } = require('./especulador');
+const { detectarOportunidadesTrading, evaluarActivosToxicos, calcularIndiceInflacion, buscarChollosBaratos } = require('./especulador');
 const { seleccionarOnceOptimo } = require('./alineador');
 
 const fs = require('fs');
@@ -153,10 +153,13 @@ async function ejecutarAgente() {
         registrarAccion("🏥", `Parte Médico: ¡Atención! Tienes ${alertasMedicas.length} alertas en tu equipo.`);
     }
 
-    // Superagente Especulador (Trading)
+    // Superagente Especulador (Trading & Inflación)
     const MAX_JUGADORES = process.env.MAX_JUGADORES_PLANTILLA ? parseInt(process.env.MAX_JUGADORES_PLANTILLA) : 14;
     const oportunidadesTrading = mercado && mercado.sales ? detectarOportunidadesTrading(mercado.sales, dbJugadores, jugadoresEnPlantilla, MAX_JUGADORES) : [];
     const activosToxicos = evaluarActivosToxicos(estado.players || [], dbJugadores);
+    const inflacionMercado = dbJugadores ? calcularIndiceInflacion(dbJugadores) : { estado: '📈 Estable', cambioMedio: 0, consejo: '' };
+    const chollosBaratos = mercado && mercado.sales ? buscarChollosBaratos(mercado.sales, dbJugadores) : [];
+
     if (oportunidadesTrading.length > 0) {
         registrarAccion("🚀", `Superagente Especulador: Detectadas ${oportunidadesTrading.length} oportunidades de trading rápido.`);
     }
@@ -306,11 +309,17 @@ async function ejecutarAgente() {
         }
     }
     
+    // Cálculo del Contador Regresivo a la Jornada 1
+    const fechaPujas = process.env.FECHA_INICIO_PUJAS ? new Date(process.env.FECHA_INICIO_PUJAS) : new Date(Date.now() + 10 * 24 * 60 * 60 * 1000);
+    const diffMs = fechaPujas - new Date();
+    const diasCuentaAtras = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+    const horasCuentaAtras = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -621,6 +630,27 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </ul>
     </div>`;
 
+    let htmlChollos = '';
+    if (chollosBaratos && chollosBaratos.length > 0) {
+        htmlChollos = `
+        <div class="section-card" style="border-top-color: #06b6d4; background: rgba(6, 182, 212, 0.03);">
+            <h2>💎 Radar de Titulares Chollo (< 2.000.000€)</h2>
+            <p>Jugadores económicos recomendados para completar los 14 puestos de tu plantilla sin arruinarte:</p>
+            <div class="grid-cards">
+                ${chollosBaratos.map(c => `
+                    <div class="card" style="border-left: 3px solid #06b6d4;">
+                        <div class="card-title" style="color: #67e8f9;">${c.nombre}</div>
+                        <div class="card-detail">Precio: ${formatoEuro(c.precio)}</div>
+                        <div style="color: #a5f3fc; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(c.subida/1000).toFixed(0)}k€/día</div>
+                        <div class="card-alert" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; margin-top: 10px; font-size: 0.85rem;">
+                            ${c.recomendacion}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+
     let htmlTablon = '';
     if (movimientos.length > 0) {
         // Filtrar solo los fichajes (transfer)
@@ -783,6 +813,10 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     
     <div class="container">
         <div class="stats-hero">
+            <div class="stat-box" style="border-top-color: #ec4899;">
+                <div class="stat-label">⏳ Cuenta Atrás Jornada 1</div>
+                <div class="stat-value" style="color: #f472b6; font-size: 1.6rem;">${diasCuentaAtras}d ${horasCuentaAtras}h</div>
+            </div>
             <div class="stat-box">
                 <div class="stat-label">Saldo de Cuenta</div>
                 <div class="stat-value ${saldo >= 0 ? 'val-positive' : 'val-negative'}">${formatoEuro(saldo)}</div>
@@ -791,12 +825,18 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 <div class="stat-label">Valor de Plantilla</div>
                 <div class="stat-value" style="color: #60a5fa;">${formatoEuro(valor)}</div>
             </div>
+            <div class="stat-box" style="border-top-color: #10b981;">
+                <div class="stat-label">📊 Mercado Pretemporada</div>
+                <div class="stat-value" style="color: #34d399; font-size: 1.1rem;">${inflacionMercado ? inflacionMercado.estado : 'Estable'}</div>
+                <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 5px;">${inflacionMercado ? inflacionMercado.consejo : ''}</div>
+            </div>
         </div>
 
         ${htmlOrdenesDia}
         ${htmlSalud}
         ${htmlOnce}
         ${htmlTrading}
+        ${htmlChollos}
         ${htmlPlantilla}
         ${htmlPretemporada}
         ${htmlVentas}
