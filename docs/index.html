@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biwenger Advisor</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -68,6 +69,9 @@
         .badge-emerald { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
         .badge-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .stats-hero {
             display: grid;
@@ -149,14 +153,14 @@
 <body>
     <header>
         <h1>Biwenger Advisor</h1>
-        <div class="subtitle">Análisis Estratégico - martes, 4 de agosto de 2026</div>
+        <div class="subtitle">Análisis Estratégico - miércoles, 5 de agosto de 2026</div>
     </header>
     
     <div class="container">
         <div class="stats-hero">
             <div class="stat-box" style="border-top-color: #ec4899;">
                 <div class="stat-label">⏳ Cuenta Atrás Jornada 1</div>
-                <div class="stat-value" style="color: #f472b6; font-size: 1.6rem;">10d 0h</div>
+                <div class="stat-value" style="color: #f472b6; font-size: 1.6rem;">9d 20h</div>
             </div>
             <div class="stat-box">
                 <div class="stat-label">Saldo de Cuenta</div>
@@ -173,6 +177,18 @@
             </div>
         </div>
 
+        
+    <div class="search-container" style="margin-bottom: 25px; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); padding: 15px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <span style="font-size: 1.2rem;">🔍</span>
+        <input type="text" id="searchInput" onkeyup="filtrarContenido()" placeholder="Buscar jugador, posición (PT, DF, MC, DL) o rival en vivo..." style="flex: 1; min-width: 250px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 16px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none;">
+        <div style="font-size: 0.8rem; color: #94a3b8; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="filter-chip" onclick="filtrarPosicion('')" style="cursor:pointer; padding: 5px 12px; background: rgba(255,255,255,0.1); border-radius: 8px; font-weight: 600;">Todos</span>
+            <span class="filter-chip" onclick="filtrarPosicion('PT')" style="cursor:pointer; padding: 5px 12px; background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-radius: 8px; font-weight: 600;">🧤 PT</span>
+            <span class="filter-chip" onclick="filtrarPosicion('DF')" style="cursor:pointer; padding: 5px 12px; background: rgba(16, 185, 129, 0.2); color: #34d399; border-radius: 8px; font-weight: 600;">🛡️ DF</span>
+            <span class="filter-chip" onclick="filtrarPosicion('MC')" style="cursor:pointer; padding: 5px 12px; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-radius: 8px; font-weight: 600;">⚙️ MC</span>
+            <span class="filter-chip" onclick="filtrarPosicion('DL')" style="cursor:pointer; padding: 5px 12px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-radius: 8px; font-weight: 600;">⚽ DL</span>
+        </div>
+    </div>
         
     <div class="executive-banner" style="border-color: #3b82f6; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.35) 100%);">
         <div class="banner-header">
@@ -216,6 +232,45 @@
                     <div class="action-item">Formación: <strong>4-3-3</strong> (11/11 titulares)</div><div class="action-item">🎯 Ariete (+3 gol): <strong>Camello</strong></div>
                 </div>
             </div>
+        </div>
+    </div>
+        
+    <div class="section-card" style="border-top-color: #3b82f6; background: rgba(15, 23, 42, 0.4);">
+        <h2 style="display: flex; align-items: center; gap: 10px;">
+            <span>📊</span> Centro de Analítica Visual & Comparativa
+        </h2>
+        <p style="color: #94a3b8;">Visualización interactiva del valor de plantilla de la comunidad y desglose de tu equipo:</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                <h3 style="margin-top: 0; font-size: 1rem; color: #60a5fa; text-align: center;">🏆 Valores de Plantilla de la Liga (€)</h3>
+                <div style="position: relative; height: 260px; width: 100%;">
+                    <canvas id="chartRivales"></canvas>
+                </div>
+            </div>
+            
+            <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                <h3 style="margin-top: 0; font-size: 1rem; color: #34d399; text-align: center;">⚽ Tu Plantilla por Posición</h3>
+                <div style="position: relative; height: 260px; width: 100%;">
+                    <canvas id="chartPlantilla"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="section-card" style="border-top-color: #a855f7; background: rgba(168, 85, 247, 0.03);">
+        <h2 style="display: flex; align-items: center; gap: 10px; color: #c084fc;">
+            <span>⚔️</span> Comparador Cara a Cara (Head-to-Head)
+        </h2>
+        <p style="color: #94a3b8;">Selecciona a cualquier rival para analizar sus necesidades tácticas, perfil psicológico de sobrepuja y vulnerabilidad:</p>
+        
+        <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+            <label for="selectRival" style="font-weight: bold; color: #e2e8f0;">Rival a Espiar:</label>
+            <select id="selectRival" onchange="actualizarCaraACara()" style="background: #0f172a; color: #a78bfa; border: 1px solid #a855f7; padding: 10px 15px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none; cursor: pointer;">
+            </select>
+        </div>
+        
+        <div id="panelCaraACara" style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 25px; border: 1px solid rgba(168, 85, 247, 0.2);">
         </div>
     </div>
         
@@ -401,16 +456,99 @@
         </div>
         
         
-        
-        <div class="section-card success">
-            <h2>✅ Cuentas Saneadas</h2>
-            <p>Tu saldo es positivo. No tienes obligación de vender para cuadrar cuentas.</p>
+        <div class="section-card" style="border-top-color: #f472b6;">
+            <h2>🧐 Análisis de Plantilla Inicial</h2>
+            <p>El asesor ha evaluado tu equipo inicial. Aquí tienes el desglose:</p>
+            
+            <h3 style="color: var(--success); margin-top: 20px;">🛡️ Jugadores a Mantener (Claves/Especulación)</h3>
+            <div class="grid-cards">
+                
+                    <div class="card">
+                        <div class="card-title">De la Fuente</div>
+                        <div class="card-detail">Valor: 3.060.000 € | Tendencia: +70.000 €/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">Subiendo de valor. Especula con él.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Camello</div>
+                        <div class="card-detail">Valor: 2.140.000 € | Tendencia: +40.000 €/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">Subiendo de valor. Especula con él.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Pablo Ibáñez</div>
+                        <div class="card-detail">Valor: 1.740.000 € | Tendencia: +40.000 €/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">Subiendo de valor. Especula con él.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Pablo Campos</div>
+                        <div class="card-detail">Valor: 1.650.000 € | Tendencia: -20.000 €/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">🛡️ ÚNICO PORTERO. Protegido para evitar penalización de -4 pts por casilla vacía.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Mario Martín</div>
+                        <div class="card-detail">Valor: 1.570.000 € | Tendencia: +60.000 €/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">Subiendo de valor. Especula con él.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Paredes</div>
+                        <div class="card-detail">Valor: 350.000 € | Tendencia: +30.000 €/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">Subiendo de valor. Especula con él.</div>
+                    </div>
+                
+            </div>
+
+            <h3 style="color: var(--danger); margin-top: 20px;">👋 Jugadores a Vender (Descartes/Bajando)</h3>
+            <div class="grid-cards">
+                
+            </div>
+
+            <h3 style="color: #94a3b8; margin-top: 20px;">🤔 Dudas / Parches</h3>
+            <div class="grid-cards">
+                
+                    <div class="card">
+                        <div class="card-title">Miguel Sierra</div>
+                        <div class="card-detail">Valor: 240.000 € | Tendencia: -10.000 €/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">Parche de bajo coste. Puedes usarlo para rellenar.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Carlos Martín</div>
+                        <div class="card-detail">Valor: 210.000 € | Tendencia: -10.000 €/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">Parche de bajo coste. Puedes usarlo para rellenar.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">John Donald</div>
+                        <div class="card-detail">Valor: 190.000 € | Tendencia: -10.000 €/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">Parche de bajo coste. Puedes usarlo para rellenar.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Gerenabarrena</div>
+                        <div class="card-detail">Valor: 190.000 € | Tendencia: -10.000 €/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">Parche de bajo coste. Puedes usarlo para rellenar.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Miguel Rubio</div>
+                        <div class="card-detail">Valor: 150.000 € | Tendencia: 0 €/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">Parche de bajo coste. Puedes usarlo para rellenar.</div>
+                    </div>
+                
+                    <div class="card">
+                        <div class="card-title">Selton Sánchez</div>
+                        <div class="card-detail">Valor: 150.000 € | Tendencia: 0 €/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">Parche de bajo coste. Puedes usarlo para rellenar.</div>
+                    </div>
+                
+            </div>
         </div>
         
-        <div class="section-card neutral">
-            <h2>🤷‍♂️ Sin Objetivos en el Mercado</h2>
-            <p>Hoy no hay ningún jugador en el mercado que encaje con tus necesidades o presupuesto.</p>
-        </div>
+        
         
         
             <div class="section-card" style="border-top-color: #3b82f6;">
@@ -418,6 +556,13 @@
                 <p>El mercado se mueve. Estos han sido los últimos fichajes de tus rivales:</p>
                 <div class="grid-cards">
                     
+                        <div class="card" style="background: rgba(59, 130, 246, 0.05);">
+                            <div style="color: #94a3b8; font-size: 0.85rem;"><strong>Aston Birra</strong> ha vendido a:</div>
+                            <div class="card-title" style="color: #60a5fa;">Patiño</div>
+                            <div class="card-detail">De: Aston Birra ➡️ Para: Computer</div>
+                            <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: 153.100 €</div>
+                        </div>
+                        
                         <div class="card" style="background: rgba(59, 130, 246, 0.05);">
                             <div style="color: #94a3b8; font-size: 0.85rem;"><strong>JONI</strong> ha vendido a:</div>
                             <div class="card-title" style="color: #60a5fa;">Juanpe Melero</div>
@@ -481,13 +626,6 @@
                             <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: 280.800 €</div>
                         </div>
                         
-                        <div class="card" style="background: rgba(59, 130, 246, 0.05);">
-                            <div style="color: #94a3b8; font-size: 0.85rem;"><strong>Aston Birra</strong> ha vendido a:</div>
-                            <div class="card-title" style="color: #60a5fa;">Dani Martín</div>
-                            <div class="card-detail">De: Aston Birra ➡️ Para: Computer</div>
-                            <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: 154.400 €</div>
-                        </div>
-                        
                 </div>
             </div>
         
@@ -503,17 +641,191 @@
         <div class="logs-section">
             <h3>Terminal de Análisis</h3>
             <ul>
-                <li><span class="hora">10:13:19 PM</span> 🚀 [8/4/2026, 10:13:19 PM] Iniciando el Biwenger Advisor Dashboard...</li>
-<li><span class="hora">10:13:24 PM</span> ✅ Conectado. Plantilla actual: 12/25 jugadores.</li>
-<li><span class="hora">10:13:24 PM</span> 💰 Saldo Actual: 28969200€ | Valor Equipo: 11640000€</li>
-<li><span class="hora">10:13:28 PM</span> ⏳ ¡Atención! Faltan aprox 24 horas para que empiece la jornada.</li>
-<li><span class="hora">10:13:30 PM</span> 🛒 Analizando el mercado: 14 libres del computer y 149 a la venta por rivales.</li>
-<li><span class="hora">10:13:30 PM</span> 📊 Necesidades detectadas: PT:1 DF:3 MC:4 DL:2</li>
-<li><span class="hora">10:13:34 PM</span> 🚀 Superagente Especulador: Detectadas 5 oportunidades de trading rápido.</li>
-<li><span class="hora">10:13:36 PM</span> 🧠 Analítica de Pujas: Historial actualizado y guardado en memoria.</li>
-<li><span class="hora">10:13:36 PM</span> 🏁 [8/4/2026, 10:13:36 PM] Análisis finalizado.</li>
+                <li><span class="hora">0:23:37</span> 🚀 [5/8/2026, 0:23:37] Iniciando el Biwenger Advisor Dashboard...</li>
+<li><span class="hora">0:23:37</span> ⏳ Modo Pretemporada activo. Inicio de mercado/liga: 2026-08-14T21:00:00. Analizando plantilla inicial...</li>
+<li><span class="hora">0:23:42</span> ✅ Conectado. Plantilla actual: 12/14 jugadores.</li>
+<li><span class="hora">0:23:42</span> 💰 Saldo Actual: 28969200€ | Valor Equipo: 11640000€</li>
+<li><span class="hora">0:23:42</span> ✅ Análisis de pretemporada completado. Se han detectado 0 descartes claros.</li>
+<li><span class="hora">0:23:47</span> 🛒 Analizando el mercado: 14 libres del computer y 148 a la venta por rivales.</li>
+<li><span class="hora">0:23:47</span> 📊 Necesidades detectadas: PT:1 DF:3 MC:4 DL:2</li>
+<li><span class="hora">0:23:52</span> 🚀 Superagente Especulador: Detectadas 5 oportunidades de trading rápido.</li>
+<li><span class="hora">0:23:55</span> 🧠 Analítica de Pujas: Historial actualizado y guardado en memoria.</li>
+<li><span class="hora">0:23:55</span> 🏁 [5/8/2026, 0:23:55] Análisis finalizado.</li>
             </ul>
         </div>
     </div>
+
+    <script>
+    window.DATA_RIVALES = [];
+    window.DATA_MI_VALOR = 11640000;
+    window.DATA_PLANTILLA_COUNTS = {"PT":1,"DF":4,"MC":4,"DL":3};
+    window.DATA_ROBOS = [];
+
+    function formatoEuroJS(num) {
+        return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Chart 1: Rivales vs Tu Equipo
+        const ctxRivales = document.getElementById('chartRivales');
+        if (ctxRivales && window.Chart) {
+            const labels = ['Tu Equipo'].concat(window.DATA_RIVALES.map(function(r) { return r.nombre; }));
+            const dataValues = [window.DATA_MI_VALOR].concat(window.DATA_RIVALES.map(function(r) { return r.valor; }));
+            const bgColors = ['rgba(59, 130, 246, 0.85)'].concat(window.DATA_RIVALES.map(function(_, i) { 
+                return 'hsl(' + (250 + i * 30) + ', 65%, 60%)'; 
+            }));
+            
+            new Chart(ctxRivales, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Valor de Plantilla (€)',
+                        data: dataValues,
+                        backgroundColor: bgColors,
+                        borderRadius: 8,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return 'Valor: ' + formatoEuroJS(context.raw); }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { family: 'Outfit' } }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8', font: { family: 'Outfit' }, callback: function(value) { return (value/1000000).toFixed(1) + 'M€'; } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+        }
+
+        // Chart 2: Donut de Plantilla
+        const ctxPlantilla = document.getElementById('chartPlantilla');
+        if (ctxPlantilla && window.Chart) {
+            const counts = window.DATA_PLANTILLA_COUNTS;
+            new Chart(ctxPlantilla, {
+                type: 'doughnut',
+                data: {
+                    labels: ['🧤 Porteros', '🛡️ Defensas', '⚙️ Medios', '⚽ Delanteros'],
+                    datasets: [{
+                        data: [counts.PT, counts.DF, counts.MC, counts.DL],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { family: 'Outfit' } } }
+                    }
+                }
+            });
+        }
+
+        // 2. Poblar Selector Cara a Cara
+        const select = document.getElementById('selectRival');
+        if (select && window.DATA_RIVALES.length > 0) {
+            select.innerHTML = window.DATA_RIVALES.map(function(r) { return '<option value="' + r.nombre + '">' + r.nombre + '</option>'; }).join('');
+            actualizarCaraACara();
+        } else if (select) {
+            select.innerHTML = '<option>Sin rivales cargados</option>';
+        }
+    });
+
+    function actualizarCaraACara() {
+        const select = document.getElementById('selectRival');
+        const panel = document.getElementById('panelCaraACara');
+        if (!select || !panel) return;
+        
+        const nombreRival = select.value;
+        const rival = window.DATA_RIVALES.find(function(r) { return r.nombre === nombreRival; });
+        if (!rival) {
+            panel.innerHTML = '<div style="color: #94a3b8;">Selecciona un rival válido.</div>';
+            return;
+        }
+
+        const difValor = rival.valor - window.DATA_MI_VALOR;
+        const difStr = difValor > 0 ? ('+' + formatoEuroJS(difValor) + ' respecto a ti') : (formatoEuroJS(difValor) + ' respecto a ti');
+        const robosRival = window.DATA_ROBOS.filter(function(r) { return r.equipoRival === rival.nombre || r.dueño === rival.nombre; });
+
+        let urgenciasHTML = '<span style="color:#34d399; font-size:0.85rem;">Plantilla equilibrada</span>';
+        if (rival.urgencias && rival.urgencias.length > 0) {
+            urgenciasHTML = rival.urgencias.map(function(u) { 
+                return '<span style="display:inline-block; margin-right:5px; background:rgba(239, 68, 68, 0.2); color:#fca5a5; padding:3px 10px; border-radius:12px; font-weight:bold; font-size:0.85rem;">Busca ' + u + '</span>'; 
+            }).join('');
+        }
+
+        let perfilPsico = (rival.statsPuja && rival.statsPuja.perfilPsicologico) ? rival.statsPuja.perfilPsicologico : '⚖️ Conservador / Calculador';
+        let sobrepujaInfo = (rival.statsPuja && rival.statsPuja.sobrepujaMedia) ? ('<div style="font-size: 0.8rem; color: #cbd5e1; margin-top: 2px;">Sobrepuja media: +' + Math.round(rival.statsPuja.sobrepujaMedia * 100) + '%</div>') : '';
+
+        let robosHTML = '<div style="font-size: 0.85rem; color: #94a3b8; font-style: italic;">No hay clausulazos recomendados actualmente contra este rival.</div>';
+        if (robosRival.length > 0) {
+            robosHTML = robosRival.map(function(r) {
+                return '<div style="background: rgba(139, 92, 246, 0.1); border-left: 3px solid #a855f7; padding: 10px 15px; border-radius: 8px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">' +
+                    '<div><strong style="color: #fff;">' + r.nombre + '</strong> (' + r.posicion + ') — Media: ⭐ ' + r.mediaPuntos + '<div style="font-size: 0.8rem; color: #94a3b8;">' + (r.motivoViabilidad || '') + '</div></div>' +
+                    '<div><span style="font-weight: bold; color: #a78bfa;">Cláusula: ' + formatoEuroJS(r.clausula || r.precioMercado) + '</span><span class="badge ' + (r.viabilidadBadge || 'badge-purple') + '" style="margin-left: 8px;">' + (r.viabilidadLabel || '🟡 MEDIA') + '</span></div>' +
+                '</div>';
+            }).join('');
+        }
+
+        panel.innerHTML = 
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">' +
+                '<div>' +
+                    '<div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase;">Valor de Plantilla</div>' +
+                    '<div style="font-size: 1.5rem; font-weight: 800; color: #a78bfa; margin-top: 4px;">' + formatoEuroJS(rival.valor) + '</div>' +
+                    '<div style="font-size: 0.8rem; color: ' + (difValor > 0 ? '#f87171' : '#34d399') + ';">' + difStr + '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase;">Urgencias de Mercado</div>' +
+                    '<div style="margin-top: 8px;">' + urgenciasHTML + '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase;">Perfil Psicológico de Puja</div>' +
+                    '<div style="font-weight: bold; color: #fbbf24; margin-top: 6px; font-size: 0.95rem;">' + perfilPsico + '</div>' +
+                    sobrepujaInfo +
+                '</div>' +
+            '</div>' +
+            '<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">' +
+                '<div style="font-size: 0.9rem; font-weight: bold; color: #c084fc; margin-bottom: 8px;">🥷 Vulnerabilidad a Clausulazo en su Equipo:</div>' +
+                robosHTML +
+            '</div>';
+    }
+
+    function filtrarContenido() {
+        const input = document.getElementById('searchInput');
+        const query = input ? input.value.toLowerCase().trim() : '';
+        const cards = document.querySelectorAll('.grid-cards .card');
+
+        cards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            if (!query || text.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function filtrarPosicion(pos) {
+        const input = document.getElementById('searchInput');
+        if (input) {
+            input.value = pos;
+            filtrarContenido();
+        }
+    }
+    </script>
 </body>
 </html>

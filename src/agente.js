@@ -320,10 +320,10 @@ async function ejecutarAgente() {
     const horasCuentaAtras = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
 
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras, estado.players || []);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0, plantillaUsuario = []) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -716,7 +716,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     </div>`;
 
     // Conteo de posiciones para gráfico de donut
-    const jugPlantilla = estado && estado.players ? estado.players : [];
+    const jugPlantilla = plantillaUsuario || [];
     const plantillaCounts = {
         PT: jugPlantilla.filter(p => p.position === 1 || p.posicion === 1).length,
         DF: jugPlantilla.filter(p => p.position === 2 || p.posicion === 2).length,
