@@ -48,4 +48,5 @@ jobs:
           git config --global user.email "bot@biwenger.local"
           git add .
           git commit -m "docs: actualizar reporte diario e inteligencia [skip ci]" || echo "No hay cambios que reportar"
+          git pull --rebase origin main
           git push
