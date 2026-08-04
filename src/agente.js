@@ -7,7 +7,7 @@ const {
     obtenerUltimosMovimientos,
     obtenerBaseDatosJugadores
 } = require('./api');
-const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos } = require('./analista');
+const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos, generarParteMedico } = require('./analista');
 
 const fs = require('fs');
 const path = require('path');
@@ -146,6 +146,11 @@ async function ejecutarAgente() {
     }
 
     const dbJugadores = await obtenerBaseDatosJugadores();
+    const alertasMedicas = dbJugadores ? generarParteMedico(estado.players || [], dbJugadores) : [];
+    if (alertasMedicas.length > 0) {
+        registrarAccion("🏥", `Parte Médico: ¡Atención! Tienes ${alertasMedicas.length} alertas en tu equipo.`);
+    }
+
     let robosSugeridos = [];
     
     // Si tenemos necesidades y hemos cargado la DB
@@ -286,10 +291,10 @@ async function ejecutarAgente() {
     }
     
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = []) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = []) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -490,6 +495,55 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>`;
     }
 
+    let htmlSalud = '';
+    if (alertasMedicas.length > 0) {
+        htmlSalud = `
+        <div class="section-card danger">
+            <h2>🏥 Parte Médico de tu Equipo</h2>
+            <p>Se han detectado problemas en jugadores de tu plantilla. Te recomendamos buscarles recambio antes de la jornada:</p>
+            <div class="grid-cards">
+                ${alertasMedicas.map(a => `
+                    <div class="card" style="border-left: 4px solid #ef4444;">
+                        <div class="card-title">${a.nombre}</div>
+                        <div class="card-alert" style="margin-top: 10px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: #fca5a5;">${a.mensaje}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+
+    let htmlTablon = '';
+    if (movimientos.length > 0) {
+        // Filtrar solo los fichajes (transfer)
+        const fichajes = movimientos.filter(m => m.type === 'transfer' && Array.isArray(m.content)).flatMap(m => m.content);
+        if (fichajes.length > 0) {
+            htmlTablon = `
+            <div class="section-card" style="border-top-color: #3b82f6;">
+                <h2>📰 Últimos Movimientos de la Liga</h2>
+                <p>El mercado se mueve. Estos han sido los últimos fichajes de tus rivales:</p>
+                <div class="grid-cards">
+                    ${fichajes.slice(0, 10).map(f => `
+                        <div class="card" style="background: rgba(59, 130, 246, 0.05);">
+                            <div style="color: #94a3b8; font-size: 0.85rem;">Ha fichado a:</div>
+                            <div class="card-title" style="color: #60a5fa;">${f.player ? f.player.name : 'Jugador'}</div>
+                            <div class="card-detail">Comprador: <strong>${f.to ? f.to.name : 'Computer'}</strong></div>
+                            <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: ${formatoEuro(f.amount)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>`;
+        }
+    }
+
+    let htmlCalendario = `
+    <div class="section-card" style="border-top-color: #10b981; background: rgba(16, 185, 129, 0.05);">
+        <h2>📅 Calendario de la Jornada</h2>
+        <div style="text-align: center; padding: 20px; color: #94a3b8; font-style: italic;">
+            <p>⏳ Esperando a que Biwenger publique los horarios oficiales de la jornada...</p>
+            <p style="font-size: 0.8rem;">(Este bloque se llenará automáticamente con los partidos en cuanto la API los habilite unos días antes del inicio de la liga)</p>
+        </div>
+    </div>`;
+
     let listaHTML = registro.map(r => `<li><span class="hora">${r.hora}</span> ${r.texto.replace(/<.*?>/g, '')}</li>`).join('\n');
 
     const htmlContent = `<!DOCTYPE html>
@@ -620,12 +674,15 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
         </div>
 
+        ${htmlSalud}
         ${htmlPlantilla}
         ${htmlPretemporada}
         ${htmlVentas}
         ${htmlMercado}
         ${htmlRobos}
+        ${htmlTablon}
         ${htmlDetective}
+        ${htmlCalendario}
 
         <div class="logs-section">
             <h3>Terminal de Análisis</h3>

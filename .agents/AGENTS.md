@@ -28,3 +28,6 @@
 ## Tareas Pendientes para Agosto
 1. **Configurar Credenciales:** El usuario proporcionará el token de Biwenger y el ID de su liga (`BIWENGER_TOKEN` y `BIWENGER_LEAGUE_ID`) en el `.env` local o secrets de GitHub.
 2. **Operativa Manual:** El usuario usará el Dashboard diariamente a partir del reseteo para tomar decisiones financieras informadas, aplicando manualmente las ventas y fichajes sugeridos.
+
+## Reglas de Comportamiento del Agente
+* **Gestión de Git:** Siempre que el agente modifique código a nivel local o genere archivos importantes (como el Dashboard HTML al ejecutar el script), DEBE realizar obligatoriamente un `git add .`, `git commit` y `git push` sin necesidad de que el usuario se lo recuerde. El repositorio remoto debe estar siempre actualizado con los cambios locales.

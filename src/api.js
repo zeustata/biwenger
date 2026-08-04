@@ -142,9 +142,9 @@ async function obtenerInicioProximaJornada() {
 // Función para obtener los últimos movimientos del mercado (tablón)
 async function obtenerUltimosMovimientos() {
     try {
-        // En Biwenger el tablón se consulta en /league/board o /events
-        // Pedimos los últimos eventos para analizar fichajes (tipo transfer)
-        const response = await biwengerApi.get('/league/board?type=transfer,market&limit=100');
+        // En Biwenger el tablón se consulta en /league/{ID}/board
+        // Pedimos los últimos 15 eventos para analizar fichajes y mercado (tipo transfer,market)
+        const response = await biwengerApi.get(`/league/${process.env.BIWENGER_LEAGUE_ID}/board?type=transfer,market&limit=15`);
         return response.data.data;
     } catch (error) {
         console.error("Error al obtener últimos movimientos:", error.response ? error.response.data : error.message);

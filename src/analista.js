@@ -292,11 +292,43 @@ function buscarMejoresClausulazos(urgencias, rivales, dbJugadores, saldoDisponib
     return robos.slice(0, 5);
 }
 
+/**
+ * Evalúa la salud de tu plantilla y alerta de lesiones o si alguien se va de la liga.
+ */
+function generarParteMedico(plantilla, dbJugadores) {
+    const alertas = [];
+    if (!plantilla || !dbJugadores) return alertas;
+
+    plantilla.forEach(jugador => {
+        const id = typeof jugador === 'object' ? jugador.id : jugador;
+        const jDatos = dbJugadores[id];
+        
+        if (!jDatos) {
+            alertas.push({
+                nombre: typeof jugador === 'object' && jugador.name ? jugador.name : `ID: ${id}`,
+                tipo: 'out',
+                mensaje: '⚠️ Posible salida de La Liga. No está en la base de datos.'
+            });
+        } else {
+            if (jDatos.status === 'injured') {
+                alertas.push({ nombre: jDatos.name, tipo: 'injured', mensaje: '🏥 Lesionado. Tienes que buscarle recambio.' });
+            } else if (jDatos.status === 'doubt') {
+                alertas.push({ nombre: jDatos.name, tipo: 'doubt', mensaje: '🤔 Es duda por molestias o recuperación.' });
+            } else if (jDatos.status === 'suspended') {
+                alertas.push({ nombre: jDatos.name, tipo: 'suspended', mensaje: '🟥 Sancionado. Te dará 0 puntos.' });
+            }
+        }
+    });
+
+    return alertas;
+}
+
 module.exports = {
     detectarNecesidadesPlantilla,
     evaluarJugador,
     evaluarPlantillaInicial,
     analizarRivales,
     calcularPerfilPujador,
-    buscarMejoresClausulazos
+    buscarMejoresClausulazos,
+    generarParteMedico
 };
