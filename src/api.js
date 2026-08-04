@@ -32,7 +32,8 @@ biwengerApi.interceptors.request.use(async (config) => {
 // Función para obtener el estado del equipo y saldo actual
 async function obtenerEstadoEquipo() {
     try {
-        const response = await biwengerApi.get('/user');
+        // Biwenger cambió su API: ahora la plantilla viene en 'players' en lugar de 'team'
+        const response = await biwengerApi.get('/user?fields=*,players');
         // biwenger devuelve la info en response.data.data
         return response.data.data;
     } catch (error) {

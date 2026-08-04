@@ -44,18 +44,23 @@ async function ejecutarAgente() {
         return;
     }
     
-    const jugadoresEnPlantilla = estado.team ? estado.team.length : 0;
+    const jugadoresEnPlantilla = estado.players ? estado.players.length : 0;
     const maxJugadores = parseInt(process.env.MAX_JUGADORES_PLANTILLA || "25");
     
     registrarAccion("✅", `Conectado. Plantilla actual: ${jugadoresEnPlantilla}/${maxJugadores} jugadores.`);
     
-    let saldoActual = estado.balance || 0;
-    const valorEquipo = estado.teamValue || 0;
+    const saldoActual = estado.balance || 0;
+    let valorEquipo = estado.teamValue || 0;
+    
+    // Si la API no devuelve teamValue, lo sumamos manualmente
+    if (valorEquipo === 0 && estado.players) {
+        valorEquipo = estado.players.reduce((sum, p) => sum + (p.price || 0), 0);
+    }
     
     registrarAccion("💰", `Saldo Actual: ${saldoActual}€ | Valor Equipo: ${valorEquipo}€`);
     
     if (modoPretemporada) {
-        const analisisPretemporada = evaluarPlantillaInicial(estado.team || []);
+        const analisisPretemporada = evaluarPlantillaInicial(estado.players || []);
         registrarAccion("✅", `Análisis de pretemporada completado. Se han detectado ${analisisPretemporada.vender.length} descartes claros.`);
         generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, [], jugadoresEnPlantilla);
         return;
