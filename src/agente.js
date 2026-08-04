@@ -398,27 +398,31 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         
         if (recomComputer.length > 0) {
             htmlCards += `<h3 style="color: #60a5fa; margin-top: 15px;">🤖 Mercado Libre (Computer)</h3><div class="grid-cards">`;
-            htmlCards += recomComputer.map(m => `
+            htmlCards += recomComputer.map(m => {
+                const infoFF = obtenerTitularidadJugador(m.nombre, datosFF);
+                return `
                 <div class="card buy-card">
-                    <div class="card-title">${m.nombre}</div>
+                    <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
                     <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
                     <div class="card-bid">Puja Sugerida:<br>${formatoEuro(m.puja)}</div>
                     ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
             htmlCards += `</div>`;
         }
 
         if (recomRivales.length > 0) {
             htmlCards += `<h3 style="color: #f472b6; margin-top: 25px;">🏃‍♂️ En Venta por Rivales</h3><div class="grid-cards">`;
-            htmlCards += recomRivales.map(m => `
+            htmlCards += recomRivales.map(m => {
+                const infoFF = obtenerTitularidadJugador(m.nombre, datosFF);
+                return `
                 <div class="card buy-card" style="border-left: 3px solid #f472b6;">
-                    <div class="card-title">${m.nombre}</div>
+                    <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
                     <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
                     <div class="card-bid">Pagarás aprox:<br>${formatoEuro(m.puja)}</div>
                     ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
             htmlCards += `</div>`;
         }
 
@@ -443,15 +447,17 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             <h2>🥷 Robos Tácticos Sugeridos (Clausulazos)</h2>
             <p>El Asesor ha escaneado a tus rivales y te recomienda estos "robos" para cubrir tus posiciones urgentes:</p>
             <div class="grid-cards">
-                ${robosSugeridos.map(r => `
+                ${robosSugeridos.map(r => {
+                    const infoFF = obtenerTitularidadJugador(r.nombre, datosFF);
+                    return `
                     <div class="card buy-card" style="border-left: 3px solid #8b5cf6;">
-                        <div class="card-title">${r.nombre} <span style="font-size: 0.8rem; background: #475569; padding: 2px 6px; border-radius: 8px;">${r.posicion}</span></div>
+                        <div class="card-title">${r.nombre} <span style="font-size: 0.8rem; background: #475569; padding: 2px 6px; border-radius: 8px;">${r.posicion}</span> <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
                         <div class="card-detail">Pertenece a: <strong>${r.dueño}</strong></div>
                         <div class="card-detail" style="margin-top: 5px;">Media: ⭐ ${r.mediaPuntos} pts</div>
                         <div class="card-bid" style="margin-top: 10px;">Valor aprox.:<br>${formatoEuro(r.precioMercado)}</div>
                         <div class="card-alert" style="margin-top: 10px; background: rgba(139, 92, 246, 0.1); color: #c4b5fd;">Alta rentabilidad. Verifica su cláusula real en la app.</div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
         </div>`;
     }
@@ -465,35 +471,41 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             
             <h3 style="color: var(--success); margin-top: 20px;">🛡️ Jugadores a Mantener (Claves/Especulación)</h3>
             <div class="grid-cards">
-                ${analisisPretemporada.mantener.map(m => `
+                ${analisisPretemporada.mantener.map(m => {
+                    const infoFF = obtenerTitularidadJugador(m.nombre, datosFF);
+                    return `
                     <div class="card">
-                        <div class="card-title">${m.nombre}</div>
+                        <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
                         <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
                         <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">${m.motivo}</div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
 
             <h3 style="color: var(--danger); margin-top: 20px;">👋 Jugadores a Vender (Descartes/Bajando)</h3>
             <div class="grid-cards">
-                ${analisisPretemporada.vender.map(m => `
+                ${analisisPretemporada.vender.map(m => {
+                    const infoFF = obtenerTitularidadJugador(m.nombre, datosFF);
+                    return `
                     <div class="card">
-                        <div class="card-title">${m.nombre}</div>
+                        <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
                         <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
                         <div class="card-alert" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);">${m.motivo}</div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
 
             <h3 style="color: #94a3b8; margin-top: 20px;">🤔 Dudas / Parches</h3>
             <div class="grid-cards">
-                ${analisisPretemporada.duda.map(m => `
+                ${analisisPretemporada.duda.map(m => {
+                    const infoFF = obtenerTitularidadJugador(m.nombre, datosFF);
+                    return `
                     <div class="card">
-                        <div class="card-title">${m.nombre}</div>
+                        <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
                         <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
                         <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">${m.motivo}</div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
         </div>`;
         
