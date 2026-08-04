@@ -164,31 +164,46 @@ function evaluarPlantillaInicial(plantilla) {
  * Analiza las plantillas de los rivales para el Expediente.
  * Devuelve un array de rivales y sus "urgencias" (posiciones que necesitan fichar urgentemente).
  */
-function analizarRivales(standings) {
+function analizarRivales(standings, dbJugadores = null, miUserId = null) {
     const expediente = [];
     if (!standings || !Array.isArray(standings)) return expediente;
     
+    const idUsuarioActual = miUserId ? parseInt(miUserId) : (process.env.BIWENGER_USER_ID ? parseInt(process.env.BIWENGER_USER_ID) : null);
+
     standings.forEach(rival => {
-        // Si hay array de equipo
+        // Excluir a nosotros mismos de la lista de rivales si coincide ID
+        if (idUsuarioActual && rival.id === idUsuarioActual) return;
+
+        let equipoRival = [];
+        let valorCalculado = rival.teamValue || 0;
+
         if (rival.team && Array.isArray(rival.team)) {
-            const necesidades = detectarNecesidadesPlantilla(rival.team);
-            let urgencias = [];
-            // Si le falta un PT o DL, es crítico. Si le faltan muchos DF o MC también.
-            if (necesidades.PT > 0) urgencias.push('PT');
-            if (necesidades.DF > 1) urgencias.push('DF'); 
-            if (necesidades.MC > 1) urgencias.push('MC');
-            if (necesidades.DL > 0) urgencias.push('DL');
-            
-            if (urgencias.length > 0) {
-                expediente.push({
-                    id: rival.id || 'N/A',
-                    nombre: rival.name || 'Rival Desconocido',
-                    valor: rival.teamValue || 0,
-                    urgencias: urgencias,
-                    necesidadesRaw: necesidades
-                });
+            equipoRival = rival.team.map(j => {
+                const idJ = typeof j === 'object' ? j.id : j;
+                const dJ = dbJugadores && dbJugadores[idJ] ? dbJugadores[idJ] : null;
+                return dJ || { id: idJ, position: 2, status: 'ok', average: 3.0 };
+            });
+
+            if (valorCalculado === 0 && dbJugadores) {
+                valorCalculado = equipoRival.reduce((sum, p) => sum + (p.price || 0), 0);
             }
         }
+
+        const necesidades = detectarNecesidadesPlantilla(equipoRival);
+        let urgencias = [];
+        if (necesidades.PT > 0) urgencias.push('PT');
+        if (necesidades.DF > 1) urgencias.push('DF'); 
+        if (necesidades.MC > 1) urgencias.push('MC');
+        if (necesidades.DL > 0) urgencias.push('DL');
+
+        expediente.push({
+            id: rival.id || 'N/A',
+            nombre: rival.name || 'Rival Desconocido',
+            valor: valorCalculado,
+            urgencias: urgencias,
+            team: equipoRival,
+            necesidadesRaw: necesidades
+        });
     });
     
     // Ordenar por valor de equipo (rivales más fuertes arriba)

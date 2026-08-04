@@ -74,9 +74,19 @@ async function obtenerMercado() {
 // Función para obtener las plantillas de los rivales
 async function obtenerPlantillasRivales() {
     try {
-        // En Biwenger suele ser la ruta /league que contiene a los usuarios (standings) y sus equipos
-        const response = await biwengerApi.get('/league?include=all');
-        return response.data.data;
+        const response = await biwengerApi.get('/league?fields=*,users(id,name,balance,players),standings');
+        const data = response.data.data;
+        if (data && data.users && Array.isArray(data.users)) {
+            // Mapeamos data.users como standings para el orquestador
+            data.standings = data.users.map(u => ({
+                id: u.id,
+                name: u.name,
+                balance: u.balance,
+                team: u.players || [],
+                players: u.players || []
+            }));
+        }
+        return data;
     } catch (error) {
         console.error("Error al obtener plantillas rivales:", error.response ? error.response.data : error.message);
         return null;

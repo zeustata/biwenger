@@ -142,13 +142,15 @@ async function ejecutarAgente() {
     registrarAccion("📊", `Necesidades detectadas: PT:${necesidades.PT} DF:${necesidades.DF} MC:${necesidades.MC} DL:${necesidades.DL}`);
     
     // MODO DETECTIVE: Analizar rivales y pujas
+    const dbJugadores = await obtenerBaseDatosJugadores();
+
     const datosLiga = await obtenerPlantillasRivales();
     let expedienteRivales = [];
     if (datosLiga && datosLiga.standings) {
-        expedienteRivales = analizarRivales(datosLiga.standings);
+        expedienteRivales = analizarRivales(datosLiga.standings, dbJugadores, process.env.BIWENGER_USER_ID);
+        registrarAccion("🕵️", `Expediente de Liga: Investigados ${expedienteRivales.length} mánagers rivales.`);
     }
 
-    const dbJugadores = await obtenerBaseDatosJugadores();
     const alertasMedicas = dbJugadores ? generarParteMedico(estado.players || [], dbJugadores) : [];
     if (alertasMedicas.length > 0) {
         registrarAccion("🏥", `Parte Médico: ¡Atención! Tienes ${alertasMedicas.length} alertas en tu equipo.`);
