@@ -6,18 +6,27 @@
 function aplicarGuardiaReglas(plantilla, ventasRecomendadas, recomMercado = []) {
     if (!plantilla || !Array.isArray(plantilla)) return ventasRecomendadas;
 
-    const porteros = plantilla.filter(j => (j.position === 1 || j.posicion === 1));
-    const porterosEnMercado = recomMercado.filter(m => m.posicion === 1 || (m.jugadorObj && m.jugadorObj.position === 1));
+    const conteo = { PT: 0, DF: 0, MC: 0, DL: 0 };
+    plantilla.forEach(j => {
+        const pos = j.position || j.posicion;
+        if (pos === 1) conteo.PT++;
+        if (pos === 2) conteo.DF++;
+        if (pos === 3) conteo.MC++;
+        if (pos === 4) conteo.DL++;
+    });
 
     const ventasFiltradas = [];
 
     ventasRecomendadas.forEach(v => {
-        const idVenta = v.id || v.nombre;
-        const esPortero = porteros.some(p => p.name === v.nombre || p.id === v.id);
+        const pos = v.posicion || (v.jugadorObj ? v.jugadorObj.position : 0);
+        // Mínimos para evitar casillas vacías en cualquier formación
+        const esUltimoPT = (pos === 1 || v.posicionStr === 'PT') && conteo.PT <= 1;
+        const esCriticoDF = (pos === 2 || v.posicionStr === 'DF') && conteo.DF <= 3;
+        const esCriticoMC = (pos === 3 || v.posicionStr === 'MC') && conteo.MC <= 3;
+        const esCriticoDL = (pos === 4 || v.posicionStr === 'DL') && conteo.DL <= 1;
 
-        if (esPortero && porteros.length <= 1 && porterosEnMercado.length === 0) {
-            // BLOQUEO POR REGLA DE BIWENGER: No vender al único portero sin recambio
-            console.log(`🛡️ Guardián de Reglas: Bloqueada la venta de ${v.nombre} (Es tu único portero. Venderlo causaría -4 pts de penalización en la jornada).`);
+        if (esUltimoPT || (conteo.PT + conteo.DF + conteo.MC + conteo.DL - 1 < 11)) {
+            console.log(`🛡️ Guardián de Reglas: Bloqueada la venta de ${v.nombre} (Protección anti-casilla vacía: venderlo causaría penalización de -4 pts).`);
         } else {
             ventasFiltradas.push(v);
         }
@@ -27,31 +36,62 @@ function aplicarGuardiaReglas(plantilla, ventasRecomendadas, recomMercado = []) 
 }
 
 function verificarUnicoPortero(plantilla, dbJugadores = {}) {
+    return evaluarCoberturaCasillas(plantilla, dbJugadores);
+}
+
+/**
+ * Evalúa si hay casillas vacías en la alineación que provoquen la penalización de -4 puntos por hueco.
+ */
+function evaluarCoberturaCasillas(plantilla, dbJugadores = {}) {
     if (!plantilla || !Array.isArray(plantilla)) return null;
 
-    const porteros = plantilla.map(j => {
+    const conteo = { PT: 0, DF: 0, MC: 0, DL: 0 };
+
+    plantilla.forEach(j => {
         const id = typeof j === 'object' ? j.id : j;
-        return dbJugadores[id] || (typeof j === 'object' ? j : null);
-    }).filter(j => j && (j.position === 1 || j.posicion === 1));
+        const pObj = dbJugadores[id] || (typeof j === 'object' ? j : null);
+        const pos = pObj ? (pObj.position || pObj.posicion) : 0;
+        if (pos === 1) conteo.PT++;
+        if (pos === 2) conteo.DF++;
+        if (pos === 3) conteo.MC++;
+        if (pos === 4) conteo.DL++;
+    });
 
-    if (porteros.length === 1) {
+    const totalJugadores = conteo.PT + conteo.DF + conteo.MC + conteo.DL;
+    let alertas = [];
+    let huecosVacios = 0;
+
+    if (conteo.PT === 0) {
+        alertas.push("🧤 <strong>Portería (PT):</strong> 0 porteros (1 casilla vacía = -4 pts).");
+        huecosVacios++;
+    }
+
+    if (totalJugadores < 11) {
+        const faltantes = 11 - totalJugadores;
+        huecosVacios += faltantes;
+        alertas.push(`🚨 <strong>Plantilla Corta:</strong> Tienes solo ${totalJugadores}/11 jugadores. Dejarás ${faltantes} casilla(s) vacía(s) = -${faltantes * 4} pts de penalización.`);
+    }
+
+    if (huecosVacios > 0) {
         return {
-            nombre: porteros[0].name || 'Tu portero',
-            mensaje: `🧤 <strong>${porteros[0].name || 'Tu portero'}</strong> es tu ÚNICO portero. Está protegido por la regla anti-penalización (-4 pts por hueco vacío).`
+            estado: '🚨 ALERTA CASILLA VACÍA (-4 PTS)',
+            huecosVacios,
+            penalizacionTotal: huecosVacios * -4,
+            mensaje: `¡Cuidado! Tienes <strong>${huecosVacios} casilla(s) vacía(s)</strong> en tu alineación. Sufrirás una penalización de <strong>${huecosVacios * -4} puntos</strong> si no fichas para rellenar los huecos.`,
+            detalles: alertas
         };
     }
 
-    if (porteros.length === 0) {
-        return {
-            nombre: 'Ninguno',
-            mensaje: `🚨 <strong>¡ALERTA CRÍTICA!</strong> No tienes NINGÚN portero en plantilla. Sufrirás -4 PUNTOS DE PENALIZACIÓN si no fichas un portero urgente.`
-        };
-    }
-
-    return null;
+    return {
+        estado: '✅ 11 COMPLETO SIN CASILLAS VACÍAS',
+        huecosVacios: 0,
+        penalizacionTotal: 0,
+        mensaje: `Tienes suficientes jugadores (${totalJugadores}/11) para cubrir todas las casillas y evitar penalizaciones de -4 pts.`
+    };
 }
 
 module.exports = {
     aplicarGuardiaReglas,
-    verificarUnicoPortero
+    verificarUnicoPortero,
+    evaluarCoberturaCasillas
 };
