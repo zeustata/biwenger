@@ -206,36 +206,48 @@ function obtenerTitularidadJugador(nombreJugador, datosFF, dbJugador = null) {
     }
 
     // 1. Verificar bajas en DB oficial
-    if (dbJugador && dbJugador.status === 'injured') {
+    if (dbJugador && (dbJugador.status === 'injured' || dbJugador.fitnessStatus === 'injured')) {
         return { titularidad: 0, badge: 'badge-danger', label: '🔴 Lesionado 0% FF' };
     }
-    if (dbJugador && dbJugador.status === 'suspended') {
+    if (dbJugador && (dbJugador.status === 'suspended' || dbJugador.fitnessStatus === 'suspended')) {
         return { titularidad: 0, badge: 'badge-danger', label: '🔴 Sancionado 0% FF' };
     }
 
     // 2. Buscar en FútbolFantasy con motor de coincidencia flexible
     const infoFF = buscarJugadorEnFF(nombreJugador, datosFF);
 
-    if (infoFF) {
-        if (infoFF.estado === 'lesionado') {
-            return { titularidad: 0, badge: 'badge-danger', label: '🔴 Lesionado 0% FF' };
-        }
-        const prob = infoFF.titularidad || 90;
+    if (infoFF && infoFF.estado === 'lesionado') {
+        return { titularidad: 0, badge: 'badge-danger', label: '🔴 Lesionado 0% FF' };
+    }
+
+    // 3. Evaluar por perfil real de jugador (precio, media y puntos proyectados)
+    const precio = dbJugador ? (dbJugador.price || dbJugador.precio || 0) : 0;
+    const media = dbJugador ? (dbJugador.average || dbJugador.puntosMedia || 0) : 0;
+
+    // Si es un parche de bajo coste (<800k) o sin apenas puntos (media < 1.8), en LaLiga suele ser suplente habitual
+    if (precio > 0 && precio < 800000 && media < 2.0) {
+        return { titularidad: 30, badge: 'badge-danger', label: '🔴 Suplente 30% FF' };
+    }
+
+    // Si es un jugador de rotación intermedia (entre 800k y 2.5M o media entre 2.0 y 3.8)
+    if ((precio >= 800000 && precio < 2500000) || (media >= 2.0 && media < 3.8)) {
+        return { titularidad: 65, badge: 'badge-warning', label: '🟡 Rotación 65% FF' };
+    }
+
+    // Si es un titular consolidado (>2.5M o media >= 3.8)
+    if (precio >= 2500000 || media >= 3.8) {
+        return { titularidad: 90, badge: 'badge-emerald', label: '🟢 Titular 90% FF' };
+    }
+
+    // Si figura en alineación probable de FF
+    if (infoFF && infoFF.titularidad) {
+        const prob = infoFF.titularidad;
         if (prob >= 80) return { titularidad: prob, badge: 'badge-emerald', label: `🟢 Titular ${prob}% FF` };
         if (prob >= 50) return { titularidad: prob, badge: 'badge-warning', label: `🟡 Rotación ${prob}% FF` };
         return { titularidad: prob, badge: 'badge-danger', label: `🔴 Duda ${prob}% FF` };
     }
 
-    // 3. Evaluación inteligente por perfil de jugador si no figura en los 11 titulares
-    if (dbJugador) {
-        const precio = dbJugador.price || 0;
-        const media = dbJugador.average || 0;
-        if (precio < 400000 || media < 2.0) {
-            return { titularidad: 40, badge: 'badge-warning', label: '🟡 Rotación 40% FF' };
-        }
-    }
-
-    return { titularidad: 85, badge: 'badge-emerald', label: '🟢 Titular 85% FF' };
+    return { titularidad: 60, badge: 'badge-warning', label: '🟡 Rotación 60% FF' };
 }
 
 function obtenerDatosFallback() {
