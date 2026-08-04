@@ -130,7 +130,9 @@ async function ejecutarAgente() {
         return;
     }
     
-    registrarAccion("🛒", `Analizando ${mercado.sales.length} jugadores en el mercado hoy.`);
+    const ventasComputer = mercado.sales.filter(v => v.user === null || v.user === undefined).length;
+    const ventasRivales = mercado.sales.filter(v => v.user !== null && v.user !== undefined).length;
+    registrarAccion("🛒", `Analizando el mercado: ${ventasComputer} libres del computer y ${ventasRivales} a la venta por rivales.`);
     
     // 3. Lógica de pujas (Asesoramiento)
     const necesidades = detectarNecesidadesPlantilla(estado.team || []);
@@ -344,20 +346,42 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
     let htmlMercado = '';
     if (recomMercado.length > 0) {
+        const recomComputer = recomMercado.filter(m => !m.clausula);
+        const recomRivales = recomMercado.filter(m => m.clausula);
+
+        let htmlCards = '';
+        
+        if (recomComputer.length > 0) {
+            htmlCards += `<h3 style="color: #60a5fa; margin-top: 15px;">🤖 Mercado Libre (Computer)</h3><div class="grid-cards">`;
+            htmlCards += recomComputer.map(m => `
+                <div class="card buy-card">
+                    <div class="card-title">${m.nombre}</div>
+                    <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
+                    <div class="card-bid">Puja Sugerida:<br>${formatoEuro(m.puja)}</div>
+                    ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
+                </div>
+            `).join('');
+            htmlCards += `</div>`;
+        }
+
+        if (recomRivales.length > 0) {
+            htmlCards += `<h3 style="color: #f472b6; margin-top: 25px;">🏃‍♂️ En Venta por Rivales</h3><div class="grid-cards">`;
+            htmlCards += recomRivales.map(m => `
+                <div class="card buy-card" style="border-left: 3px solid #f472b6;">
+                    <div class="card-title">${m.nombre}</div>
+                    <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
+                    <div class="card-bid">Pagarás aprox:<br>${formatoEuro(m.puja)}</div>
+                    ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
+                </div>
+            `).join('');
+            htmlCards += `</div>`;
+        }
+
         htmlMercado = `
         <div class="section-card market">
-            <h2>🎯 Recomendaciones de Fichajes</h2>
-            <p>El algoritmo ha detectado estos jugadores interesantes en el mercado hoy:</p>
-            <div class="grid-cards">
-                ${recomMercado.map(m => `
-                    <div class="card buy-card">
-                        <div class="card-title">${m.nombre} ${m.clausula ? '🏷️ (Cláusula)' : ''}</div>
-                        <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
-                        <div class="card-bid">Puja Sugerida:<br>${formatoEuro(m.puja)}</div>
-                        ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
-                    </div>
-                `).join('')}
-            </div>
+            <h2>🎯 Recomendaciones de Mercado</h2>
+            <p>El algoritmo ha detectado estos jugadores rentables a la venta hoy:</p>
+            ${htmlCards}
         </div>`;
     } else {
         htmlMercado = `
