@@ -96,7 +96,153 @@ function evaluarJugador(jugador, esClausula = false, necesidades = {}, saldoDisp
     return false;
 }
 
+/**
+ * Evalúa la plantilla inicial asignada al usuario antes de que empiece la liga.
+ * Clasifica a los jugadores en: 'mantener' (clave), 'vender' (descartes) y 'duda' (observar).
+ */
+function evaluarPlantillaInicial(plantilla) {
+    const analisis = {
+        mantener: [],
+        vender: [],
+        duda: []
+    };
+
+    if (!plantilla || plantilla.length === 0) return analisis;
+
+    plantilla.forEach(jugador => {
+        // En pretemporada valoramos: Titularidad (status='ok'), Valor (price), Tendencia (priceIncrement)
+        const lesionado = jugador.status === 'injured' || jugador.status === 'doubt' || jugador.status === 'suspended';
+        const tendenciaAlcista = jugador.priceIncrement > 20000;
+        const tendenciaBajista = jugador.priceIncrement < -20000;
+        const jugadorClave = jugador.average > 4.5; // o precio muy alto
+        
+        let decision = 'duda';
+        let motivo = '';
+
+        if (lesionado) {
+            decision = 'vender';
+            motivo = 'No disponible (lesión/sanción). Mejor hacer caja.';
+        } else if (tendenciaBajista && !jugadorClave) {
+            decision = 'vender';
+            motivo = 'Bajando de valor. Vender antes de perder dinero.';
+        } else if (jugadorClave || jugador.price > 6000000) {
+            decision = 'mantener';
+            motivo = 'Jugador Top o muy caro. Base de tu equipo titular.';
+        } else if (tendenciaAlcista) {
+            decision = 'mantener';
+            motivo = 'Subiendo de valor. Especula con él.';
+        } else if (jugador.price < 500000) {
+            decision = 'duda';
+            motivo = 'Parche de bajo coste. Puedes usarlo para rellenar.';
+        } else {
+            decision = 'vender';
+            motivo = 'Rendimiento mediocre. Vender para reinvertir en el mercado.';
+        }
+
+        analisis[decision].push({
+            nombre: jugador.name,
+            precio: jugador.price,
+            incremento: jugador.priceIncrement,
+            motivo: motivo
+        });
+    });
+
+    // Ordenar por precio
+    analisis.mantener.sort((a, b) => b.precio - a.precio);
+    analisis.vender.sort((a, b) => b.precio - a.precio);
+    analisis.duda.sort((a, b) => b.precio - a.precio);
+
+    return analisis;
+}
+
+/**
+ * Analiza las plantillas de los rivales para el Expediente.
+ * Devuelve un array de rivales y sus "urgencias" (posiciones que necesitan fichar urgentemente).
+ */
+function analizarRivales(standings) {
+    const expediente = [];
+    if (!standings || !Array.isArray(standings)) return expediente;
+    
+    standings.forEach(rival => {
+        // Si hay array de equipo
+        if (rival.team && Array.isArray(rival.team)) {
+            const necesidades = detectarNecesidadesPlantilla(rival.team);
+            let urgencias = [];
+            // Si le falta un PT o DL, es crítico. Si le faltan muchos DF o MC también.
+            if (necesidades.PT > 0) urgencias.push('PT');
+            if (necesidades.DF > 1) urgencias.push('DF'); 
+            if (necesidades.MC > 1) urgencias.push('MC');
+            if (necesidades.DL > 0) urgencias.push('DL');
+            
+            if (urgencias.length > 0) {
+                expediente.push({
+                    id: rival.id || 'N/A',
+                    nombre: rival.name || 'Rival Desconocido',
+                    valor: rival.teamValue || 0,
+                    urgencias: urgencias,
+                    necesidadesRaw: necesidades
+                });
+            }
+        }
+    });
+    
+    // Ordenar por valor de equipo (rivales más fuertes arriba)
+    expediente.sort((a, b) => (b.valor || 0) - (a.valor || 0));
+    return expediente;
+}
+
+/**
+ * Analiza el historial de pujas del tablón y actualiza las estadísticas de los rivales.
+ */
+function calcularPerfilPujador(movimientos, statsAntiguas = {}) {
+    const stats = { ...statsAntiguas };
+    
+    if (!movimientos || !Array.isArray(movimientos)) return stats;
+    
+    movimientos.forEach(evento => {
+        // Buscamos eventos de fichaje
+        if (evento.type === 'transfer' && Array.isArray(evento.content)) {
+            evento.content.forEach(transfer => {
+                const idComprador = transfer.to ? transfer.to.id : null;
+                const pagado = transfer.amount;
+                
+                if (idComprador && pagado) {
+                    if (!stats[idComprador]) {
+                        stats[idComprador] = {
+                            nombre: transfer.to.name || 'Desconocido',
+                            pujaMaxima: 0,
+                            fichajesAnalizados: 0,
+                            sobrepujaAcumulada: 0,
+                            sobrepujaMedia: 0
+                        };
+                    }
+                    
+                    const perfil = stats[idComprador];
+                    
+                    if (pagado > perfil.pujaMaxima) {
+                        perfil.pujaMaxima = pagado;
+                    }
+                    
+                    const valorMercado = transfer.player && transfer.player.price ? transfer.player.price : null;
+                    
+                    if (valorMercado && pagado >= valorMercado) {
+                        const sobrepuja = (pagado - valorMercado) / valorMercado;
+                        perfil.sobrepujaAcumulada += sobrepuja;
+                        perfil.fichajesAnalizados += 1;
+                        perfil.sobrepujaMedia = perfil.sobrepujaAcumulada / perfil.fichajesAnalizados;
+                    }
+                }
+            });
+        }
+    });
+    
+    return stats;
+}
+
 module.exports = {
     detectarNecesidadesPlantilla,
-    evaluarJugador
+    evaluarJugador,
+    evaluarPlantillaInicial,
+    analizarRivales,
+    calcularPerfilPujador
 };
