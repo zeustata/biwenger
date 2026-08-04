@@ -4,9 +4,10 @@ const {
     obtenerOfertas,
     obtenerInicioProximaJornada,
     obtenerPlantillasRivales,
-    obtenerUltimosMovimientos
+    obtenerUltimosMovimientos,
+    obtenerBaseDatosJugadores
 } = require('./api');
-const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador } = require('./analista');
+const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos } = require('./analista');
 
 const fs = require('fs');
 const path = require('path');
@@ -40,7 +41,7 @@ async function ejecutarAgente() {
     const estado = await obtenerEstadoEquipo();
     if (!estado) {
         registrarAccion("❌", "No se ha podido conectar. Revisa el Token en el archivo .env o en los Secrets.");
-        generarHTML(registroAcciones, 0, 0, recomendacionesMercado, recomendacionesVenta, null);
+        generarHTML(registroAcciones, 0, 0, recomendacionesMercado, recomendacionesVenta, null, [], 0, 999, []);
         return;
     }
     
@@ -62,7 +63,7 @@ async function ejecutarAgente() {
     if (modoPretemporada) {
         const analisisPretemporada = evaluarPlantillaInicial(estado.players || []);
         registrarAccion("✅", `Análisis de pretemporada completado. Se han detectado ${analisisPretemporada.vender.length} descartes claros.`);
-        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, [], jugadoresEnPlantilla);
+        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, [], jugadoresEnPlantilla, 999, []);
         return;
     }
 
@@ -125,7 +126,7 @@ async function ejecutarAgente() {
     const mercado = await obtenerMercado();
     if (!mercado || !mercado.sales) {
         registrarAccion("❌", "No se ha podido leer el mercado.");
-        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, [], jugadoresEnPlantilla);
+        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, [], jugadoresEnPlantilla, 999, []);
         return;
     }
     
@@ -140,6 +141,17 @@ async function ejecutarAgente() {
     let expedienteRivales = [];
     if (datosLiga && datosLiga.standings) {
         expedienteRivales = analizarRivales(datosLiga.standings);
+    }
+
+    const dbJugadores = await obtenerBaseDatosJugadores();
+    let robosSugeridos = [];
+    
+    // Si tenemos necesidades y hemos cargado la DB
+    if (dbJugadores && (necesidades.PT > 0 || necesidades.DF > 0 || necesidades.MC > 0 || necesidades.DL > 0)) {
+        robosSugeridos = buscarMejoresClausulazos(necesidades, expedienteRivales, dbJugadores, saldoActual, valorEquipo);
+        if (robosSugeridos.length > 0) {
+            registrarAccion("🥷", `Modo Robos activado: Se han encontrado ${robosSugeridos.length} opciones interesantes en plantillas rivales.`);
+        }
     }
 
     const dirDocs = path.join(__dirname, '..', 'docs');
@@ -272,10 +284,10 @@ async function ejecutarAgente() {
     }
     
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = []) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -352,6 +364,26 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         <div class="section-card neutral">
             <h2>🤷‍♂️ Sin Objetivos en el Mercado</h2>
             <p>Hoy no hay ningún jugador en el mercado que encaje con tus necesidades o presupuesto.</p>
+        </div>`;
+    }
+
+    let htmlRobos = '';
+    if (robosSugeridos && robosSugeridos.length > 0) {
+        htmlRobos = `
+        <div class="section-card" style="border-top-color: #8b5cf6; background: rgba(139, 92, 246, 0.05);">
+            <h2>🥷 Robos Tácticos Sugeridos (Clausulazos)</h2>
+            <p>El Asesor ha escaneado a tus rivales y te recomienda estos "robos" para cubrir tus posiciones urgentes:</p>
+            <div class="grid-cards">
+                ${robosSugeridos.map(r => `
+                    <div class="card buy-card" style="border-left: 3px solid #8b5cf6;">
+                        <div class="card-title">${r.nombre} <span style="font-size: 0.8rem; background: #475569; padding: 2px 6px; border-radius: 8px;">${r.posicion}</span></div>
+                        <div class="card-detail">Pertenece a: <strong>${r.dueño}</strong></div>
+                        <div class="card-detail" style="margin-top: 5px;">Media: ⭐ ${r.mediaPuntos} pts</div>
+                        <div class="card-bid" style="margin-top: 10px;">Valor aprox.:<br>${formatoEuro(r.precioMercado)}</div>
+                        <div class="card-alert" style="margin-top: 10px; background: rgba(139, 92, 246, 0.1); color: #c4b5fd;">Alta rentabilidad. Verifica su cláusula real en la app.</div>
+                    </div>
+                `).join('')}
+            </div>
         </div>`;
     }
 
@@ -568,6 +600,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         ${htmlPretemporada}
         ${htmlVentas}
         ${htmlMercado}
+        ${htmlRobos}
         ${htmlDetective}
 
         <div class="logs-section">

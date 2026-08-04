@@ -152,6 +152,17 @@ async function obtenerUltimosMovimientos() {
     }
 }
 
+// Función para obtener la base de datos de jugadores completa
+async function obtenerBaseDatosJugadores() {
+    try {
+        const response = await biwengerApi.get('/competitions/la-liga/data?lang=es&score=5');
+        return response.data.data.players;
+    } catch (error) {
+        console.error("Error al obtener la base de datos de jugadores:", error.message);
+        return null;
+    }
+}
+
 // Exportamos las funciones para usarlas en el agente
 module.exports = {
     obtenerEstadoEquipo,
@@ -162,5 +173,6 @@ module.exports = {
     obtenerOfertas,
     aceptarOferta,
     obtenerInicioProximaJornada,
-    obtenerUltimosMovimientos
+    obtenerUltimosMovimientos,
+    obtenerBaseDatosJugadores
 };

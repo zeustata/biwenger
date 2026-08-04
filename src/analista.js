@@ -239,10 +239,64 @@ function calcularPerfilPujador(movimientos, statsAntiguas = {}) {
     return stats;
 }
 
+/**
+ * Busca los mejores jugadores en los equipos rivales para robar mediante pago de cláusula,
+ * centrándose solo en las posiciones que urgen al usuario.
+ */
+function buscarMejoresClausulazos(urgencias, rivales, dbJugadores, saldoDisponible, valorEquipo) {
+    const robos = [];
+    if (!urgencias || !rivales || !dbJugadores) return robos;
+
+    const limiteGasto = saldoDisponible + (valorEquipo * 0.20); // 20% del valor del equipo como riesgo máximo
+
+    rivales.forEach(rival => {
+        if (!rival.team || !Array.isArray(rival.team)) return;
+
+        rival.team.forEach(jugador => {
+            const id = typeof jugador === 'object' ? jugador.id : jugador;
+            const jDatos = dbJugadores[id];
+            
+            if (jDatos) {
+                let posString = '';
+                if (jDatos.position === 1) posString = 'PT';
+                else if (jDatos.position === 2) posString = 'DF';
+                else if (jDatos.position === 3) posString = 'MC';
+                else if (jDatos.position === 4) posString = 'DL';
+
+                // Si esta posición nos urge (urgencias[posString] > 0)
+                if (urgencias[posString] > 0) {
+                    const lesionado = jDatos.status === 'injured' || jDatos.status === 'doubt' || jDatos.status === 'suspended';
+                    const juegaHabitualmente = jDatos.average > 3.0; // Solo titulares o gente que puntúa bien
+
+                    if (!lesionado && juegaHabitualmente && jDatos.price <= limiteGasto) {
+                        const rentabilidad = jDatos.average / (jDatos.price / 1000000); // Puntos por millón
+                        
+                        robos.push({
+                            id: jDatos.id,
+                            nombre: jDatos.name,
+                            posicion: posString,
+                            dueño: rival.nombre,
+                            precioMercado: jDatos.price,
+                            mediaPuntos: jDatos.average,
+                            rentabilidad: rentabilidad
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+    // Ordenamos de mayor a menor rentabilidad
+    robos.sort((a, b) => b.rentabilidad - a.rentabilidad);
+    // Devolvemos el top 5 de opciones recomendadas
+    return robos.slice(0, 5);
+}
+
 module.exports = {
     detectarNecesidadesPlantilla,
     evaluarJugador,
     evaluarPlantillaInicial,
     analizarRivales,
-    calcularPerfilPujador
+    calcularPerfilPujador,
+    buscarMejoresClausulazos
 };
