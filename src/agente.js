@@ -331,10 +331,10 @@ async function ejecutarAgente() {
     const horasCuentaAtras = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
 
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras, estado.players || [], saludPorteria);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras, estado.players || [], saludPorteria, datosFF);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0, plantillaUsuario = [], saludPorteria = null) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0, plantillaUsuario = [], saludPorteria = null, datosFF = null) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -573,13 +573,15 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 </div>` : ''}
             </div>
             <div class="grid-cards">
-                ${analisisOnce.onceTitular.map(j => `
+                ${analisisOnce.onceTitular.map(j => {
+                    const infoFF = obtenerTitularidadJugador(j.nombre, datosFF);
+                    return `
                     <div class="card" style="border-left: 3px solid #f59e0b;">
-                        <div class="card-title">${j.nombre} ${j.id === (analisisOnce.capitan ? analisisOnce.capitan.id : null) ? '🌟 (Capitán)' : ''} ${j.id === (analisisOnce.ariete ? analisisOnce.ariete.id : null) ? '🎯 (Ariete)' : ''}</div>
+                        <div class="card-title">${j.nombre} ${j.id === (analisisOnce.capitan ? analisisOnce.capitan.id : null) ? '🌟 (Capitán)' : ''} ${j.id === (analisisOnce.ariete ? analisisOnce.ariete.id : null) ? '🎯 (Ariete)' : ''} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
                         <div class="card-detail">Posición: ${j.posicion === 1 ? '🧤 Portero' : j.posicion === 2 ? '🛡️ Defensa' : j.posicion === 3 ? '⚙️ Medio' : '⚽ Delantero'}</div>
                         <div style="margin-top: 5px; color: #f59e0b; font-weight: bold;">Expectativa: ~${j.puntosMedia} pts</div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
         </div>`;
     }
@@ -589,18 +591,20 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         htmlTrading = `
         <div class="section-card" style="border-top-color: #10b981; background: rgba(16, 185, 129, 0.03);">
             <h2>🚀 Mercado de Especulación Rápida (Trading)</h2>
-            <p>Jugadores en subida libre recomendados estrictamente para ganar dinero limpio en 3-4 días:</p>
+            <p>Jugadores en subida libre recomendados strictly para ganar dinero limpio en 3-4 días:</p>
             <div class="grid-cards">
-                ${oportunidadesTrading.map(t => `
+                ${oportunidadesTrading.map(t => {
+                    const infoFF = obtenerTitularidadJugador(t.nombre, datosFF);
+                    return `
                     <div class="card" style="border-left: 3px solid #10b981;">
-                        <div class="card-title" style="color: #34d399;">${t.nombre}</div>
+                        <div class="card-title" style="color: #34d399;">${t.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
                         <div class="card-detail">Valor: ${formatoEuro(t.precio)}</div>
                         <div style="color: #a7f3d0; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(t.subidaDiaria/1000).toFixed(0)}k€/día</div>
                         <div class="card-alert" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px; font-size: 0.85rem;">
                             ${t.recomendacion}
                         </div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
         </div>`;
     }
