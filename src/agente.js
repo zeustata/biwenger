@@ -291,10 +291,10 @@ async function ejecutarAgente() {
     }
     
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = []) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -522,14 +522,24 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 <h2>📰 Últimos Movimientos de la Liga</h2>
                 <p>El mercado se mueve. Estos han sido los últimos fichajes de tus rivales:</p>
                 <div class="grid-cards">
-                    ${fichajes.slice(0, 10).map(f => `
+                    ${fichajes.slice(0, 10).map(f => {
+                        const idJugador = typeof f.player === 'object' ? f.player.id : f.player;
+                        const nombreJugador = dbJugadores && dbJugadores[idJugador] ? dbJugadores[idJugador].name : 'Jugador Desconocido';
+                        const vendedor = f.from ? f.from.name : 'Computer';
+                        const comprador = f.to ? f.to.name : 'Computer';
+                        const esVenta = vendedor !== 'Computer' && comprador === 'Computer';
+                        const accionStr = esVenta ? 'Ha vendido a:' : 'Ha fichado a:';
+                        const usuarioDestacado = esVenta ? vendedor : comprador;
+                        
+                        return `
                         <div class="card" style="background: rgba(59, 130, 246, 0.05);">
-                            <div style="color: #94a3b8; font-size: 0.85rem;">Ha fichado a:</div>
-                            <div class="card-title" style="color: #60a5fa;">${f.player ? f.player.name : 'Jugador'}</div>
-                            <div class="card-detail">Comprador: <strong>${f.to ? f.to.name : 'Computer'}</strong></div>
+                            <div style="color: #94a3b8; font-size: 0.85rem;"><strong>${usuarioDestacado}</strong> ${accionStr.toLowerCase()}</div>
+                            <div class="card-title" style="color: #60a5fa;">${nombreJugador}</div>
+                            <div class="card-detail">De: ${vendedor} ➡️ Para: ${comprador}</div>
                             <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: ${formatoEuro(f.amount)}</div>
                         </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             </div>`;
         }
