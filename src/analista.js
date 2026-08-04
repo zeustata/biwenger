@@ -259,10 +259,23 @@ function buscarMejoresClausulazos(urgencias, rivales, dbJugadores, saldoDisponib
     const robos = [];
     if (!urgencias || !rivales || !dbJugadores) return robos;
 
-    const limiteGasto = saldoDisponible + (valorEquipo * 0.20); // 20% del valor del equipo como riesgo máximo
+    const limiteGasto = saldoDisponible + (valorEquipo * 0.25); // 25% del valor del equipo como riesgo máximo
 
     rivales.forEach(rival => {
         if (!rival.team || !Array.isArray(rival.team)) return;
+
+        // Mapear plantilla del rival para contar sustitutos por posición
+        const jugRivalSustitutos = { PT: 0, DF: 0, MC: 0, DL: 0 };
+        rival.team.forEach(j => {
+            const idJ = typeof j === 'object' ? j.id : j;
+            const dJ = dbJugadores[idJ];
+            if (dJ && dJ.status === 'ok') {
+                if (dJ.position === 1) jugRivalSustitutos.PT++;
+                else if (dJ.position === 2) jugRivalSustitutos.DF++;
+                else if (dJ.position === 3) jugRivalSustitutos.MC++;
+                else if (dJ.position === 4) jugRivalSustitutos.DL++;
+            }
+        });
 
         rival.team.forEach(jugador => {
             const id = typeof jugador === 'object' ? jugador.id : jugador;
@@ -279,18 +292,45 @@ function buscarMejoresClausulazos(urgencias, rivales, dbJugadores, saldoDisponib
                 if (urgencias[posString] > 0) {
                     const lesionado = jDatos.status === 'injured' || jDatos.status === 'doubt' || jDatos.status === 'suspended';
                     const juegaHabitualmente = jDatos.average > 3.0; // Solo titulares o gente que puntúa bien
+                    const precioClausula = jDatos.clause || (jugador.clause) || Math.round(jDatos.price * 1.5);
 
-                    if (!lesionado && juegaHabitualmente && jDatos.price <= limiteGasto) {
-                        const rentabilidad = jDatos.average / (jDatos.price / 1000000); // Puntos por millón
-                        
+                    if (!lesionado && juegaHabitualmente && precioClausula <= limiteGasto) {
+                        const rentabilidad = jDatos.average / (precioClausula / 1000000); // Puntos por millón de cláusula
+                        const sustitutosEnRival = jugRivalSustitutos[posString] - 1; // Sustitutos restantes tras la baja
+
+                        // Determinar Viabilidad Táctica
+                        let viabilidadLabel = '🟡 MEDIA';
+                        let viabilidadBadge = 'badge-warning';
+                        let motivoViabilidad = 'Rentabilidad estándar.';
+
+                        if (sustitutosEnRival <= 0 && jDatos.average >= 4.0) {
+                            viabilidadLabel = '🟢 ALTA';
+                            viabilidadBadge = 'badge-success';
+                            motivoViabilidad = `🔥 Rival sin recambio en ${posString}. Golpe táctico devastador.`;
+                        } else if (jDatos.average >= 5.0 && rentabilidad >= 1.0) {
+                            viabilidadLabel = '🟢 ALTA';
+                            viabilidadBadge = 'badge-success';
+                            motivoViabilidad = '⭐ Jugador Top en racha con cláusula asequible.';
+                        } else if (precioClausula > saldoDisponible) {
+                            viabilidadLabel = '🔴 ARRIESGADA';
+                            viabilidadBadge = 'badge-danger';
+                            motivoViabilidad = '⚠️ Requiere vender activos para financiar la cláusula.';
+                        }
+
                         robos.push({
                             id: jDatos.id,
                             nombre: jDatos.name,
                             posicion: posString,
                             dueño: rival.nombre,
+                            equipoRival: rival.nombre,
                             precioMercado: jDatos.price,
+                            clausula: precioClausula,
                             mediaPuntos: jDatos.average,
-                            rentabilidad: rentabilidad
+                            rentabilidad: rentabilidad,
+                            sustitutosRival: sustitutosEnRival,
+                            viabilidadLabel: viabilidadLabel,
+                            viabilidadBadge: viabilidadBadge,
+                            motivoViabilidad: motivoViabilidad
                         });
                     }
                 }

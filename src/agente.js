@@ -715,6 +715,69 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>
     </div>`;
 
+    // Conteo de posiciones para gráfico de donut
+    const jugPlantilla = estado && estado.players ? estado.players : [];
+    const plantillaCounts = {
+        PT: jugPlantilla.filter(p => p.position === 1 || p.posicion === 1).length,
+        DF: jugPlantilla.filter(p => p.position === 2 || p.posicion === 2).length,
+        MC: jugPlantilla.filter(p => p.position === 3 || p.posicion === 3).length,
+        DL: jugPlantilla.filter(p => p.position === 4 || p.posicion === 4).length
+    };
+
+    let htmlBuscador = `
+    <div class="search-container" style="margin-bottom: 25px; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); padding: 15px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <span style="font-size: 1.2rem;">🔍</span>
+        <input type="text" id="searchInput" onkeyup="filtrarContenido()" placeholder="Buscar jugador, posición (PT, DF, MC, DL) o rival en vivo..." style="flex: 1; min-width: 250px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 16px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none;">
+        <div style="font-size: 0.8rem; color: #94a3b8; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="filter-chip" onclick="filtrarPosicion('')" style="cursor:pointer; padding: 5px 12px; background: rgba(255,255,255,0.1); border-radius: 8px; font-weight: 600;">Todos</span>
+            <span class="filter-chip" onclick="filtrarPosicion('PT')" style="cursor:pointer; padding: 5px 12px; background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-radius: 8px; font-weight: 600;">🧤 PT</span>
+            <span class="filter-chip" onclick="filtrarPosicion('DF')" style="cursor:pointer; padding: 5px 12px; background: rgba(16, 185, 129, 0.2); color: #34d399; border-radius: 8px; font-weight: 600;">🛡️ DF</span>
+            <span class="filter-chip" onclick="filtrarPosicion('MC')" style="cursor:pointer; padding: 5px 12px; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-radius: 8px; font-weight: 600;">⚙️ MC</span>
+            <span class="filter-chip" onclick="filtrarPosicion('DL')" style="cursor:pointer; padding: 5px 12px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-radius: 8px; font-weight: 600;">⚽ DL</span>
+        </div>
+    </div>`;
+
+    let htmlGraficos = `
+    <div class="section-card" style="border-top-color: #3b82f6; background: rgba(15, 23, 42, 0.4);">
+        <h2 style="display: flex; align-items: center; gap: 10px;">
+            <span>📊</span> Centro de Analítica Visual & Comparativa
+        </h2>
+        <p style="color: #94a3b8;">Visualización interactiva del valor de plantilla de la comunidad y desglose de tu equipo:</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                <h3 style="margin-top: 0; font-size: 1rem; color: #60a5fa; text-align: center;">🏆 Valores de Plantilla de la Liga (€)</h3>
+                <div style="position: relative; height: 260px; width: 100%;">
+                    <canvas id="chartRivales"></canvas>
+                </div>
+            </div>
+            
+            <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                <h3 style="margin-top: 0; font-size: 1rem; color: #34d399; text-align: center;">⚽ Tu Plantilla por Posición</h3>
+                <div style="position: relative; height: 260px; width: 100%;">
+                    <canvas id="chartPlantilla"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+    let htmlCaraACara = `
+    <div class="section-card" style="border-top-color: #a855f7; background: rgba(168, 85, 247, 0.03);">
+        <h2 style="display: flex; align-items: center; gap: 10px; color: #c084fc;">
+            <span>⚔️</span> Comparador Cara a Cara (Head-to-Head)
+        </h2>
+        <p style="color: #94a3b8;">Selecciona a cualquier rival para analizar sus necesidades tácticas, perfil psicológico de sobrepuja y vulnerabilidad:</p>
+        
+        <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+            <label for="selectRival" style="font-weight: bold; color: #e2e8f0;">Rival a Espiar:</label>
+            <select id="selectRival" onchange="actualizarCaraACara()" style="background: #0f172a; color: #a78bfa; border: 1px solid #a855f7; padding: 10px 15px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none; cursor: pointer;">
+            </select>
+        </div>
+        
+        <div id="panelCaraACara" style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 25px; border: 1px solid rgba(168, 85, 247, 0.2);">
+        </div>
+    </div>`;
+
     let listaHTML = registro.map(r => `<li><span class="hora">${r.hora}</span> ${r.texto.replace(/<.*?>/g, '')}</li>`).join('\n');
 
     const htmlContent = `<!DOCTYPE html>
@@ -724,6 +787,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biwenger Advisor</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -787,6 +851,9 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         .badge-emerald { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
         .badge-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .stats-hero {
             display: grid;
@@ -892,7 +959,10 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
         </div>
 
+        ${htmlBuscador}
         ${htmlOrdenesDia}
+        ${htmlGraficos}
+        ${htmlCaraACara}
         ${htmlSalud}
         ${htmlOnce}
         ${htmlTrading}
@@ -913,6 +983,179 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </ul>
         </div>
     </div>
+
+    <script>
+    window.DATA_RIVALES = ${JSON.stringify(expedienteRivales || [])};
+    window.DATA_MI_VALOR = ${valor};
+    window.DATA_PLANTILLA_COUNTS = ${JSON.stringify(plantillaCounts)};
+    window.DATA_ROBOS = ${JSON.stringify(robosSugeridos || [])};
+
+    function formatoEuroJS(num) {
+        return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Chart 1: Rivales vs Tu Equipo
+        const ctxRivales = document.getElementById('chartRivales');
+        if (ctxRivales && window.Chart) {
+            const labels = ['Tu Equipo'].concat(window.DATA_RIVALES.map(function(r) { return r.nombre; }));
+            const dataValues = [window.DATA_MI_VALOR].concat(window.DATA_RIVALES.map(function(r) { return r.valor; }));
+            const bgColors = ['rgba(59, 130, 246, 0.85)'].concat(window.DATA_RIVALES.map(function(_, i) { 
+                return 'hsl(' + (250 + i * 30) + ', 65%, 60%)'; 
+            }));
+            
+            new Chart(ctxRivales, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Valor de Plantilla (€)',
+                        data: dataValues,
+                        backgroundColor: bgColors,
+                        borderRadius: 8,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return 'Valor: ' + formatoEuroJS(context.raw); }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { family: 'Outfit' } }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8', font: { family: 'Outfit' }, callback: function(value) { return (value/1000000).toFixed(1) + 'M€'; } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+        }
+
+        // Chart 2: Donut de Plantilla
+        const ctxPlantilla = document.getElementById('chartPlantilla');
+        if (ctxPlantilla && window.Chart) {
+            const counts = window.DATA_PLANTILLA_COUNTS;
+            new Chart(ctxPlantilla, {
+                type: 'doughnut',
+                data: {
+                    labels: ['🧤 Porteros', '🛡️ Defensas', '⚙️ Medios', '⚽ Delanteros'],
+                    datasets: [{
+                        data: [counts.PT, counts.DF, counts.MC, counts.DL],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { family: 'Outfit' } } }
+                    }
+                }
+            });
+        }
+
+        // 2. Poblar Selector Cara a Cara
+        const select = document.getElementById('selectRival');
+        if (select && window.DATA_RIVALES.length > 0) {
+            select.innerHTML = window.DATA_RIVALES.map(function(r) { return '<option value="' + r.nombre + '">' + r.nombre + '</option>'; }).join('');
+            actualizarCaraACara();
+        } else if (select) {
+            select.innerHTML = '<option>Sin rivales cargados</option>';
+        }
+    });
+
+    function actualizarCaraACara() {
+        const select = document.getElementById('selectRival');
+        const panel = document.getElementById('panelCaraACara');
+        if (!select || !panel) return;
+        
+        const nombreRival = select.value;
+        const rival = window.DATA_RIVALES.find(function(r) { return r.nombre === nombreRival; });
+        if (!rival) {
+            panel.innerHTML = '<div style="color: #94a3b8;">Selecciona un rival válido.</div>';
+            return;
+        }
+
+        const difValor = rival.valor - window.DATA_MI_VALOR;
+        const difStr = difValor > 0 ? ('+' + formatoEuroJS(difValor) + ' respecto a ti') : (formatoEuroJS(difValor) + ' respecto a ti');
+        const robosRival = window.DATA_ROBOS.filter(function(r) { return r.equipoRival === rival.nombre || r.dueño === rival.nombre; });
+
+        let urgenciasHTML = '<span style="color:#34d399; font-size:0.85rem;">Plantilla equilibrada</span>';
+        if (rival.urgencias && rival.urgencias.length > 0) {
+            urgenciasHTML = rival.urgencias.map(function(u) { 
+                return '<span style="display:inline-block; margin-right:5px; background:rgba(239, 68, 68, 0.2); color:#fca5a5; padding:3px 10px; border-radius:12px; font-weight:bold; font-size:0.85rem;">Busca ' + u + '</span>'; 
+            }).join('');
+        }
+
+        let perfilPsico = (rival.statsPuja && rival.statsPuja.perfilPsicologico) ? rival.statsPuja.perfilPsicologico : '⚖️ Conservador / Calculador';
+        let sobrepujaInfo = (rival.statsPuja && rival.statsPuja.sobrepujaMedia) ? ('<div style="font-size: 0.8rem; color: #cbd5e1; margin-top: 2px;">Sobrepuja media: +' + Math.round(rival.statsPuja.sobrepujaMedia * 100) + '%</div>') : '';
+
+        let robosHTML = '<div style="font-size: 0.85rem; color: #94a3b8; font-style: italic;">No hay clausulazos recomendados actualmente contra este rival.</div>';
+        if (robosRival.length > 0) {
+            robosHTML = robosRival.map(function(r) {
+                return '<div style="background: rgba(139, 92, 246, 0.1); border-left: 3px solid #a855f7; padding: 10px 15px; border-radius: 8px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">' +
+                    '<div><strong style="color: #fff;">' + r.nombre + '</strong> (' + r.posicion + ') — Media: ⭐ ' + r.mediaPuntos + '<div style="font-size: 0.8rem; color: #94a3b8;">' + (r.motivoViabilidad || '') + '</div></div>' +
+                    '<div><span style="font-weight: bold; color: #a78bfa;">Cláusula: ' + formatoEuroJS(r.clausula || r.precioMercado) + '</span><span class="badge ' + (r.viabilidadBadge || 'badge-purple') + '" style="margin-left: 8px;">' + (r.viabilidadLabel || '🟡 MEDIA') + '</span></div>' +
+                '</div>';
+            }).join('');
+        }
+
+        panel.innerHTML = 
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">' +
+                '<div>' +
+                    '<div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase;">Valor de Plantilla</div>' +
+                    '<div style="font-size: 1.5rem; font-weight: 800; color: #a78bfa; margin-top: 4px;">' + formatoEuroJS(rival.valor) + '</div>' +
+                    '<div style="font-size: 0.8rem; color: ' + (difValor > 0 ? '#f87171' : '#34d399') + ';">' + difStr + '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase;">Urgencias de Mercado</div>' +
+                    '<div style="margin-top: 8px;">' + urgenciasHTML + '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<div style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase;">Perfil Psicológico de Puja</div>' +
+                    '<div style="font-weight: bold; color: #fbbf24; margin-top: 6px; font-size: 0.95rem;">' + perfilPsico + '</div>' +
+                    sobrepujaInfo +
+                '</div>' +
+            '</div>' +
+            '<div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">' +
+                '<div style="font-size: 0.9rem; font-weight: bold; color: #c084fc; margin-bottom: 8px;">🥷 Vulnerabilidad a Clausulazo en su Equipo:</div>' +
+                robosHTML +
+            '</div>';
+    }
+
+    function filtrarContenido() {
+        const input = document.getElementById('searchInput');
+        const query = input ? input.value.toLowerCase().trim() : '';
+        const cards = document.querySelectorAll('.grid-cards .card');
+
+        cards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            if (!query || text.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function filtrarPosicion(pos) {
+        const input = document.getElementById('searchInput');
+        if (input) {
+            input.value = pos;
+            filtrarContenido();
+        }
+    }
+    </script>
 </body>
 </html>`;
 

@@ -47,7 +47,9 @@ function generarPlanDiario({
     let planClausulas = [];
     if (robosSugeridos.length > 0) {
         robosSugeridos.forEach(r => {
-            planClausulas.push(`🥷 <strong>${r.nombre}</strong> (${r.equipoRival}): Pagar cláusula de <strong>${formatoEuro(r.clausula)}</strong>.`);
+            const viab = r.viabilidadLabel || '🟡 MEDIA';
+            const motivo = r.motivoViabilidad ? ` — <em>${r.motivoViabilidad}</em>` : '';
+            planClausulas.push(`🥷 <strong>${r.nombre}</strong> (${r.equipoRival || r.dueño}): Cláusula de <strong>${formatoEuro(r.clausula || r.precioMercado)}</strong> [Viabilidad: ${viab}]${motivo}`);
         });
     }
 
