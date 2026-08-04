@@ -194,49 +194,56 @@ function analizarRivales(standings) {
 /**
  * Analiza el historial de pujas del tablón y actualiza las estadísticas de los rivales.
  */
-function calcularPerfilPujador(movimientos, statsAntiguas = {}) {
-    const stats = { ...statsAntiguas };
-    
-    if (!movimientos || !Array.isArray(movimientos)) return stats;
-    
-    movimientos.forEach(evento => {
-        // Buscamos eventos de fichaje
-        if (evento.type === 'transfer' && Array.isArray(evento.content)) {
-            evento.content.forEach(transfer => {
-                const idComprador = transfer.to ? transfer.to.id : null;
-                const pagado = transfer.amount;
-                
-                if (idComprador && pagado) {
-                    if (!stats[idComprador]) {
-                        stats[idComprador] = {
-                            nombre: transfer.to.name || 'Desconocido',
-                            pujaMaxima: 0,
+function calcularPerfilPujador(ultimosMovimientos, statsPoderPujador = {}) {
+    const rivalesStats = statsPoderPujador || {};
+
+    if (!ultimosMovimientos || !Array.isArray(ultimosMovimientos)) return rivalesStats;
+
+    ultimosMovimientos.forEach(mov => {
+        if (mov.type === 'transfer' && Array.isArray(mov.content)) {
+            mov.content.forEach(f => {
+                if (f.to && f.to.id) {
+                    const rivalId = f.to.id;
+                    if (!rivalesStats[rivalId]) {
+                        rivalesStats[rivalId] = {
+                            nombre: f.to.name,
                             fichajesAnalizados: 0,
-                            sobrepujaAcumulada: 0,
-                            sobrepujaMedia: 0
+                            sumaSobrepujaRatio: 0,
+                            pujaMaxima: 0,
+                            perfilPsicologico: '⚖️ Conservador / Calculador'
                         };
                     }
+
+                    const stat = rivalesStats[rivalId];
+                    stat.fichajesAnalizados += 1;
                     
-                    const perfil = stats[idComprador];
-                    
-                    if (pagado > perfil.pujaMaxima) {
-                        perfil.pujaMaxima = pagado;
+                    if (f.amount > stat.pujaMaxima) {
+                        stat.pujaMaxima = f.amount;
                     }
-                    
-                    const valorMercado = transfer.player && transfer.player.price ? transfer.player.price : null;
-                    
-                    if (valorMercado && pagado >= valorMercado) {
-                        const sobrepuja = (pagado - valorMercado) / valorMercado;
-                        perfil.sobrepujaAcumulada += sobrepuja;
-                        perfil.fichajesAnalizados += 1;
-                        perfil.sobrepujaMedia = perfil.sobrepujaAcumulada / perfil.fichajesAnalizados;
+
+                    if (f.player && typeof f.player === 'object' && f.player.price) {
+                        const sobrepuja = (f.amount - f.player.price) / f.player.price;
+                        if (sobrepuja > 0) {
+                            stat.sumaSobrepujaRatio += sobrepuja;
+                        }
+                    }
+
+                    const sobrepujaPromedio = stat.fichajesAnalizados > 0 ? (stat.sumaSobrepujaRatio / stat.fichajesAnalizados) : 0;
+                    stat.sobrepujaMedia = sobrepujaPromedio;
+
+                    if (sobrepujaPromedio >= 0.20) {
+                        stat.perfilPsicologico = '🔥 Kamikaze (Sobrepuja Agresiva)';
+                    } else if (stat.fichajesAnalizados >= 5 && sobrepujaPromedio < 0.05) {
+                        stat.perfilPsicologico = '💼 Especulador / Tacaño';
+                    } else {
+                        stat.perfilPsicologico = '⚖️ Conservador / Calculador';
                     }
                 }
             });
         }
     });
-    
-    return stats;
+
+    return rivalesStats;
 }
 
 /**

@@ -2,29 +2,33 @@
   "6537795": {
     "nombre": "Puxaoviedo",
     "pujaMaxima": 1380000,
-    "fichajesAnalizados": 0,
+    "fichajesAnalizados": 1,
     "sobrepujaAcumulada": 0,
-    "sobrepujaMedia": 0
+    "sobrepujaMedia": null,
+    "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "6537829": {
     "nombre": "Viji",
     "pujaMaxima": 300000,
-    "fichajesAnalizados": 0,
+    "fichajesAnalizados": 1,
     "sobrepujaAcumulada": 0,
-    "sobrepujaMedia": 0
+    "sobrepujaMedia": null,
+    "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "9894889": {
     "nombre": "Nadalcarnero FC",
     "pujaMaxima": 7055000,
-    "fichajesAnalizados": 0,
+    "fichajesAnalizados": 2,
     "sobrepujaAcumulada": 0,
-    "sobrepujaMedia": 0
+    "sobrepujaMedia": null,
+    "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "12693423": {
     "nombre": "Montes",
     "pujaMaxima": 6171000,
-    "fichajesAnalizados": 0,
+    "fichajesAnalizados": 1,
     "sobrepujaAcumulada": 0,
-    "sobrepujaMedia": 0
+    "sobrepujaMedia": null,
+    "perfilPsicologico": "⚖️ Conservador / Calculador"
   }
 }

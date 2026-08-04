@@ -8,6 +8,8 @@ const {
     obtenerBaseDatosJugadores
 } = require('./api');
 const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos, generarParteMedico } = require('./analista');
+const { detectarOportunidadesTrading, evaluarActivosToxicos } = require('./especulador');
+const { seleccionarOnceOptimo } = require('./alineador');
 
 const fs = require('fs');
 const path = require('path');
@@ -151,6 +153,19 @@ async function ejecutarAgente() {
         registrarAccion("🏥", `Parte Médico: ¡Atención! Tienes ${alertasMedicas.length} alertas en tu equipo.`);
     }
 
+    // Superagente Especulador (Trading)
+    const oportunidadesTrading = mercado && mercado.sales ? detectarOportunidadesTrading(mercado.sales, dbJugadores) : [];
+    const activosToxicos = evaluarActivosToxicos(estado.players || [], dbJugadores);
+    if (oportunidadesTrading.length > 0) {
+        registrarAccion("🚀", `Superagente Especulador: Detectadas ${oportunidadesTrading.length} oportunidades de trading rápido.`);
+    }
+
+    // Superagente Táctico (Alineación Óptima, Capitán y Ariete)
+    const analisisOnce = seleccionarOnceOptimo(estado.players || [], dbJugadores);
+    if (analisisOnce && analisisOnce.capitan) {
+        registrarAccion("🌟", `Superagente Táctico: 11 Óptimo (${analisisOnce.formacion}) seleccionado. Capitán sugerido: ${analisisOnce.capitan.nombre}.`);
+    }
+
     let robosSugeridos = [];
     
     // Si tenemos necesidades y hemos cargado la DB
@@ -291,10 +306,10 @@ async function ejecutarAgente() {
     }
     
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -512,6 +527,59 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>`;
     }
 
+    let htmlOnce = '';
+    if (analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0) {
+        htmlOnce = `
+        <div class="section-card" style="border-top-color: #f59e0b; background: rgba(245, 158, 11, 0.03);">
+            <h2>👑 11 Titular Sugerido & Elección de Capitán (Formación: ${analisisOnce.formacion})</h2>
+            <p>El Superagente Táctico ha analizado el rendimiento proyectado de tus jugadores disponibles:</p>
+            <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+                ${analisisOnce.capitan ? `
+                <div style="background: rgba(234, 179, 8, 0.15); border: 2px solid #eab308; border-radius: 12px; padding: 15px; flex: 1; min-width: 200px;">
+                    <div style="color: #fef08a; font-size: 0.85rem; font-weight: bold;">🌟 CAPITÁN RECOMENDADO (x2 Puntos)</div>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px;">${analisisOnce.capitan.nombre}</div>
+                    <div style="color: #cbd5e1; font-size: 0.85rem;">Media Proyectada: ${analisisOnce.capitan.puntosMedia} pts/partido</div>
+                </div>` : ''}
+                ${analisisOnce.ariete ? `
+                <div style="background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 12px; padding: 15px; flex: 1; min-width: 200px;">
+                    <div style="color: #fca5a5; font-size: 0.85rem; font-weight: bold;">🎯 ARIETE RECOMENDADO (Goles Extra)</div>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px;">${analisisOnce.ariete.nombre}</div>
+                    <div style="color: #cbd5e1; font-size: 0.85rem;">Media Proyectada: ${analisisOnce.ariete.puntosMedia} pts/partido</div>
+                </div>` : ''}
+            </div>
+            <div class="grid-cards">
+                ${analisisOnce.onceTitular.map(j => `
+                    <div class="card" style="border-left: 3px solid #f59e0b;">
+                        <div class="card-title">${j.nombre} ${j.id === (analisisOnce.capitan ? analisisOnce.capitan.id : null) ? '🌟 (Capitán)' : ''} ${j.id === (analisisOnce.ariete ? analisisOnce.ariete.id : null) ? '🎯 (Ariete)' : ''}</div>
+                        <div class="card-detail">Posición: ${j.posicion === 1 ? '🧤 Portero' : j.posicion === 2 ? '🛡️ Defensa' : j.posicion === 3 ? '⚙️ Medio' : '⚽ Delantero'}</div>
+                        <div style="margin-top: 5px; color: #f59e0b; font-weight: bold;">Expectativa: ~${j.puntosMedia} pts</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+
+    let htmlTrading = '';
+    if (oportunidadesTrading && oportunidadesTrading.length > 0) {
+        htmlTrading = `
+        <div class="section-card" style="border-top-color: #10b981; background: rgba(16, 185, 129, 0.03);">
+            <h2>🚀 Mercado de Especulación Rápida (Trading)</h2>
+            <p>Jugadores en subida libre recomendados estrictamente para ganar dinero limpio en 3-4 días:</p>
+            <div class="grid-cards">
+                ${oportunidadesTrading.map(t => `
+                    <div class="card" style="border-left: 3px solid #10b981;">
+                        <div class="card-title" style="color: #34d399;">${t.nombre}</div>
+                        <div class="card-detail">Valor: ${formatoEuro(t.precio)}</div>
+                        <div style="color: #a7f3d0; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(t.subidaDiaria/1000).toFixed(0)}k€/día</div>
+                        <div class="card-alert" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px; font-size: 0.85rem;">
+                            ${t.recomendacion}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+
     let htmlTablon = '';
     if (movimientos.length > 0) {
         // Filtrar solo los fichajes (transfer)
@@ -685,6 +753,8 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>
 
         ${htmlSalud}
+        ${htmlOnce}
+        ${htmlTrading}
         ${htmlPlantilla}
         ${htmlPretemporada}
         ${htmlVentas}
