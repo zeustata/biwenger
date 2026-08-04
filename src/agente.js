@@ -590,44 +590,63 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>`;
     }
 
-    // Sintetizar Ordenes del Día para el Resumen Ejecutivo
-    const ordenesPujas = recomMercado.map(m => `Puja ${formatoEuro(m.puja)} por <strong>${m.nombre}</strong> (${m.clausula ? 'Cláusula' : 'Mercado Libre'})`);
-    const ordenesVentas = recomVenta.map(v => `Vende a <strong>${v.nombre}</strong> por ${formatoEuro(v.oferta)}`);
-    const ordenesTrading = oportunidadesTrading.map(t => `Compra para trading a <strong>${t.nombre}</strong> (+${(t.subidaDiaria/1000).toFixed(0)}k€/día)`);
-    const ordenesClausulazos = robosSugeridos.map(r => `Paga la cláusula de <strong>${r.nombre}</strong> (${r.equipoRival}) por ${formatoEuro(r.clausula)}`);
-    
-    let ordenesAlineacion = '';
-    if (analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0) {
-        ordenesAlineacion = `Alinea formación <strong>${analisisOnce.formacion}</strong>. Pon Capitán 🌟 a <strong>${analisisOnce.capitan ? analisisOnce.capitan.nombre : 'N/A'}</strong> y Ariete 🎯 a <strong>${analisisOnce.ariete ? analisisOnce.ariete.nombre : 'N/A'}</strong>.`;
-    }
+    // Sintetizar Ordenes del Día para el Resumen Ejecutivo en formato Tarjetas VIP
+    const ordenesPujas = recomMercado.map(m => `<div class="action-item"><strong>${m.nombre}</strong> <span class="badge badge-blue">Puja ${formatoEuro(m.puja)}</span></div>`);
+    const ordenesVentas = recomVenta.map(v => `<div class="action-item"><strong>${v.nombre}</strong> <span class="badge badge-red">Oferta ${formatoEuro(v.oferta)}</span></div>`);
+    const ordenesTrading = oportunidadesTrading.map(t => `<div class="action-item"><strong>${t.nombre}</strong> <span class="badge badge-emerald">+${(t.subidaDiaria/1000).toFixed(0)}k€/día</span></div>`);
+    const ordenesClausulazos = robosSugeridos.map(r => `<div class="action-item"><strong>${r.nombre}</strong> (${r.equipoRival}) <span class="badge badge-purple">${formatoEuro(r.clausula)}</span></div>`);
 
     let htmlOrdenesDia = `
-    <div class="section-card" style="border-top-color: #ec4899; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border: 1px solid rgba(236, 72, 153, 0.3);">
-        <h2 style="color: #f472b6; margin-top: 0;">📋 Órdenes del Día de tus Superagentes</h2>
-        <p style="color: #cbd5e1;">Tu resumen ejecutivo directo al grano para actuar hoy en Biwenger:</p>
-        
-        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-            <li>
-                <strong>🛒 Pujas del Día:</strong> 
-                ${ordenesPujas.length > 0 ? ordenesPujas.join(' · ') : '<span style="color: #94a3b8;">No hace falta pujar por nadie del mercado hoy.</span>'}
-            </li>
-            <li>
-                <strong>🚀 Trading Rápido:</strong> 
-                ${ordenesTrading.length > 0 ? ordenesTrading.join(' · ') : '<span style="color: #94a3b8;">No hace falta comprar activos de trading hoy.</span>'}
-            </li>
-            <li>
-                <strong>💵 Ventas Requeridas:</strong> 
-                ${ordenesVentas.length > 0 ? ordenesVentas.join(' · ') : '<span style="color: #94a3b8;">No hace falta vender a nadie hoy. Cuentas saneadas.</span>'}
-            </li>
-            <li>
-                <strong>🥷 Clausulazos Tácticos:</strong> 
-                ${ordenesClausulazos.length > 0 ? ordenesClausulazos.join(' · ') : '<span style="color: #94a3b8;">No hace falta robar jugadores a ningún rival hoy.</span>'}
-            </li>
-            <li>
-                <strong>⚽ Alineación Recomendada:</strong> 
-                ${ordenesAlineacion ? ordenesAlineacion : '<span style="color: #94a3b8;">No requiere cambios de alineación hoy.</span>'}
-            </li>
-        </ul>
+    <div class="executive-banner">
+        <div class="banner-header">
+            <h2>📋 Órdenes del Día de tus Superagentes</h2>
+            <span class="live-pill">⚡ EN DIRECTO</span>
+        </div>
+        <div class="action-grid">
+            <div class="action-card card-pujas">
+                <div class="action-icon">🛒</div>
+                <div class="action-title">Pujas del Día</div>
+                <div class="action-body">
+                    ${ordenesPujas.length > 0 ? ordenesPujas.join('') : '<div class="action-empty">Sin pujas necesarias hoy</div>'}
+                </div>
+            </div>
+
+            <div class="action-card card-trading">
+                <div class="action-icon">🚀</div>
+                <div class="action-title">Trading Rápido</div>
+                <div class="action-body">
+                    ${ordenesTrading.length > 0 ? ordenesTrading.join('') : '<div class="action-empty">Sin activos de trading hoy</div>'}
+                </div>
+            </div>
+
+            <div class="action-card card-ventas">
+                <div class="action-icon">💵</div>
+                <div class="action-title">Ventas Requeridas</div>
+                <div class="action-body">
+                    ${ordenesVentas.length > 0 ? ordenesVentas.join('') : '<div class="action-empty">Cuentas saneadas ✅</div>'}
+                </div>
+            </div>
+
+            <div class="action-card card-clausulas">
+                <div class="action-icon">🥷</div>
+                <div class="action-title">Clausulazos</div>
+                <div class="action-body">
+                    ${ordenesClausulazos.length > 0 ? ordenesClausulazos.join('') : '<div class="action-empty">Sin robos recomendados hoy</div>'}
+                </div>
+            </div>
+
+            <div class="action-card card-alineacion">
+                <div class="action-icon">⚽</div>
+                <div class="action-title">Alineación & Capitán</div>
+                <div class="action-body">
+                    ${analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0 ? `
+                        <div class="action-item">Formación: <strong>${analisisOnce.formacion}</strong></div>
+                        ${analisisOnce.capitan ? `<div class="action-item">🌟 <strong>${analisisOnce.capitan.nombre}</strong> (Capitán)</div>` : ''}
+                        ${analisisOnce.ariete ? `<div class="action-item">🎯 <strong>${analisisOnce.ariete.nombre}</strong> (Ariete)</div>` : ''}
+                    ` : '<div class="action-empty">Sin cambios de 11 requeridos</div>'}
+                </div>
+            </div>
+        </div>
     </div>`;
 
     let htmlChollos = '';
@@ -701,89 +720,127 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biwenger Advisor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
+            --bg-color: #0b0f19;
             --text-main: #f8fafc;
-            --card-bg: #1e293b;
+            --card-bg: rgba(30, 41, 59, 0.7);
             --accent: #3b82f6;
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
         }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', 'Inter', sans-serif;
             background-color: var(--bg-color);
+            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
             padding: 0;
             line-height: 1.6;
         }
         header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            padding: 50px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        h1 { margin: 0; font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; }
-        .subtitle { font-size: 1.1rem; opacity: 0.9; margin-top: 5px; }
+        h1 { margin: 0; font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { font-size: 1.1rem; color: #94a3b8; margin-top: 8px; font-weight: 500; }
+        
         .container {
-            max-width: 1000px;
-            margin: -30px auto 40px auto;
+            max-width: 1100px;
+            margin: -30px auto 50px auto;
             padding: 0 20px;
         }
+
+        .executive-banner {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(244, 114, 182, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.2);
+        }
+        .banner-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .banner-header h2 { margin: 0; color: #f472b6; font-size: 1.4rem; }
+        .live-pill { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #f472b6; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .action-card { background: rgba(15, 23, 42, 0.6); border-radius: 14px; padding: 18px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; }
+        .action-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+        .action-icon { font-size: 1.6rem; margin-bottom: 8px; }
+        .action-title { font-size: 0.95rem; font-weight: 700; color: #cbd5e1; margin-bottom: 10px; }
+        .action-body { font-size: 0.85rem; color: #94a3b8; }
+        .action-item { margin-bottom: 8px; }
+        .action-empty { color: #64748b; font-style: italic; font-size: 0.8rem; }
+
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-top: 4px; }
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-emerald { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
         .stats-hero {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
         .stat-box {
             background: var(--card-bg);
+            backdrop-filter: blur(12px);
             padding: 25px;
-            border-radius: 16px;
+            border-radius: 18px;
             text-align: center;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.08);
             transition: transform 0.3s ease;
         }
-        .stat-box:hover { transform: translateY(-5px); }
-        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
-        .stat-value { font-size: 2.5rem; font-weight: 800; margin-top: 10px; }
+        .stat-box:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 600; }
+        .stat-value { font-size: 2.2rem; font-weight: 800; margin-top: 8px; }
         .val-positive { color: var(--success); }
         .val-negative { color: var(--danger); }
         
         .section-card {
             background: var(--card-bg);
+            backdrop-filter: blur(16px);
             padding: 30px;
-            border-radius: 16px;
+            border-radius: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.08);
             border-top: 4px solid var(--accent);
         }
         .section-card.danger { border-top-color: var(--danger); }
         .section-card.success { border-top-color: var(--success); }
         .section-card.market { border-top-color: #8b5cf6; }
         
-        .section-card h2 { margin-top: 0; }
+        .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.5rem; }
         
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
             margin-top: 20px;
         }
         .card {
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 14px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card:hover {
-            background: rgba(255,255,255,0.08);
-            transform: scale(1.02);
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.15);
         }
         .card-title { font-weight: 600; font-size: 1.2rem; margin-bottom: 10px; }
         .sell-card .card-price { color: var(--success); font-size: 1.4rem; font-weight: 800; }
