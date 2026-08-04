@@ -34,6 +34,10 @@
   - Asegura que el mánager cumpla tanto las reglas comunitarias como las reglas oficiales de Biwenger.
 - **`src/directorTecnico.js` (Superagente Mánager General / Director Técnico):**
   - Sintetiza las recomendaciones de todos los superagentes en un **Plan de Acción Diario** unificado al principio del Dashboard (Pujas del día, Ventas del día, Cláusulas del día con su viabilidad táctica y Alineación recomendada).
+- **`src/ojeadorFantasy.js` (Superagente Ojeador FútbolFantasy):**
+  - Lector táctico ligero de `futbolfantasy.com` con **caché local de 12h** (cero sobrecarga y 100% de protección anti-baneo).
+  - Evalúa los porcentajes de titularidad (%), estado real de la portería y lanzadores oficiales de penaltis/faltas.
+  - Alerta de salud de portería en el Plan de Acción Diario si tu portero apunta a suplente o baja.
 
 ---
 
