@@ -12,7 +12,8 @@ function generarPlanDiario({
     analisisOnce = null,
     plantilla = [],
     saldoActual = 0,
-    diasCuentaAtras = 10
+    diasCuentaAtras = 10,
+    saludPorteria = null
 }) {
     const porteros = plantilla.filter(j => j.position === 1 || j.posicion === 1);
     const numJugadores = plantilla.length;
@@ -20,6 +21,11 @@ function generarPlanDiario({
 
     // 1. Sintetizar PUJAS recomendadas para hoy
     let planPujas = [];
+
+    if (saludPorteria && saludPorteria.urgentePujar) {
+        planPujas.push(`<strong>${saludPorteria.estado}:</strong> ${saludPorteria.mensaje}`);
+    }
+
     if (recomMercado.length > 0) {
         recomMercado.forEach(p => {
             let nota = p.clausula ? ' (Cláusula)' : ' (Mercado Libre)';

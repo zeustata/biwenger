@@ -12,6 +12,7 @@ const { detectarOportunidadesTrading, evaluarActivosToxicos, calcularIndiceInfla
 const { seleccionarOnceOptimo } = require('./alineador');
 const { verificarUnicoPortero } = require('./guardiaReglas');
 const { generarPlanDiario } = require('./directorTecnico');
+const { obtenerDatosFutbolFantasy, evaluarSaludPorteria, obtenerTitularidadJugador } = require('./ojeadorFantasy');
 
 const fs = require('fs');
 const path = require('path');
@@ -149,6 +150,14 @@ async function ejecutarAgente() {
     if (datosLiga && datosLiga.standings) {
         expedienteRivales = analizarRivales(datosLiga.standings, dbJugadores, process.env.BIWENGER_USER_ID);
         registrarAccion("🕵️", `Expediente de Liga: Investigados ${expedienteRivales.length} mánagers rivales.`);
+    }
+
+    const datosFF = await obtenerDatosFutbolFantasy();
+    const saludPorteria = evaluarSaludPorteria(estado.players || [], dbJugadores, datosFF);
+    if (saludPorteria && saludPorteria.urgentePujar) {
+        registrarAccion("🧤", `${saludPorteria.estado}: ${saludPorteria.mensaje}`);
+    } else if (saludPorteria) {
+        registrarAccion("🧤", `Ojeador FF: ${saludPorteria.mensaje}`);
     }
 
     const alertasMedicas = dbJugadores ? generarParteMedico(estado.players || [], dbJugadores) : [];
@@ -322,10 +331,10 @@ async function ejecutarAgente() {
     const horasCuentaAtras = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
 
     registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
-    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras, estado.players || []);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada, robosSugeridos, alertasMedicas, ultimosMovimientos, dbJugadores, oportunidadesTrading, activosToxicos, analisisOnce, inflacionMercado, chollosBaratos, diasCuentaAtras, horasCuentaAtras, estado.players || [], saludPorteria);
 }
 
-function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0, plantillaUsuario = []) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999, robosSugeridos = [], alertasMedicas = [], movimientos = [], dbJugadores = null, oportunidadesTrading = [], activosToxicos = [], analisisOnce = null, inflacionMercado = null, chollosBaratos = [], diasCuentaAtras = 0, horasCuentaAtras = 0, plantillaUsuario = [], saludPorteria = null) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
@@ -605,7 +614,8 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         analisisOnce,
         plantilla: [],
         saldoActual: saldo,
-        diasCuentaAtras
+        diasCuentaAtras,
+        saludPorteria
     });
 
     let htmlOrdenesDia = `
