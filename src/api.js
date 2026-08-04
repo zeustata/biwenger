@@ -32,10 +32,28 @@ biwengerApi.interceptors.request.use(async (config) => {
 // Función para obtener el estado del equipo y saldo actual
 async function obtenerEstadoEquipo() {
     try {
-        // Biwenger cambió su API: ahora la plantilla viene en 'players' en lugar de 'team'
+        // Biwenger cambió su API: ahora la plantilla viene en 'players' (pero solo con IDs)
         const response = await biwengerApi.get('/user?fields=*,players');
-        // biwenger devuelve la info en response.data.data
-        return response.data.data;
+        let estado = response.data.data;
+        
+        // Enriquecer la información de los jugadores (nombres, precios, tendencias)
+        if (estado.players && estado.players.length > 0 && !estado.players[0].name) {
+            try {
+                const compRes = await biwengerApi.get('/competitions/la-liga/data?lang=es&score=5');
+                const todosLosJugadores = compRes.data.data.players; // Diccionario de ID -> Jugador
+                
+                estado.players = estado.players.map(p => {
+                    if (todosLosJugadores[p.id]) {
+                        return todosLosJugadores[p.id];
+                    }
+                    return p;
+                });
+            } catch (err) {
+                console.error("Error al obtener la base de datos de jugadores:", err.message);
+            }
+        }
+        
+        return estado;
     } catch (error) {
         console.error("Error al obtener estado del equipo:", error.response ? error.response.data : error.message);
         return null;
