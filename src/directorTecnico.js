@@ -55,7 +55,6 @@ function generarPlanDiario({
     let planAlineacion = [];
     if (analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0) {
         planAlineacion.push(`Formación: <strong>${analisisOnce.formacion}</strong> (${analisisOnce.onceTitular.length}/11 titulares)`);
-        if (analisisOnce.capitan) planAlineacion.push(`🌟 Capitán (x2 pts): <strong>${analisisOnce.capitan.nombre}</strong>`);
         if (analisisOnce.ariete) planAlineacion.push(`🎯 Ariete (+3 gol): <strong>${analisisOnce.ariete.nombre}</strong>`);
     } else {
         planAlineacion.push(`⚠️ Revisa tu plantilla. Faltan titulares para completar un 11.`);

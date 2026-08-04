@@ -75,17 +75,11 @@ function seleccionarOnceOptimo(plantilla, dbJugadores = {}) {
         mejorFormacion = { nombre: 'Adaptada' };
     }
 
-    // 2. Selección de Capitán (🌟) -> El jugador de mayor xP en el 11
-    let capitan = null;
-    if (mejorOnce.length > 0) {
-        capitan = [...mejorOnce].sort((a, b) => b.puntosMedia - a.puntosMedia)[0];
-    }
+    // 2. Selección de Alineación Estándar (Sin bonus por Capitán ni Once Inicial en las reglas de esta liga)
+    let capitan = null; // Desactivado por regla local
 
-    // 3. Selección de Ariete (🎯) -> El mejor delantero del 11 (o el 2º mejor jugador si no hay DL)
+    // 3. Selección de Ariete (🎯) -> El mejor delantero del 11 si aplica
     let ariete = delanteros.length > 0 ? delanteros[0] : null;
-    if (ariete && capitan && ariete.id === capitan.id && delanteros.length > 1) {
-        ariete = delanteros[1]; // Evitar asignar Capitán y Ariete al mismo si hay opciones
-    }
 
     // 4. Suplentes recomendados
     const idsOnce = new Set(mejorOnce.map(j => j.id));
