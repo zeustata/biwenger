@@ -109,17 +109,22 @@ function evaluarPlantillaInicial(plantilla) {
 
     if (!plantilla || plantilla.length === 0) return analisis;
 
+    const porterosCount = plantilla.filter(j => j.position === 1).length;
+
     plantilla.forEach(jugador => {
-        // En pretemporada valoramos: Titularidad (status='ok'), Valor (price), Tendencia (priceIncrement)
+        const esPorteroUnico = jugador.position === 1 && porterosCount <= 1;
         const lesionado = jugador.status === 'injured' || jugador.status === 'doubt' || jugador.status === 'suspended';
         const tendenciaAlcista = jugador.priceIncrement > 20000;
         const tendenciaBajista = jugador.priceIncrement < -20000;
-        const jugadorClave = jugador.average > 4.5; // o precio muy alto
+        const jugadorClave = jugador.average > 4.5;
         
         let decision = 'duda';
         let motivo = '';
 
-        if (lesionado) {
+        if (esPorteroUnico) {
+            decision = 'mantener';
+            motivo = '🛡️ ÚNICO PORTERO. Protegido para evitar penalización de -4 pts por casilla vacía.';
+        } else if (lesionado) {
             decision = 'vender';
             motivo = 'No disponible (lesión/sanción). Mejor hacer caja.';
         } else if (tendenciaBajista && !jugadorClave) {

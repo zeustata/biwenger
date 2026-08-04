@@ -10,6 +10,7 @@ const {
 const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos, generarParteMedico } = require('./analista');
 const { detectarOportunidadesTrading, evaluarActivosToxicos, calcularIndiceInflacion, buscarChollosBaratos } = require('./especulador');
 const { seleccionarOnceOptimo } = require('./alineador');
+const { verificarUnicoPortero } = require('./guardiaReglas');
 
 const fs = require('fs');
 const path = require('path');
