@@ -1,801 +1,3074 @@
 {
   "jugadores": {
-    "futbolfantasy": {
+    "carles alena": {
+      "nombreOriginal": "Carles Aleñá",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "menu": {
+    "angel perez": {
+      "nombreOriginal": "Ángel Pérez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "fantasy✨": {
+    "ville koski": {
+      "nombreOriginal": "Ville Koski",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "mis equipos": {
+    "jonny castro": {
+      "nombreOriginal": "Jonny Castro",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "predicted11": {
+    "nahuel tenaglia": {
+      "nombreOriginal": "Nahuel Tenaglia",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "alaves": {
+    "abde rebbach": {
+      "nombreOriginal": "Abde Rebbach",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "athletic": {
+    "antonio blanco": {
+      "nombreOriginal": "Antonio Blanco",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "atletico": {
+    "pablo ibanez": {
+      "nombreOriginal": "Pablo Ibáñez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "barcelona": {
+    "antonio sivera": {
+      "nombreOriginal": "Antonio Sivera",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "betis": {
+    "toni martinez": {
+      "nombreOriginal": "Toni Martinez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "celta": {
+    "lucas boye": {
+      "nombreOriginal": "Lucas Boyé",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "deportivo": {
+    "denis suarez": {
+      "nombreOriginal": "Denis Suárez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "elche": {
+    "youssef enriquez": {
+      "nombreOriginal": "Youssef Enríquez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "espanyol": {
+    "carlos benavidez": {
+      "nombreOriginal": "Carlos Benavidez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "getafe": {
+    "ander guevara": {
+      "nombreOriginal": "Ander Guevara",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "levante": {
+    "moussa diarra": {
+      "nombreOriginal": "Moussa Diarra",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "malaga": {
+    "xanet olaiz": {
+      "nombreOriginal": "Xanet Oláiz",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "osasuna": {
+    "miguel rodriguez": {
+      "nombreOriginal": "Miguel Rodríguez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "racing": {
+    "mikel rodriguez": {
+      "nombreOriginal": "Mikel Rodriguez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "rayo": {
+    "hugo novoa": {
+      "nombreOriginal": "Hugo Novoa",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "real madrid": {
+    "mariano diaz": {
+      "nombreOriginal": "Mariano Díaz",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "real sociedad": {
+    "jesus owono": {
+      "nombreOriginal": "Jesús Owono",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sevilla": {
+    "selu diallo": {
+      "nombreOriginal": "Selu Diallo",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "valencia": {
+    "aitor manas": {
+      "nombreOriginal": "Aitor Mañas",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "villarreal": {
+    "nikola maras": {
+      "nombreOriginal": "Nikola Maras",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "premier league": {
+    "adrian rodriguez": {
+      "nombreOriginal": "Adrián Rodríguez",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "serie a": {
+    "facundo garces": {
+      "nombreOriginal": "Facundo Garcés",
+      "equipo": "alaves",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "champions": {
+    "nico williams": {
+      "nombreOriginal": "Nico Williams",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "europa league": {
+    "oihan sancet": {
+      "nombreOriginal": "Oihan Sancet",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "altas y bajas": {
+    "mikel jauregizar": {
+      "nombreOriginal": "Mikel Jauregizar",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "pretemporada": {
+    "yeray alvarez": {
+      "nombreOriginal": "Yeray Álvarez",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "alineaciones": {
+    "yuri berchiche": {
+      "nombreOriginal": "Yuri Berchiche",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "mercados": {
+    "gorka guruzeta": {
+      "nombreOriginal": "Gorka Guruzeta",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "lesionados": {
+    "inigo ruiz de galarreta": {
+      "nombreOriginal": "Íñigo Ruiz de Galarreta",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sancionados": {
+    "jesus areso": {
+      "nombreOriginal": "Jesús Areso",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "jerarquias": {
+    "inaki williams": {
+      "nombreOriginal": "Iñaki Williams",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "dazn": {
+    "aitor paredes": {
+      "nombreOriginal": "Aitor Paredes",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "dazn abierto": {
+    "unai simon": {
+      "nombreOriginal": "Unai Simón",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "clasificacion": {
+    "robert navarro": {
+      "nombreOriginal": "Robert Navarro",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "amistoso": {
+    "hugo rincon": {
+      "nombreOriginal": "Hugo Rincón",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "pau fc": {
+    "adama boiro": {
+      "nombreOriginal": "Adama Boiro",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "leganes": {
+    "dani vivian": {
+      "nombreOriginal": "Dani Vivian",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "juv. torremolinos": {
+    "peio canales": {
+      "nombreOriginal": "Peio Canales",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "derio": {
+    "benat prados": {
+      "nombreOriginal": "Beñat Prados",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sheff united": {
+    "alex berenguer": {
+      "nombreOriginal": "Álex Berenguer",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "reading": {
+    "aymeric laporte": {
+      "nombreOriginal": "Aymeric Laporte",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "benfica": {
+    "alejandro rego": {
+      "nombreOriginal": "Alejandro Rego",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "hearts": {
+    "benat gerenabarrena": {
+      "nombreOriginal": "Beñat Gerenabarrena",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sportfreunde lotte": {
+    "selton sanchez": {
+      "nombreOriginal": "Selton Sánchez",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "petro de luanda": {
+    "nico serrano": {
+      "nombreOriginal": "Nico Serrano",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "eibar": {
+    "andoni gorosabel": {
+      "nombreOriginal": "Andoni Gorosabel",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "olot": {
+    "alvaro djalo": {
+      "nombreOriginal": "Álvaro Djaló",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "kaizer chiefs": {
+    "alex padilla": {
+      "nombreOriginal": "Alex Padilla",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "leioa": {
+    "unai vencedor": {
+      "nombreOriginal": "Unai Vencedor",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "compostela": {
+    "maroan sannadi": {
+      "nombreOriginal": "Maroan Sannadi",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "braga": {
+    "julen agirrezabala": {
+      "nombreOriginal": "Julen Agirrezabala",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "ks cracovia": {
+    "unai egiluz": {
+      "nombreOriginal": "Unai Egiluz",
+      "equipo": "athletic",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sestao": {
+    "lamine yamal": {
+      "nombreOriginal": "Lamine Yamal",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "eldense": {
+    "fermin lopez": {
+      "nombreOriginal": "Fermín López",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "recreativo": {
+    "ferran torres": {
+      "nombreOriginal": "Ferrán Torres",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "tenerife": {
+    "marc bernal": {
+      "nombreOriginal": "Marc Bernal",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "cordoba": {
+    "jules kounde": {
+      "nombreOriginal": "Jules Koundé",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "alcorcon": {
+    "raphinha": {
+      "nombreOriginal": "Raphinha",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "johor": {
+    "gerard martin": {
+      "nombreOriginal": "Gerard Martín",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "europa": {
+    "alejandro balde": {
+      "nombreOriginal": "Alejandro Balde",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sabadell": {
+    "pedri gonzalez": {
+      "nombreOriginal": "Pedri González",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "girona": {
+    "joan garcia": {
+      "nombreOriginal": "Joan Garcia",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "wolves": {
+    "pau cubarsi": {
+      "nombreOriginal": "Pau Cubarsí",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sporting": {
+    "eric garcia": {
+      "nombreOriginal": "Eric Garcia",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "valladolid": {
+    "dani olmo": {
+      "nombreOriginal": "Dani Olmo",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "leicester": {
+    "anthony gordon": {
+      "nombreOriginal": "Anthony Gordon",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "real oviedo": {
+    "pablo gavi": {
+      "nombreOriginal": "Pablo Gavi",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "granada": {
+    "ronald araujo": {
+      "nombreOriginal": "Ronald Araújo",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "castellon": {
+    "karim adeyemi": {
+      "nombreOriginal": "Karim Adeyemi",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "al qadsiah": {
+    "xavi espart": {
+      "nombreOriginal": "Xavi Espart",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "feyenoord": {
+    "marc casado": {
+      "nombreOriginal": "Marc Casadó",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "ceuta": {
+    "hector fort": {
+      "nombreOriginal": "Héctor Fort",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "derby county": {
+    "andreas christensen": {
+      "nombreOriginal": "Andreas Christensen",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "al ain": {
+    "roony bardghji": {
+      "nombreOriginal": "Roony Bardghji",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "aston villa": {
+    "wojciech szczesny": {
+      "nombreOriginal": "Wojciech Szczesny",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "ac. de viseu": {
+    "frenkie de jong": {
+      "nombreOriginal": "Frenkie de Jong",
+      "equipo": "barcelona",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "al-ula sc": {
+    "david hancko": {
+      "nombreOriginal": "David Hancko",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "lugo": {
+    "marcos llorente": {
+      "nombreOriginal": "Marcos Llorente",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "o. lyon": {
+    "robin le normand": {
+      "nombreOriginal": "Robin Le Normand",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "ipswich town": {
+    "matteo ruggeri": {
+      "nombreOriginal": "Matteo Ruggeri",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "burnley": {
+    "alexander sorloth": {
+      "nombreOriginal": "Alexander Sorloth",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "como": {
+    "pablo barrios": {
+      "nombreOriginal": "Pablo Barrios",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "al ittihad": {
+    "morten hjulmand": {
+      "nombreOriginal": "Morten Hjulmand",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "toulouse": {
+    "giuliano simeone": {
+      "nombreOriginal": "Giuliano Simeone",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "birmingham city": {
+    "ademola lookman": {
+      "nombreOriginal": "Ademola Lookman",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "albacete": {
+    "alex baena": {
+      "nombreOriginal": "Álex Baena",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "man united": {
+    "jan oblak": {
+      "nombreOriginal": "Jan Oblak",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "norwich": {
+    "julian alvarez": {
+      "nombreOriginal": "Julián Álvarez",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "middlesbrough": {
+    "marc pubill": {
+      "nombreOriginal": "Marc Pubill",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "fiorentina": {
+    "koke resurreccion": {
+      "nombreOriginal": "Koke Resurrección",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "st. pauli": {
+    "johnny cardoso": {
+      "nombreOriginal": "Johnny Cardoso",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "burgos": {
+    "rodrigo mendoza": {
+      "nombreOriginal": "Rodrigo Mendoza",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "charleroi": {
+    "arnau ortiz": {
+      "nombreOriginal": "Arnau Ortiz",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "stoke": {
+    "alex grimaldo": {
+      "nombreOriginal": "Álex Grimaldo",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "lens": {
+    "nahuel molina": {
+      "nombreOriginal": "Nahuel Molina",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "almeria": {
+    "javier bonar": {
+      "nombreOriginal": "Javier Boñar",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "utrecht": {
+    "jorge dominguez": {
+      "nombreOriginal": "Jorge Domínguez",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "napoli": {
+    "obed vargas": {
+      "nombreOriginal": "Obed Vargas",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sassuolo": {
+    "jose maria gimenez": {
+      "nombreOriginal": "José María Giménez",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "arsenal": {
+    "kang-in lee": {
+      "nombreOriginal": "Kang-In Lee",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "al arabi": {
+    "carlos martin": {
+      "nombreOriginal": "Carlos Martín",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "monaco": {
+    "juan musso": {
+      "nombreOriginal": "Juan Musso",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "colonia": {
+    "thiago almada": {
+      "nombreOriginal": "Thiago Almada",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "b. leverkusen": {
+    "thomas lemar": {
+      "nombreOriginal": "Thomas Lemar",
+      "equipo": "atletico",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "tottenham": {
+    "ferran jutgla": {
+      "nombreOriginal": "Ferran Jutglà",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "coventry city": {
+    "hugo gonzalez": {
+      "nombreOriginal": "Hugo González",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "ferencvaros": {
+    "williot swedberg": {
+      "nombreOriginal": "Williot Swedberg",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "galatasaray": {
+    "miguel roman": {
+      "nombreOriginal": "Miguel Román",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "bournemouth": {
+    "javi rueda": {
+      "nombreOriginal": "Javi Rueda",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "genoa": {
+    "ilaix moriba": {
+      "nombreOriginal": "Ilaix Moriba",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "nott. forest": {
+    "carl starfelt": {
+      "nombreOriginal": "Carl Starfelt",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "newcastle": {
+    "marcos alonso": {
+      "nombreOriginal": "Marcos Alonso",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "udinese": {
+    "ionut radu": {
+      "nombreOriginal": "Ionut Radu",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "man city": {
+    "sergio carreira": {
+      "nombreOriginal": "Sergio Carreira",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "o. marsella": {
+    "javi rodriguez": {
+      "nombreOriginal": "Javi Rodríguez",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "fulham": {
+    "hugo alvarez": {
+      "nombreOriginal": "Hugo Álvarez",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "atalanta": {
+    "aleix febas": {
+      "nombreOriginal": "Aleix Febas",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "chelsea": {
+    "javi galan": {
+      "nombreOriginal": "Javi Galán",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "inter": {
+    "iago aspas": {
+      "nombreOriginal": "Iago Aspas",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "schalke 04": {
+    "matias vecino": {
+      "nombreOriginal": "Matías Vecino",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "al-ahly": {
+    "yoel lago": {
+      "nombreOriginal": "Yoel Lago",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "cadiz": {
+    "alvaro nunez": {
+      "nombreOriginal": "Álvaro Núñez",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "celta fortuna": {
+    "carlos dominguez": {
+      "nombreOriginal": "Carlos Dominguez",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "andorra": {
+    "pablo duran": {
+      "nombreOriginal": "Pablo Durán",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "mallorca": {
+    "jones el-abdellaoui": {
+      "nombreOriginal": "Jones El-Abdellaoui",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "r. sociedad b": {
+    "abdoulaye faye": {
+      "nombreOriginal": "Abdoulaye Faye",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "las palmas": {
+    "manu fernandez": {
+      "nombreOriginal": "Manu Fernández",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "hull city": {
+    "borja iglesias": {
+      "nombreOriginal": "Borja Iglesias",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "everton": {
+    "ivan villar": {
+      "nombreOriginal": "Iván Villar",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "crystal palace": {
+    "carles perez": {
+      "nombreOriginal": "Carles Pérez",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "sunderland": {
+    "unai nunez": {
+      "nombreOriginal": "Unai Núñez",
+      "equipo": "celta",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "leeds united": {
+    "pablo fornals": {
+      "nombreOriginal": "Pablo Fornals",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "brentford": {
+    "cucho hernandez": {
+      "nombreOriginal": "Cucho Hernández",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "brighton": {
+    "hector bellerin": {
+      "nombreOriginal": "Héctor Bellerín",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "liverpool": {
+    "diego javier llorente": {
+      "nombreOriginal": "Diego Javier Llorente",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "roma": {
+    "natan": {
+      "nombreOriginal": "Natan",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "bologna": {
+    "fran garcia": {
+      "nombreOriginal": "Fran García",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "lazio": {
+    "marc roca": {
+      "nombreOriginal": "Marc Roca",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "frosinone": {
+    "isco alarcon": {
+      "nombreOriginal": "Isco Alarcón",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "juventus": {
+    "antony": {
+      "nombreOriginal": "Antony",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "monza": {
+    "abde ezzalzouli": {
+      "nombreOriginal": "Abde Ezzalzouli",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "parma": {
+    "alvaro valles": {
+      "nombreOriginal": "Álvaro Valles",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "cagliari": {
+    "facundo bernal": {
+      "nombreOriginal": "Facundo Bernal",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "venezia": {
+    "rodrigo riquelme": {
+      "nombreOriginal": "Rodrigo Riquelme",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "lecce": {
+    "pablo garcia": {
+      "nombreOriginal": "Pablo García",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "torino": {
+    "giovani lo celso": {
+      "nombreOriginal": "Giovani Lo Celso",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "milan": {
+    "alvaro fidalgo": {
+      "nombreOriginal": "Álvaro Fidalgo",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "facebook": {
+    "angel ortiz": {
+      "nombreOriginal": "Ángel Ortiz",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "twitter": {
+    "marc bartra": {
+      "nombreOriginal": "Marc Bartra",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "youtube": {
+    "diego conde": {
+      "nombreOriginal": "Diego Conde",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "telegram": {
+    "junior firpo": {
+      "nombreOriginal": "Junior Firpo",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "telegram chat": {
+    "valentin gomez": {
+      "nombreOriginal": "Valentín Gómez",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "tiktok": {
+    "jose antonio morante": {
+      "nombreOriginal": "José Antonio Morante",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "apple store": {
+    "nelson deossa": {
+      "nombreOriginal": "Nelson Deossa",
+      "equipo": "betis",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "play store": {
+    "iker losada": {
+      "nombreOriginal": "Iker Losada",
+      "equipo": "betis",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "gonzalo petit": {
+      "nombreOriginal": "Gonzalo Petit",
+      "equipo": "betis",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "manu gonzalez": {
+      "nombreOriginal": "Manu González",
+      "equipo": "betis",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aitor ruibal": {
+      "nombreOriginal": "Aitor Ruibal",
+      "equipo": "betis",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mario martin": {
+      "nombreOriginal": "Mario Martín",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kiko femenia": {
+      "nombreOriginal": "Kiko Femenia",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "abdel abqar": {
+      "nombreOriginal": "Abdel Abqar",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "zaid romero": {
+      "nombreOriginal": "Zaid Romero",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sebastian boselli": {
+      "nombreOriginal": "Sebastián Boselli",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "davinchi": {
+      "nombreOriginal": "Davinchi",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dakonam djene": {
+      "nombreOriginal": "Dakonam Djené",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ramon terrats": {
+      "nombreOriginal": "Ramón Terrats",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "david soria": {
+      "nombreOriginal": "David Soria",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "christantus uche": {
+      "nombreOriginal": "Christantus Uche",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "martin satriano": {
+      "nombreOriginal": "Martín Satriano",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "andres garcia": {
+      "nombreOriginal": "Andrés García",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "saba sazonov": {
+      "nombreOriginal": "Saba Sazonov",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "borja mayoral": {
+      "nombreOriginal": "Borja Mayoral",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juan berrocal": {
+      "nombreOriginal": "Juan Berrocal",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ismael bekhoucha": {
+      "nombreOriginal": "Ismael Bekhoucha",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jean ives valou": {
+      "nombreOriginal": "Jean Ives Valou",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex sancris": {
+      "nombreOriginal": "Álex Sancris",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "javi munoz": {
+      "nombreOriginal": "Javi Muñoz",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jiri letacek": {
+      "nombreOriginal": "Jiri Letácek",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "yvan neyou": {
+      "nombreOriginal": "Yvan Neyou",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juanmi jimenez": {
+      "nombreOriginal": "Juanmi Jiménez",
+      "equipo": "getafe",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "roberto fernandez": {
+      "nombreOriginal": "Roberto Fernández",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pere milla": {
+      "nombreOriginal": "Pere Milla",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "marko dmitrovic": {
+      "nombreOriginal": "Marko Dmitrovic",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tyrhys dolan": {
+      "nombreOriginal": "Tyrhys Dolan",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "edu exposito": {
+      "nombreOriginal": "Edu Expósito",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "urko gonzalez de zarate": {
+      "nombreOriginal": "Urko González de Zarate",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "clemens riedel": {
+      "nombreOriginal": "Clemens Riedel",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "leandro cabrera": {
+      "nombreOriginal": "Leandro Cabrera",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "quilindschy hartman": {
+      "nombreOriginal": "Quilindschy Hartman",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "omar el hilali": {
+      "nombreOriginal": "Omar El Hilali",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex calatrava": {
+      "nombreOriginal": "Álex Calatrava",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jofre carreras": {
+      "nombreOriginal": "Jofre Carreras",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "gabriel moscardo": {
+      "nombreOriginal": "Gabriel Moscardo",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pol lozano": {
+      "nombreOriginal": "Pol Lozano",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "roger hinojo": {
+      "nombreOriginal": "Roger Hinojo",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ruben sanchez": {
+      "nombreOriginal": "Rubén Sánchez",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "marcos fernandez": {
+      "nombreOriginal": "Marcos Fernández",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "javier hernandez": {
+      "nombreOriginal": "Javier Hernández",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "rafel bauza": {
+      "nombreOriginal": "Rafel Bauzà",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pablo ramon": {
+      "nombreOriginal": "Pablo Ramón",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "miguel angel rubio": {
+      "nombreOriginal": "Miguel Ángel Rubio",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "angel fortuno": {
+      "nombreOriginal": "Ángel Fortuño",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kike garcia": {
+      "nombreOriginal": "Kike García",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "javi puado": {
+      "nombreOriginal": "Javi Puado",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "stefan bajcetic": {
+      "nombreOriginal": "Stefan Bajcetic",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mika marmol": {
+      "nombreOriginal": "Mika Mármol",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex suarez": {
+      "nombreOriginal": "Alex Suárez",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fabio silva": {
+      "nombreOriginal": "Fábio Silva",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "viti rozada": {
+      "nombreOriginal": "Viti Rozada",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jasper cillessen": {
+      "nombreOriginal": "Jasper Cillessen",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "oliver mcburnie": {
+      "nombreOriginal": "Oliver McBurnie",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alberto moleiro": {
+      "nombreOriginal": "Alberto Moleiro",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dario essugo": {
+      "nombreOriginal": "Dário Essugo",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "scott mckenna": {
+      "nombreOriginal": "Scott McKenna",
+      "equipo": "las-palmas",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "azzedine ounahi": {
+      "nombreOriginal": "Azzedine Ounahi",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "axel witsel": {
+      "nombreOriginal": "Axel Witsel",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "vitor reis": {
+      "nombreOriginal": "Vitor Reis",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "vladyslav vanat": {
+      "nombreOriginal": "Vladyslav Vanat",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "arnau martinez": {
+      "nombreOriginal": "Arnau Martínez",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fran beltran": {
+      "nombreOriginal": "Fran Beltrán",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "claudio echeverri": {
+      "nombreOriginal": "Claudio Echeverri",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex moreno": {
+      "nombreOriginal": "Álex Moreno",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "paulo gazzaniga": {
+      "nombreOriginal": "Paulo Gazzaniga",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "viktor tsygankov": {
+      "nombreOriginal": "Viktor Tsygankov",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "daley blind": {
+      "nombreOriginal": "Daley Blind",
+      "equipo": "girona",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pablo torre": {
+      "nombreOriginal": "Pablo Torre",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "vedat muriqi": {
+      "nombreOriginal": "Vedat Muriqi",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sergi darder": {
+      "nombreOriginal": "Sergi Darder",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "leo roman": {
+      "nombreOriginal": "Leo Román",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pablo maffeo": {
+      "nombreOriginal": "Pablo Maffeo",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "manuel morlanes": {
+      "nombreOriginal": "Manuel Morlanes",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "zito luvumbo": {
+      "nombreOriginal": "Zito Luvumbo",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "omar mascarell": {
+      "nombreOriginal": "Omar Mascarell",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "johan mojica": {
+      "nombreOriginal": "Johan Mojica",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "martin valjent": {
+      "nombreOriginal": "Martin Valjent",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "samu costa": {
+      "nombreOriginal": "Samú Costa",
+      "equipo": "mallorca",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jorge saenz": {
+      "nombreOriginal": "Jorge Sáenz",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "enric franquesa": {
+      "nombreOriginal": "Enric Franquesa",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "duk": {
+      "nombreOriginal": "Duk",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ruben pena": {
+      "nombreOriginal": "Rubén Peña",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juan soriano": {
+      "nombreOriginal": "Juan Soriano",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "diego garcia": {
+      "nombreOriginal": "Diego García",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "miguel de la fuente": {
+      "nombreOriginal": "Miguel de la Fuente",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juan cruz": {
+      "nombreOriginal": "Juan Cruz",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "amadou diawara": {
+      "nombreOriginal": "Amadou Diawara",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lalo aguilar": {
+      "nombreOriginal": "Lalo Aguilar",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "seydouba cisse": {
+      "nombreOriginal": "Seydouba Cisse",
+      "equipo": "leganes",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pathe ciss": {
+      "nombreOriginal": "Pathé Ciss",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sergio camello": {
+      "nombreOriginal": "Sergio Camello",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "augusto batalla": {
+      "nombreOriginal": "Augusto Batalla",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jorge de frutos": {
+      "nombreOriginal": "Jorge de Frutos",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pedro diaz": {
+      "nombreOriginal": "Pedro Díaz",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "unai lopez": {
+      "nombreOriginal": "Unai López",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "oscar valentin": {
+      "nombreOriginal": "Óscar Valentín",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "florian lejeune": {
+      "nombreOriginal": "Florian Lejeune",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ivan balliu": {
+      "nombreOriginal": "Iván Balliu",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alvaro garcia": {
+      "nombreOriginal": "Álvaro García",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "andrei ratiu": {
+      "nombreOriginal": "Andrei Ratiu",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "nobel mendy": {
+      "nombreOriginal": "Nobel Mendy",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alemao": {
+      "nombreOriginal": "Alemão",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pep chavarria": {
+      "nombreOriginal": "Pep Chavarría",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fran perez": {
+      "nombreOriginal": "Fran Pérez",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pelayo fernandez": {
+      "nombreOriginal": "Pelayo Fernández",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "randy nteka": {
+      "nombreOriginal": "Randy Nteka",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jozhua vertrouwd": {
+      "nombreOriginal": "Jozhua Vertrouwd",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dani cardenas": {
+      "nombreOriginal": "Dani Cárdenas",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "raul de tomas": {
+      "nombreOriginal": "Raúl De Tomás",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "miguel angel morro": {
+      "nombreOriginal": "Miguel Angel Morro",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "isi palazon": {
+      "nombreOriginal": "Isi Palazón",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "luiz felipe": {
+      "nombreOriginal": "Luiz Felipe",
+      "equipo": "rayo-vallecano",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "valentin rosier": {
+      "nombreOriginal": "Valentin Rosier",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "boyomo": {
+      "nombreOriginal": "Boyomo",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alejandro catena": {
+      "nombreOriginal": "Alejandro Catena",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "abel bretones": {
+      "nombreOriginal": "Abel Bretones",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "iker munoz": {
+      "nombreOriginal": "Iker Muñoz",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon moncayola": {
+      "nombreOriginal": "Jon Moncayola",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aimar oroz": {
+      "nombreOriginal": "Aimar Oroz",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ruben garcia": {
+      "nombreOriginal": "Rubén García",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "raul moro": {
+      "nombreOriginal": "Raul Moro",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sergio herrera": {
+      "nombreOriginal": "Sergio Herrera",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ante budimir": {
+      "nombreOriginal": "Ante Budimir",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lucas torro": {
+      "nombreOriginal": "Lucas Torró",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "iker benito": {
+      "nombreOriginal": "Iker Benito",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jorge herrando": {
+      "nombreOriginal": "Jorge Herrando",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "moi gomez": {
+      "nombreOriginal": "Moi Gómez",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kike barja": {
+      "nombreOriginal": "Kike Barja",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jonathan dubasin": {
+      "nombreOriginal": "Jonathan Dubasin",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aitor fernandez": {
+      "nombreOriginal": "Aitor Fernández",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "raul garcia": {
+      "nombreOriginal": "Raúl García",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "asier osambela": {
+      "nombreOriginal": "Asier Osambela",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "inigo arguibide": {
+      "nombreOriginal": "Iñigo Arguibide",
+      "equipo": "osasuna",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon martin": {
+      "nombreOriginal": "Jon Martín",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex remiro": {
+      "nombreOriginal": "Álex Remiro",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mikel oyarzabal": {
+      "nombreOriginal": "Mikel Oyarzabal",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "goncalo guedes": {
+      "nombreOriginal": "Gonçalo Guedes",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ander barrenetxea": {
+      "nombreOriginal": "Ander Barrenetxea",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "luka sucic": {
+      "nombreOriginal": "Luka Sucic",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "carlos soler": {
+      "nombreOriginal": "Carlos Soler",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "benat turrientes": {
+      "nombreOriginal": "Beñat Turrientes",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sergio gomez": {
+      "nombreOriginal": "Sergio Gómez",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "igor zubeldia": {
+      "nombreOriginal": "Igor Zubeldia",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon aramburu": {
+      "nombreOriginal": "Jon Aramburu",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "takefusa kubo": {
+      "nombreOriginal": "Takefusa Kubo",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "yangel herrera": {
+      "nombreOriginal": "Yangel Herrera",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon gorrotxategi": {
+      "nombreOriginal": "Jon Gorrotxategi",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pablo marin": {
+      "nombreOriginal": "Pablo Marín",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "arsen zakharyan": {
+      "nombreOriginal": "Arsen Zakharyan",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "orri steinn oskarsson": {
+      "nombreOriginal": "Orri Steinn Óskarsson",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "luken beitia": {
+      "nombreOriginal": "Luken Beitia",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aihen munoz": {
+      "nombreOriginal": "Aihen Muñoz",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "job ochieng": {
+      "nombreOriginal": "Job Ochieng",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kazunari kita": {
+      "nombreOriginal": "Kazunari Kita",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon pacheco": {
+      "nombreOriginal": "Jon Pacheco",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "unai marrero": {
+      "nombreOriginal": "Unai Marrero",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon balda": {
+      "nombreOriginal": "Jon Balda",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mikel goti": {
+      "nombreOriginal": "Mikel Goti",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "javi lopez": {
+      "nombreOriginal": "Javi López",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "inaki ruperez": {
+      "nombreOriginal": "Iñaki Rupérez",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon karrikaburu": {
+      "nombreOriginal": "Jon Karrikaburu",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alvaro odriozola": {
+      "nombreOriginal": "Álvaro Odriozola",
+      "equipo": "real-sociedad",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aurelien tchouameni": {
+      "nombreOriginal": "Aurélien Tchouaméni",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "trent alexander-arnold": {
+      "nombreOriginal": "Trent Alexander-Arnold",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ibrahima konate": {
+      "nombreOriginal": "Ibrahima Konaté",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dean huijsen": {
+      "nombreOriginal": "Dean Huijsen",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "marc cucurella": {
+      "nombreOriginal": "Marc Cucurella",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "federico valverde": {
+      "nombreOriginal": "Federico Valverde",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jude bellingham": {
+      "nombreOriginal": "Jude Bellingham",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "arda guler": {
+      "nombreOriginal": "Arda Güler",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "vinicius junior": {
+      "nombreOriginal": "Vinicius Junior",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kylian mbappe": {
+      "nombreOriginal": "Kylian Mbappé",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "thibaut courtois": {
+      "nombreOriginal": "Thibaut Courtois",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "antonio rudiger": {
+      "nombreOriginal": "Antonio Rüdiger",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "denzel dumfries": {
+      "nombreOriginal": "Denzel Dumfries",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "bernardo silva": {
+      "nombreOriginal": "Bernardo Silva",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "eduardo camavinga": {
+      "nombreOriginal": "Eduardo Camavinga",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "brahim diaz": {
+      "nombreOriginal": "Brahim Díaz",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "andriy lunin": {
+      "nombreOriginal": "Andriy Lunin",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "franco mastantuono": {
+      "nombreOriginal": "Franco Mastantuono",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alvaro f. carreras": {
+      "nombreOriginal": "Álvaro F. Carreras",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "carlos espi": {
+      "nombreOriginal": "Carlos Espí",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "endrick": {
+      "nombreOriginal": "Endrick",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ferland mendy": {
+      "nombreOriginal": "Ferland Mendy",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "raul asencio": {
+      "nombreOriginal": "Raúl Asencio",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "eder militao": {
+      "nombreOriginal": "Éder Militão",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "thiago pitarch": {
+      "nombreOriginal": "Thiago Pitarch",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "rodrygo goes": {
+      "nombreOriginal": "Rodrygo Goes",
+      "equipo": "real-madrid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "cesar tarrega": {
+      "nombreOriginal": "César Tárrega",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "stole dimitrievski": {
+      "nombreOriginal": "Stole Dimitrievski",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "javi guerra": {
+      "nombreOriginal": "Javi Guerra",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ryunosuke sato": {
+      "nombreOriginal": "Ryunosuke Sato",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "arnaut danjuma": {
+      "nombreOriginal": "Arnaut Danjuma",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "aliou dieng": {
+      "nombreOriginal": "Aliou Dieng",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "umar sadiq": {
+      "nombreOriginal": "Umar Sadiq",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "justin de haas": {
+      "nombreOriginal": "Justin de Haas",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jose gaya": {
+      "nombreOriginal": "José Gayà",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "dimitri foulquier": {
+      "nombreOriginal": "Dimitri Foulquier",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "guido rodriguez": {
+      "nombreOriginal": "Guido Rodríguez",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pepelu": {
+      "nombreOriginal": "Pepelu",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "luis rioja": {
+      "nombreOriginal": "Luis Rioja",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "mouctar diakhaby": {
+      "nombreOriginal": "Mouctar Diakhaby",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "hugo duro": {
+      "nombreOriginal": "Hugo Duro",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "filip ugrinic": {
+      "nombreOriginal": "Filip Ugrinic",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "andre almeida": {
+      "nombreOriginal": "André Almeida",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ruben iranzo": {
+      "nombreOriginal": "Rubén Iranzo",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "iker cordoba": {
+      "nombreOriginal": "Iker Córdoba",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jesus vazquez": {
+      "nombreOriginal": "Jesús Vázquez",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "daniel raba": {
+      "nombreOriginal": "Daniel Raba",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "cristian rivero": {
+      "nombreOriginal": "Cristian Rivero",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alberto mari": {
+      "nombreOriginal": "Alberto Mari",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sergi canos": {
+      "nombreOriginal": "Sergi Canós",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jose manuel copete": {
+      "nombreOriginal": "José Manuel Copete",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "diego lopez": {
+      "nombreOriginal": "Diego López",
+      "equipo": "valencia",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "kike salas": {
+      "nombreOriginal": "Kike Salas",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jon guridi": {
+      "nombreOriginal": "Jon Guridi",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "isaac romero": {
+      "nombreOriginal": "Isaac Romero",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "odysseas vlachodimos": {
+      "nombreOriginal": "Odysseas Vlachodimos",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "miguel sierra": {
+      "nombreOriginal": "Miguel Sierra",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juan iglesias": {
+      "nombreOriginal": "Juan Iglesias",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "nico guillen": {
+      "nombreOriginal": "Nico Guillén",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "gabriel suazo": {
+      "nombreOriginal": "Gabriel Suazo",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "arouna sangante": {
+      "nombreOriginal": "Arouna Sangante",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "lucien agoume": {
+      "nombreOriginal": "Lucien Agoume",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ruben vargas": {
+      "nombreOriginal": "Rubén Vargas",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "andres castrin": {
+      "nombreOriginal": "Andrés Castrín",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juanlu sanchez": {
+      "nombreOriginal": "Juanlu Sánchez",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "djibril sow": {
+      "nombreOriginal": "Djibril Sow",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "julio diaz": {
+      "nombreOriginal": "Julio Díaz",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "chidera ejuke": {
+      "nombreOriginal": "Chidera Ejuke",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "joaquin oso": {
+      "nombreOriginal": "Joaquín Oso",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "jose angel carmona": {
+      "nombreOriginal": "José Ángel Carmona",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "peque": {
+      "nombreOriginal": "Peque",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "marcao": {
+      "nombreOriginal": "Marcão",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alfonso gonzalez": {
+      "nombreOriginal": "Alfonso González",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fran gonzalez": {
+      "nombreOriginal": "Fran González",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "manu bueno": {
+      "nombreOriginal": "Manu Bueno",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "joan jordan": {
+      "nombreOriginal": "Joan Jordan",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "adria pedrosa": {
+      "nombreOriginal": "Adrià Pedrosa",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "federico gattoni": {
+      "nombreOriginal": "Federico Gattoni",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "fabio cardoso": {
+      "nombreOriginal": "Fábio Cardoso",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alberto flores": {
+      "nombreOriginal": "Alberto Flores",
+      "equipo": "sevilla",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pape gueye": {
+      "nombreOriginal": "Pape Gueye",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "carlos romero": {
+      "nombreOriginal": "Carlos Romero",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "renato veiga": {
+      "nombreOriginal": "Renato Veiga",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pau navarro": {
+      "nombreOriginal": "Pau Navarro",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "santi comesana": {
+      "nombreOriginal": "Santi Comesaña",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "gerard moreno": {
+      "nombreOriginal": "Gerard Moreno",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "nicolas pepe": {
+      "nombreOriginal": "Nicolas Pépé",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "luiz junior": {
+      "nombreOriginal": "Luiz Junior",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "santiago mourino": {
+      "nombreOriginal": "Santiago Mouriño",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "georges mikautadze": {
+      "nombreOriginal": "Georges Mikautadze",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juan foyth": {
+      "nombreOriginal": "Juan Foyth",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "carlos macia": {
+      "nombreOriginal": "Carlos Macià",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex freeman": {
+      "nombreOriginal": "Alex Freeman",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ayoze perez": {
+      "nombreOriginal": "Ayoze Pérez",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "peter gulacsi": {
+      "nombreOriginal": "Péter Gulácsi",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tajon buchanan": {
+      "nombreOriginal": "Tajon Buchanan",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tani oluwaseyi": {
+      "nombreOriginal": "Tani Oluwaseyi",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "sergi cardona": {
+      "nombreOriginal": "Sergi Cardona",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "logan costa": {
+      "nombreOriginal": "Logan Costa",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alassane diatta": {
+      "nombreOriginal": "Alassane Diatta",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "ilias akhomach": {
+      "nombreOriginal": "Ilias Akhomach",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "willy kambwala": {
+      "nombreOriginal": "Willy Kambwala",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pau cabanes": {
+      "nombreOriginal": "Pau Cabanes",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex fores": {
+      "nombreOriginal": "Alex Forés",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "thiago fernandez": {
+      "nombreOriginal": "Thiago Fernández",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "henrique silva": {
+      "nombreOriginal": "Henrique Silva",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "florian grillitsch": {
+      "nombreOriginal": "Florian Grillitsch",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "stanko juric": {
+      "nombreOriginal": "Stanko Juric",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "anuar mohamed": {
+      "nombreOriginal": "Anuar Mohamed",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "javi sanchez": {
+      "nombreOriginal": "Javi Sánchez",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "antonio candela": {
+      "nombreOriginal": "Antonio Candela",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "juan miguel latasa": {
+      "nombreOriginal": "Juan Miguel Latasa",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "joseph aidoo": {
+      "nombreOriginal": "Joseph Aidoo",
+      "equipo": "valladolid",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "karl hein": {
+      "nombreOriginal": "Karl Hein",
+      "equipo": "valladolid",
       "titularidad": 90,
       "estado": "titular",
       "fuente": "FútbolFantasy"
@@ -803,806 +3076,967 @@
   },
   "lesionados": {
     "futbolfantasy": {
+      "nombreOriginal": "FútbolFantasy",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "menu": {
+      "nombreOriginal": "Menu",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "fantasy✨": {
+      "nombreOriginal": "Fantasy✨",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "mis equipos": {
+      "nombreOriginal": "Mis equipos",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "predicted11": {
+      "nombreOriginal": "Predicted11",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "logo campeonato": {
+      "nombreOriginal": "logo campeonato",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "alaves": {
+      "nombreOriginal": "Alavés",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "athletic": {
+      "nombreOriginal": "Athletic",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "atletico": {
+      "nombreOriginal": "Atlético",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "barcelona": {
+      "nombreOriginal": "Barcelona",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "betis": {
+      "nombreOriginal": "Betis",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "celta": {
+      "nombreOriginal": "Celta",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "deportivo": {
+      "nombreOriginal": "Deportivo",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "elche": {
+      "nombreOriginal": "Elche",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "espanyol": {
+      "nombreOriginal": "Espanyol",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "getafe": {
+      "nombreOriginal": "Getafe",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "levante": {
+      "nombreOriginal": "Levante",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "malaga": {
+      "nombreOriginal": "Málaga",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "osasuna": {
+      "nombreOriginal": "Osasuna",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "racing": {
+      "nombreOriginal": "Racing",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "rayo": {
+      "nombreOriginal": "Rayo",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "real madrid": {
+      "nombreOriginal": "Real Madrid",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "real sociedad": {
+      "nombreOriginal": "Real Sociedad",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sevilla": {
+      "nombreOriginal": "Sevilla",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "valencia": {
+      "nombreOriginal": "Valencia",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "villarreal": {
+      "nombreOriginal": "Villarreal",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "premier league": {
+      "nombreOriginal": "Premier League",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "serie a": {
+      "nombreOriginal": "Serie A",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "champions": {
+      "nombreOriginal": "Champions",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "europa league": {
+      "nombreOriginal": "Europa League",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "altas y bajas": {
+      "nombreOriginal": "Altas y bajas",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "pretemporada": {
+      "nombreOriginal": "Pretemporada",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "alineaciones": {
+      "nombreOriginal": "Alineaciones",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "mercados": {
+      "nombreOriginal": "Mercados",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "lesionados": {
+      "nombreOriginal": "Lesionados",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sancionados": {
+      "nombreOriginal": "Sancionados",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "jerarquias": {
+      "nombreOriginal": "Jerarquías",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "amistoso": {
+      "nombreOriginal": "Amistoso",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "pau fc": {
+      "nombreOriginal": "Pau FC",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "leganes": {
+      "nombreOriginal": "Leganés",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "juv. torremolinos": {
+      "nombreOriginal": "Juv. Torremolinos",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "derio": {
+      "nombreOriginal": "Derio",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sheff united": {
+      "nombreOriginal": "Sheff United",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "reading": {
+      "nombreOriginal": "Reading",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "benfica": {
+      "nombreOriginal": "Benfica",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "hearts": {
+      "nombreOriginal": "Hearts",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sportfreunde lotte": {
+      "nombreOriginal": "Sportfreunde Lotte",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "petro de luanda": {
+      "nombreOriginal": "Petro de Luanda",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "eibar": {
+      "nombreOriginal": "Eibar",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "olot": {
+      "nombreOriginal": "Olot",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "kaizer chiefs": {
+      "nombreOriginal": "Kaizer Chiefs",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "leioa": {
+      "nombreOriginal": "Leioa",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "compostela": {
+      "nombreOriginal": "Compostela",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "braga": {
+      "nombreOriginal": "Braga",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "ks cracovia": {
+      "nombreOriginal": "KS Cracovia",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sestao": {
+      "nombreOriginal": "Sestao",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "eldense": {
+      "nombreOriginal": "Eldense",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "recreativo": {
+      "nombreOriginal": "Recreativo",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "tenerife": {
+      "nombreOriginal": "Tenerife",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "cordoba": {
+      "nombreOriginal": "Córdoba",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "alcorcon": {
+      "nombreOriginal": "Alcorcón",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "johor": {
+      "nombreOriginal": "Johor",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "europa": {
+      "nombreOriginal": "Europa",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sabadell": {
+      "nombreOriginal": "Sabadell",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "girona": {
+      "nombreOriginal": "Girona",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "wolves": {
+      "nombreOriginal": "Wolves",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sporting": {
+      "nombreOriginal": "Sporting",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "valladolid": {
+      "nombreOriginal": "Valladolid",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "leicester": {
+      "nombreOriginal": "Leicester",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "real oviedo": {
+      "nombreOriginal": "Real Oviedo",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "granada": {
+      "nombreOriginal": "Granada",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "castellon": {
+      "nombreOriginal": "Castellón",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "al qadsiah": {
+      "nombreOriginal": "Al Qadsiah",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "feyenoord": {
+      "nombreOriginal": "Feyenoord",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "ceuta": {
+      "nombreOriginal": "Ceuta",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "derby county": {
+      "nombreOriginal": "Derby County",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "al ain": {
+      "nombreOriginal": "Al Ain",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "aston villa": {
+      "nombreOriginal": "Aston Villa",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "ac. de viseu": {
+      "nombreOriginal": "Ac. de Viseu",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "al-ula sc": {
+      "nombreOriginal": "Al-Ula SC",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "lugo": {
+      "nombreOriginal": "Lugo",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "o. lyon": {
+      "nombreOriginal": "O. Lyon",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "ipswich town": {
+      "nombreOriginal": "Ipswich Town",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "burnley": {
+      "nombreOriginal": "Burnley",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "como": {
+      "nombreOriginal": "Como",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "al ittihad": {
+      "nombreOriginal": "Al Ittihad",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "toulouse": {
+      "nombreOriginal": "Toulouse",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "birmingham city": {
+      "nombreOriginal": "Birmingham City",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "albacete": {
+      "nombreOriginal": "Albacete",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "man united": {
+      "nombreOriginal": "Man United",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "norwich": {
+      "nombreOriginal": "Norwich",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "middlesbrough": {
+      "nombreOriginal": "Middlesbrough",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "fiorentina": {
+      "nombreOriginal": "Fiorentina",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "st. pauli": {
+      "nombreOriginal": "St. Pauli",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "burgos": {
+      "nombreOriginal": "Burgos",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "charleroi": {
+      "nombreOriginal": "Charleroi",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "stoke": {
+      "nombreOriginal": "Stoke",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "lens": {
+      "nombreOriginal": "Lens",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "almeria": {
+      "nombreOriginal": "Almería",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "utrecht": {
+      "nombreOriginal": "Utrecht",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "napoli": {
+      "nombreOriginal": "Napoli",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sassuolo": {
+      "nombreOriginal": "Sassuolo",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "arsenal": {
+      "nombreOriginal": "Arsenal",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "al arabi": {
+      "nombreOriginal": "Al Arabi",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "monaco": {
+      "nombreOriginal": "Mónaco",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "colonia": {
+      "nombreOriginal": "Colonia",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "b. leverkusen": {
+      "nombreOriginal": "B. Leverkusen",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "tottenham": {
+      "nombreOriginal": "Tottenham",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "coventry city": {
+      "nombreOriginal": "Coventry City",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "ferencvaros": {
+      "nombreOriginal": "Ferencváros",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "galatasaray": {
+      "nombreOriginal": "Galatasaray",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "bournemouth": {
+      "nombreOriginal": "Bournemouth",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "genoa": {
+      "nombreOriginal": "Genoa",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "nott. forest": {
+      "nombreOriginal": "Nott. Forest",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "newcastle": {
+      "nombreOriginal": "Newcastle",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "udinese": {
+      "nombreOriginal": "Udinese",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "man city": {
+      "nombreOriginal": "Man City",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "o. marsella": {
+      "nombreOriginal": "O. Marsella",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "fulham": {
+      "nombreOriginal": "Fulham",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "atalanta": {
+      "nombreOriginal": "Atalanta",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "chelsea": {
+      "nombreOriginal": "Chelsea",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "inter": {
+      "nombreOriginal": "Inter",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "schalke 04": {
+      "nombreOriginal": "Schalke 04",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "al-ahly": {
+      "nombreOriginal": "Al-Ahly",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "dazn": {
+      "nombreOriginal": "Dazn",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "dazn abierto": {
+      "nombreOriginal": "Dazn abierto",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "cadiz": {
+      "nombreOriginal": "Cádiz",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "celta fortuna": {
+      "nombreOriginal": "Celta Fortuna",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "andorra": {
+      "nombreOriginal": "Andorra",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "mallorca": {
+      "nombreOriginal": "Mallorca",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "r. sociedad b": {
+      "nombreOriginal": "R. Sociedad B",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "las palmas": {
+      "nombreOriginal": "Las Palmas",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "hull city": {
+      "nombreOriginal": "Hull City",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "everton": {
+      "nombreOriginal": "Everton",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "crystal palace": {
+      "nombreOriginal": "Crystal Palace",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "sunderland": {
+      "nombreOriginal": "Sunderland",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "leeds united": {
+      "nombreOriginal": "Leeds United",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "brentford": {
+      "nombreOriginal": "Brentford",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "brighton": {
+      "nombreOriginal": "Brighton",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "liverpool": {
+      "nombreOriginal": "Liverpool",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "roma": {
+      "nombreOriginal": "Roma",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "bologna": {
+      "nombreOriginal": "Bologna",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "lazio": {
+      "nombreOriginal": "Lazio",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "frosinone": {
+      "nombreOriginal": "Frosinone",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "juventus": {
+      "nombreOriginal": "Juventus",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "monza": {
+      "nombreOriginal": "Monza",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "parma": {
+      "nombreOriginal": "Parma",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "cagliari": {
+      "nombreOriginal": "Cagliari",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "venezia": {
+      "nombreOriginal": "Venezia",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "lecce": {
+      "nombreOriginal": "Lecce",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "torino": {
+      "nombreOriginal": "Torino",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "milan": {
+      "nombreOriginal": "Milan",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "clasificacion": {
+      "nombreOriginal": "Clasificación",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "facebook": {
+      "nombreOriginal": "Facebook",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "twitter": {
+      "nombreOriginal": "Twitter",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "youtube": {
+      "nombreOriginal": "Youtube",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "telegram": {
+      "nombreOriginal": "Telegram",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "telegram chat": {
+      "nombreOriginal": "Telegram Chat",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "tiktok": {
+      "nombreOriginal": "TikTok",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "apple store": {
+      "nombreOriginal": "Apple Store",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
     },
     "play store": {
+      "nombreOriginal": "Play Store",
       "titularidad": 0,
       "estado": "lesionado",
       "fuente": "FútbolFantasy"
@@ -1617,7 +4051,8 @@
     "Lewandowski",
     "Vinicius Jr",
     "Gundogan",
-    "Muriqi"
+    "Muriqi",
+    "Stuani"
   ],
-  "ultimaActualizacion": "2026-08-04T23:26:29.842Z"
+  "ultimaActualizacion": "2026-08-04T23:34:21.501Z"
 }
