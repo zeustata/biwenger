@@ -31,6 +31,8 @@
 - **`src/guardiaReglas.js` (Superagente Guardián de Reglas Oficiales):**
   - **Escudo de Único Portero:** Bloquea la recomendación de venta del único portero de la plantilla (ej. Pablo Campos) para evitar la penalización oficial de -4 puntos por casilla vacía en el 11.
   - Asegura que el mánager cumpla tanto las reglas comunitarias como las reglas oficiales de Biwenger.
+- **`src/directorTecnico.js` (Superagente Mánager General / Director Técnico):**
+  - Sintetiza las recomendaciones de todos los superagentes en un **Plan de Acción Diario** unificado al principio del Dashboard (Pujas del día, Ventas del día, Cláusulas del día y Alineación recomendada).
 
 ---
 
