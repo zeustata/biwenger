@@ -580,6 +580,46 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>`;
     }
 
+    // Sintetizar Ordenes del Día para el Resumen Ejecutivo
+    const ordenesPujas = recomMercado.map(m => `Puja ${formatoEuro(m.puja)} por <strong>${m.nombre}</strong> (${m.clausula ? 'Cláusula' : 'Mercado Libre'})`);
+    const ordenesVentas = recomVenta.map(v => `Vende a <strong>${v.nombre}</strong> por ${formatoEuro(v.oferta)}`);
+    const ordenesTrading = oportunidadesTrading.map(t => `Compra para trading a <strong>${t.nombre}</strong> (+${(t.subidaDiaria/1000).toFixed(0)}k€/día)`);
+    const ordenesClausulazos = robosSugeridos.map(r => `Paga la cláusula de <strong>${r.nombre}</strong> (${r.equipoRival}) por ${formatoEuro(r.clausula)}`);
+    
+    let ordenesAlineacion = '';
+    if (analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0) {
+        ordenesAlineacion = `Alinea formación <strong>${analisisOnce.formacion}</strong>. Pon Capitán 🌟 a <strong>${analisisOnce.capitan ? analisisOnce.capitan.nombre : 'N/A'}</strong> y Ariete 🎯 a <strong>${analisisOnce.ariete ? analisisOnce.ariete.nombre : 'N/A'}</strong>.`;
+    }
+
+    let htmlOrdenesDia = `
+    <div class="section-card" style="border-top-color: #ec4899; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border: 1px solid rgba(236, 72, 153, 0.3);">
+        <h2 style="color: #f472b6; margin-top: 0;">📋 Órdenes del Día de tus Superagentes</h2>
+        <p style="color: #cbd5e1;">Tu resumen ejecutivo directo al grano para actuar hoy en Biwenger:</p>
+        
+        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+            <li>
+                <strong>🛒 Pujas del Día:</strong> 
+                ${ordenesPujas.length > 0 ? ordenesPujas.join(' · ') : '<span style="color: #94a3b8;">No hace falta pujar por nadie del mercado hoy.</span>'}
+            </li>
+            <li>
+                <strong>🚀 Trading Rápido:</strong> 
+                ${ordenesTrading.length > 0 ? ordenesTrading.join(' · ') : '<span style="color: #94a3b8;">No hace falta comprar activos de trading hoy.</span>'}
+            </li>
+            <li>
+                <strong>💵 Ventas Requeridas:</strong> 
+                ${ordenesVentas.length > 0 ? ordenesVentas.join(' · ') : '<span style="color: #94a3b8;">No hace falta vender a nadie hoy. Cuentas saneadas.</span>'}
+            </li>
+            <li>
+                <strong>🥷 Clausulazos Tácticos:</strong> 
+                ${ordenesClausulazos.length > 0 ? ordenesClausulazos.join(' · ') : '<span style="color: #94a3b8;">No hace falta robar jugadores a ningún rival hoy.</span>'}
+            </li>
+            <li>
+                <strong>⚽ Alineación Recomendada:</strong> 
+                ${ordenesAlineacion ? ordenesAlineacion : '<span style="color: #94a3b8;">No requiere cambios de alineación hoy.</span>'}
+            </li>
+        </ul>
+    </div>`;
+
     let htmlTablon = '';
     if (movimientos.length > 0) {
         // Filtrar solo los fichajes (transfer)
@@ -752,6 +792,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
         </div>
 
+        ${htmlOrdenesDia}
         ${htmlSalud}
         ${htmlOnce}
         ${htmlTrading}
