@@ -26,18 +26,24 @@
   - Selección del 11 Titular, Capitán 🌟 (x2) y Ariete 🎯.
 - **`src/analista.js` (Superagente Psicológico & Médico):** 
   - Perfilador psicológico de rivales (🔥 *Kamikaze*, 💼 *Especulador*, ⚖️ *Conservador*).
+  - **Índice de Viabilidad de Clausulazo:** Puntuación táctica (🟢 Alta, 🟡 Media, 🔴 Arriesgada) evaluando sustitutos en la plantilla rival y riesgo de contraataque.
   - Expediente de urgencias rivales.
   - Parte médico completo (Lesionados, Dudas, Sancionados).
 - **`src/guardiaReglas.js` (Superagente Guardián de Reglas Oficiales):**
   - **Escudo de Único Portero:** Bloquea la recomendación de venta del único portero de la plantilla (ej. Pablo Campos) para evitar la penalización oficial de -4 puntos por casilla vacía en el 11.
   - Asegura que el mánager cumpla tanto las reglas comunitarias como las reglas oficiales de Biwenger.
 - **`src/directorTecnico.js` (Superagente Mánager General / Director Técnico):**
-  - Sintetiza las recomendaciones de todos los superagentes en un **Plan de Acción Diario** unificado al principio del Dashboard (Pujas del día, Ventas del día, Cláusulas del día y Alineación recomendada).
+  - Sintetiza las recomendaciones de todos los superagentes en un **Plan de Acción Diario** unificado al principio del Dashboard (Pujas del día, Ventas del día, Cláusulas del día con su viabilidad táctica y Alineación recomendada).
 
 ---
 
 ## 3. Trilogía de Pretemporada & Interfaz Visual VIP
 - **Contador Regresivo Táctico "Jornada 1":** Muestra días y horas restantes hasta el pitido inicial (fijado oficialmente en 14 de agosto de 2026 a las 21:00h).
+- **Centro de Analítica Visual (Chart.js v4):** 
+  - Gráfico de Barras interactivo comparando el valor de plantilla de todos los rivales de la liga vs el mánager.
+  - Gráfico Donut/Anillo con el desglose de la plantilla del usuario por posiciones (PT, DF, MC, DL).
+- **Buscador & Filtro en Tiempo Real (Client-Side):** Búsqueda dinámica instantánea por jugador, posición (PT, DF, MC, DL) o equipo sin recargar página.
+- **Widget Comparador "Cara a Cara" (Head-to-Head):** Selector interactivo para inspeccionar rival a rival sus urgencias, sobrepuja y clausulazos vulnerables en su plantilla.
 - **Índice de Inflación de Mercado:** Analiza el ritmo de subida diaria global del mercado de La Liga (ej. 🔥 Hiper-Alcista).
 - **Radar de Titulares Chollo (< 2M€):** Tarjetas de jugadores económicos y rentables para rellenar la plantilla de 14.
 - **Diseño Glassmorphism VIP:** 
@@ -49,3 +55,4 @@
 
 ## 4. Regla Inquebrantable de Despliegue Git
 - **Auto-Push Obligatorio:** Cualquier modificación de código o ejecución de script que regenere `docs/index.html` DEBE subirse inmediatamente a GitHub ejecutando `git add .`, `git commit` y `git push` para desplegar la última versión en GitHub Pages.
+
