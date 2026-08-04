@@ -15,7 +15,7 @@
   - **Límite de Plantilla:** Configurable por el usuario en las variables (MAX_JUGADORES_PLANTILLA).
   - **Sistema de Puntuación (Ingresos):** 10.000€ por punto + Bonus Posicional compensatorio (100k al 12º hasta 900k al 20º).
   - **Goles (+3 Extra):** Los goleadores valen oro.
-  - **Cláusulas (Robos):** Máximo 2 hechos y 2 recibidos cada 7 días.
+  - **Cláusulas (Robos):** Máximo 2 hechos y 2 recibidos cada 7 días. PROHIBIDO robar desde 48h antes del primer partido de la jornada.
   - **Mercado:** Exclusivo Computer. No hay cesiones, préstamos ni traspasos entre mánagers.
   - **Alineaciones:** NO hay Capitán ni Once Ideal. SÍ hay Reservas y se permite 1 cambio manual en jornada activa.
 * **Cuadrar Cuentas:** Si el saldo es negativo, el bot analiza la plantilla y las ofertas recibidas por el *computer*, y genera una lista visual recomendando qué suplentes o peores jugadores vender para salir del negativo.

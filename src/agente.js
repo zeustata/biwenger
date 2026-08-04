@@ -1,19 +1,15 @@
 const { 
     obtenerEstadoEquipo, 
     obtenerMercado,
-    ponerJugadorEnVenta,
-    pujarPorJugador,
     obtenerOfertas,
-    aceptarOferta,
-    obtenerInicioProximaJornada
+    obtenerInicioProximaJornada,
+    obtenerPlantillasRivales,
+    obtenerUltimosMovimientos
 } = require('./api');
-const { detectarNecesidadesPlantilla, evaluarJugador } = require('./analista');
+const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador } = require('./analista');
 
 const fs = require('fs');
 const path = require('path');
-
-// Función auxiliar para dormir entre peticiones
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function ejecutarAgente() {
     const registroAcciones = [];
@@ -23,83 +19,100 @@ async function ejecutarAgente() {
         registroAcciones.push({ hora: new Date().toLocaleTimeString(), texto: accion });
     };
 
-    registrarAccion("🚀", `[${new Date().toLocaleString()}] Iniciando el Agente Biwenger...`);
+    const recomendacionesMercado = [];
+    const recomendacionesVenta = [];
+
+    registrarAccion("🚀", `[${new Date().toLocaleString()}] Iniciando el Biwenger Advisor Dashboard...`);
     
-// Comprobar si ya estamos en la fecha de inicio permitida
+    // Comprobar fecha de inicio
     const fechaInicio = process.env.FECHA_INICIO_PUJAS;
+    let modoPretemporada = false;
     if (fechaInicio) {
         const hoy = new Date();
         const inicio = new Date(fechaInicio);
         if (hoy < inicio) {
-            console.log(`⏳ Aún no es la fecha de inicio (${fechaInicio}). El agente volverá a dormir.`);
-            return;
+            modoPretemporada = true;
+            registrarAccion("⏳", `Modo Pretemporada activo. Inicio de mercado/liga: ${fechaInicio}. Analizando plantilla inicial...`);
         }
     }
     
-    // 1. Comprobar que tenemos conexión y leer saldo
+    // 1. Estado del equipo
     const estado = await obtenerEstadoEquipo();
     if (!estado) {
-        registrarAccion("❌", "No se ha podido conectar. Revisa el Token en el archivo .env o en los Secrets de GitHub.");
-        generarHTML(registroAcciones, 0, 0);
+        registrarAccion("❌", "No se ha podido conectar. Revisa el Token en el archivo .env o en los Secrets.");
+        generarHTML(registroAcciones, 0, 0, recomendacionesMercado, recomendacionesVenta, null);
         return;
     }
     
-    // NOTA: Biwenger suele devolver la plantilla en estado.team o un campo similar.
     const jugadoresEnPlantilla = estado.team ? estado.team.length : 0;
     const maxJugadores = parseInt(process.env.MAX_JUGADORES_PLANTILLA || "25");
     
     registrarAccion("✅", `Conectado. Plantilla actual: ${jugadoresEnPlantilla}/${maxJugadores} jugadores.`);
     
-    // Si la plantilla está llena, tenemos que decidir qué hacer
-    if (jugadoresEnPlantilla >= maxJugadores) {
-        registrarAccion("⚠️", "¡Plantilla llena! El agente no hará pujas a menos que decidas vender a alguien.");
-    }
-    
-    // NUEVA REGLA (Biwenger Optimizer 3.0): ESPECULACIÓN DIARIA
-    registrarAccion("📈", "Aplicando rutina de especulación: Poniendo a toda la plantilla a la venta...");
-    if (estado.team && estado.team.length > 0) {
-        for (const jugador of estado.team) {
-            await ponerJugadorEnVenta(jugador.id, jugador.price);
-            await sleep(1000); // Pausa para no saturar la API
-        }
-        registrarAccion("✅", "Toda la plantilla ha sido puesta a la venta para recibir ofertas.");
-    }
-    
-    // GUARDARRAÍLES DE SEGURIDAD (Reglas de Supervivencia)
-    registrarAccion("🛡️", "Comprobando salvaguardas y saldo...");
     let saldoActual = estado.balance || 0;
     const valorEquipo = estado.teamValue || 0;
     
     registrarAccion("💰", `Saldo Actual: ${saldoActual}€ | Valor Equipo: ${valorEquipo}€`);
     
+    if (modoPretemporada) {
+        const analisisPretemporada = evaluarPlantillaInicial(estado.team || []);
+        registrarAccion("✅", `Análisis de pretemporada completado. Se han detectado ${analisisPretemporada.vender.length} descartes claros.`);
+        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, analisisPretemporada, [], jugadoresEnPlantilla);
+        return;
+    }
+
+    
+    // Calcular tiempo hasta la próxima jornada (Para Riesgos)
+    let esRiesgoJornada = false;
+    let horasHastaJornada = 999;
+    const fechaJornada = await obtenerInicioProximaJornada();
+    
+    if (fechaJornada) {
+        const msHastaJornada = fechaJornada.getTime() - new Date().getTime();
+        horasHastaJornada = msHastaJornada / (1000 * 60 * 60);
+        if (horasHastaJornada > 0 && horasHastaJornada <= 48) {
+            esRiesgoJornada = true;
+        }
+    } else {
+        const diaSemana = new Date().getDay();
+        esRiesgoJornada = (diaSemana === 4 || diaSemana === 5 || diaSemana === 1 || diaSemana === 2); // Jueves, Viernes, Lunes, Martes pueden ser previas
+        if (esRiesgoJornada) horasHastaJornada = 24;
+    }
+
+    if (esRiesgoJornada) {
+        registrarAccion("⏳", `¡Atención! Faltan aprox ${Math.round(horasHastaJornada)} horas para que empiece la jornada.`);
+    }
+
+    // CUADRAR CUENTAS (Asesoramiento)
     if (saldoActual < 0) {
-        registrarAccion("⚠️", "¡SALDO NEGATIVO! Procediendo a cuadrar cuentas...");
+        const urgencia = esRiesgoJornada ? "¡CRÍTICO! PUNTUARÁS CERO SI NO VENDES YA." : "Analizando opciones de venta para cuadrar cuentas...";
+        registrarAccion("⚠️", `¡SALDO NEGATIVO! ${urgencia}`);
         const ofertas = await obtenerOfertas();
         if (ofertas && ofertas.length > 0) {
-            // Ordenar jugadores de nuestro equipo de peor a mejor (para vender primero a los peores)
             const jugadoresPorVender = [...estado.team].sort((a, b) => a.average - b.average);
-            
+            let saldoSimulado = saldoActual;
+
             for (const jugador of jugadoresPorVender) {
-                // Buscar si hay oferta de 'computer' para este jugador
                 const ofertaComputer = ofertas.find(o => o.player === jugador.id && o.type === 'computer');
-                
                 if (ofertaComputer) {
-                    registrarAccion("💸", `Vendiendo a ${jugador.name} por ${ofertaComputer.amount}€ para cuadrar cuentas.`);
-                    await aceptarOferta(ofertaComputer.id);
-                    saldoActual += ofertaComputer.amount;
-                    await sleep(1000);
+                    recomendacionesVenta.push({
+                        nombre: jugador.name,
+                        oferta: ofertaComputer.amount
+                    });
+                    saldoSimulado += ofertaComputer.amount;
+                    registrarAccion("💡", `Recomendación: Vender a ${jugador.name} por ${ofertaComputer.amount}€ al computer.`);
                     
-                    if (saldoActual >= 0) {
-                        registrarAccion("✅", "¡Saldo vuelto a positivo! Deteniendo ventas de emergencia.");
+                    if (saldoSimulado >= 0) {
+                        registrarAccion("✅", "Con estas ventas simuladas cuadrarías el saldo.");
                         break;
                     }
                 }
             }
-            if (saldoActual < 0) {
-                registrarAccion("❌", "Sigue habiendo saldo negativo tras aceptar ofertas. Hacen falta más ventas o mejores ofertas.");
+            if (saldoSimulado < 0) {
+                registrarAccion("❌", "Las ofertas actuales no son suficientes para salir del negativo.");
             }
         } else {
-            registrarAccion("❌", "No hay ofertas disponibles para cuadrar el saldo negativo.");
+            registrarAccion("❌", "No hay ofertas del computer disponibles para cuadrar el saldo negativo.");
         }
     }
     
@@ -107,151 +120,463 @@ async function ejecutarAgente() {
     const mercado = await obtenerMercado();
     if (!mercado || !mercado.sales) {
         registrarAccion("❌", "No se ha podido leer el mercado.");
-        generarHTML(registroAcciones, saldoActual, valorEquipo);
+        generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, [], jugadoresEnPlantilla);
         return;
     }
     
-    registrarAccion("🛒", `Se han encontrado ${mercado.sales.length} jugadores en el mercado hoy.`);
+    registrarAccion("🛒", `Analizando ${mercado.sales.length} jugadores en el mercado hoy.`);
     
-    // 3. Lógica de pujas
+    // 3. Lógica de pujas (Asesoramiento)
     const necesidades = detectarNecesidadesPlantilla(estado.team || []);
-    registrarAccion("📊", `Necesidades actuales detectadas: PT:${necesidades.PT} DF:${necesidades.DF} MC:${necesidades.MC} DL:${necesidades.DL}`);
+    registrarAccion("📊", `Necesidades detectadas: PT:${necesidades.PT} DF:${necesidades.DF} MC:${necesidades.MC} DL:${necesidades.DL}`);
     
+    // MODO DETECTIVE: Analizar rivales y pujas
+    const datosLiga = await obtenerPlantillasRivales();
+    let expedienteRivales = [];
+    if (datosLiga && datosLiga.standings) {
+        expedienteRivales = analizarRivales(datosLiga.standings);
+    }
+
+    const dirDocs = path.join(__dirname, '..', 'docs');
+    const statsPath = path.join(dirDocs, 'stats.json');
+    let statsPujas = {};
+    if (fs.existsSync(statsPath)) {
+        statsPujas = JSON.parse(fs.readFileSync(statsPath, 'utf8'));
+    }
+
+    const ultimosMovimientos = await obtenerUltimosMovimientos();
+    if (ultimosMovimientos && ultimosMovimientos.length > 0) {
+        statsPujas = calcularPerfilPujador(ultimosMovimientos, statsPujas);
+        if (!fs.existsSync(dirDocs)) fs.mkdirSync(dirDocs);
+        fs.writeFileSync(statsPath, JSON.stringify(statsPujas, null, 2));
+        registrarAccion("🧠", `Analítica de Pujas: Historial actualizado y guardado en memoria.`);
+    }
+
+    if (expedienteRivales.length > 0) {
+        // Enriquecer el expediente con las stats de pujas
+        expedienteRivales.forEach(r => {
+            r.statsPuja = statsPujas[r.id] || null;
+        });
+        registrarAccion("🕵️", `Modo Detective: Analizadas las urgencias de ${expedienteRivales.length} plantillas rivales.`);
+    }
+
     for (const venta of mercado.sales) {
-        // En Biwenger, el mercado tiene ventas directas (usuario 'computer' o sin user) o de otros usuarios
-        const esClausula = (venta.user !== null && venta.user !== undefined); // Simplificación
-        const jugador = venta.player; // A veces viene el objeto anidado o solo la info en 'venta'
-        
-        // Adaptación dependiendo de cómo llega el objeto (Biwenger suele meter datos del jugador dentro de 'player' o mezclados)
+        const esClausula = (venta.user !== null && venta.user !== undefined);
         const jugadorObj = venta.player ? venta.player : venta; 
         
         if (evaluarJugador(jugadorObj, esClausula, necesidades, saldoActual, valorEquipo)) {
-            // Decidir la cantidad a pujar
-            // Estrategia: Puja dinámica muy agresiva porque en la liga se puja fuerte
-            let puja = jugadorObj.price;
+            let pujaRecomendada = jugadorObj.price;
+            let sobrepujaPorcentaje = 0;
+
             if (!esClausula) {
-                // Base agresiva: 15% por encima del valor
-                let sobrepujaPorcentaje = 0.15; 
-                
-                // Si el jugador está subiendo fuerte (>50k diarios), pujamos un 25% extra
+                // REGLAS 26-27: Economía escasa. Base mucho más baja (5% en lugar de 15%)
+                sobrepujaPorcentaje = 0.05; 
                 if (jugadorObj.priceIncrement && jugadorObj.priceIncrement > 50000) {
-                    sobrepujaPorcentaje += 0.25; 
+                    sobrepujaPorcentaje += 0.15; // Antes 0.25
                 }
-                
-                // Si es un jugador Top (media de puntos > 6), sumamos otro 20%
                 if (jugadorObj.average && jugadorObj.average > 6) {
-                    sobrepujaPorcentaje += 0.20;
+                    sobrepujaPorcentaje += 0.15; // Antes 0.20
                 }
+                // Bonus extra para Delanteros (por la regla de +3 puntos por gol)
+                if (jugadorObj.position === 4) {
+                    sobrepujaPorcentaje += 0.10;
+                }
+
+                if (sobrepujaPorcentaje > 0.40) sobrepujaPorcentaje = 0.40; // Límite máximo bajado a 40%
                 
-                // Limite máximo de sobrepuja del 60% para no entrar en bancarrota
-                if (sobrepujaPorcentaje > 0.60) sobrepujaPorcentaje = 0.60;
-                
-                puja = Math.floor(jugadorObj.price * (1 + sobrepujaPorcentaje));
-                console.log(`📈 Estrategia agresiva: Calculada sobrepuja del ${(sobrepujaPorcentaje * 100).toFixed(0)}% para ${jugadorObj.name} (Puja: ${puja}€)`);
+                pujaRecomendada = Math.floor(jugadorObj.price * (1 + sobrepujaPorcentaje));
             } else {
-                puja = jugadorObj.clause; // Clausula es fija
+                pujaRecomendada = jugadorObj.clause;
             }
             
-            // CONTROL DE RIESGO DE JORNADA DINÁMICO
-            // Comprobamos la fecha de la próxima jornada.
-            let esRiesgoJornada = false;
-            const fechaJornada = await obtenerInicioProximaJornada();
-            
-            if (fechaJornada) {
-                const msHastaJornada = fechaJornada.getTime() - new Date().getTime();
-                const horasHastaJornada = msHastaJornada / (1000 * 60 * 60);
-                
-                if (horasHastaJornada > 0 && horasHastaJornada <= 48) {
-                    esRiesgoJornada = true;
-                }
-            } else {
-                const diaSemana = new Date().getDay();
-                esRiesgoJornada = (diaSemana === 4 || diaSemana === 5); // 4=Jueves, 5=Viernes
-            }
+            // Riesgo de jornada ya calculado fuera del bucle
             
             let puedePujar = false;
+            let alertaRiesgo = "";
             if (esRiesgoJornada) {
-                // MODO RELAJADO (A la espera de las reglas de agosto):
-                // Permitimos endeudarnos un 10% del equipo incluso si estamos cerca de la jornada,
-                // confiando en que la rutina de "Cuadrar Cuentas" del día siguiente lo arreglará.
-                puedePujar = (saldoActual + valorEquipo * 0.10) >= puja;
-                if (puedePujar && saldoActual < puja) {
-                    registrarAccion("⚠️", `Aviso de Jornada: Pujando en negativo a menos de 48h. Se confiará en vender suplentes mañana para cuadrar.`);
+                if (esClausula) {
+                    // NUEVA REGLA: Prohibido robar (clausulazo) a menos de 48h de la jornada
+                    puedePujar = false;
+                } else {
+                    puedePujar = (saldoActual + valorEquipo * 0.10) >= pujaRecomendada;
+                    if (puedePujar && saldoActual < pujaRecomendada) {
+                        alertaRiesgo = "⚠️ Riesgo de jornada: Pujar te dejará en negativo a <48h.";
+                    }
                 }
             } else {
-                // Lunes a Miércoles: Podemos especular más (20% del valor del equipo)
-                puedePujar = (saldoActual + valorEquipo * 0.20) >= puja;
+                puedePujar = (saldoActual + valorEquipo * 0.20) >= pujaRecomendada;
+            }
+
+            // Inteligencia de Rivales (Modo Detective)
+            let posString = '';
+            if (jugadorObj.position === 1) posString = 'PT';
+            else if (jugadorObj.position === 2) posString = 'DF';
+            else if (jugadorObj.position === 3) posString = 'MC';
+            else if (jugadorObj.position === 4) posString = 'DL';
+            
+            const rivalesInteresados = expedienteRivales.filter(r => r.urgencias.includes(posString));
+            let alertaCompetencia = '';
+            if (rivalesInteresados.length > 0) {
+                const nombres = rivalesInteresados.map(r => r.nombre).slice(0, 3).join(', '); // Mostramos max 3
+                
+                // Buscar si alguno de estos rivales tiene tendencia a sobrepujar
+                let maxSobrepujaMedia = 0;
+                rivalesInteresados.forEach(r => {
+                    if (r.statsPuja && r.statsPuja.sobrepujaMedia > maxSobrepujaMedia) {
+                        maxSobrepujaMedia = r.statsPuja.sobrepujaMedia;
+                    }
+                });
+
+                let porcentajeAumento = 0.05; // Base 5% por competencia
+                if (maxSobrepujaMedia > 0) {
+                    // Si el rival suele sobrepujar un 20%, nosotros sugerimos un 21%
+                    porcentajeAumento = maxSobrepujaMedia + 0.01;
+                }
+
+                const porcentajeAumentoMostrar = Math.round(porcentajeAumento * 100);
+                alertaCompetencia = `🔥 ¡Peligro! ${nombres} necesitan un ${posString}. Incrementamos puja al +${porcentajeAumentoMostrar}% por su historial de compras.`;
+                
+                // En lugar de sobreescribir la puja, tomamos el valor del jugador + porcentaje de aumento táctico
+                const pujaCompetitiva = Math.floor(jugadorObj.price * (1 + porcentajeAumento));
+                if (pujaCompetitiva > pujaRecomendada) {
+                    pujaRecomendada = pujaCompetitiva;
+                }
             }
 
             if (puedePujar) { 
-                registrarAccion("🤑", `Realizando puja por ${jugadorObj.name} de ${puja}€`);
-                await pujarPorJugador(jugadorObj.id, puja);
-                // Restamos la puja del saldo actual simulado para no sobre-endeudarnos en la misma ejecución
-                saldoActual -= puja; 
-                await sleep(1500);
-            } else {
-                registrarAccion("😞", `No hay suficiente margen financiero para pujar por ${jugadorObj.name}`);
+                let alertaFinal = alertaRiesgo;
+                if (alertaCompetencia) {
+                    alertaFinal = alertaRiesgo ? alertaRiesgo + '<br>' + alertaCompetencia : alertaCompetencia;
+                }
+                
+                if (esClausula) {
+                    const alertaClausula = "ℹ️ REGLA 26-27: Recuerda que solo tienes 2 'robos' cada 7 días. Gástalo sabiamente.";
+                    alertaFinal = alertaFinal ? alertaFinal + '<br>' + alertaClausula : alertaClausula;
+                }
+
+                recomendacionesMercado.push({
+                    nombre: jugadorObj.name,
+                    precio: jugadorObj.price,
+                    puja: pujaRecomendada,
+                    clausula: esClausula,
+                    alerta: alertaFinal
+                });
+                registrarAccion("🎯", `Oportunidad: ${jugadorObj.name}. Puja recomendada: ${pujaRecomendada}€`);
             }
         }
     }
     
-    registrarAccion("🏁", `[${new Date().toLocaleString()}] Tarea del Agente finalizada.`);
-    
-    // Generar el reporte HTML al terminar
-    generarHTML(registroAcciones, saldoActual, valorEquipo);
+    registrarAccion("🏁", `[${new Date().toLocaleString()}] Análisis finalizado.`);
+    generarHTML(registroAcciones, saldoActual, valorEquipo, recomendacionesMercado, recomendacionesVenta, null, expedienteRivales, jugadoresEnPlantilla, horasHastaJornada);
 }
 
-function generarHTML(registro, saldo, valor) {
+function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisPretemporada = null, expedienteRivales = [], jugadoresEnPlantilla = 0, horasJornada = 999) {
     const dirDocs = path.join(__dirname, '..', 'docs');
     if (!fs.existsSync(dirDocs)) {
         fs.mkdirSync(dirDocs);
     }
 
     const fecha = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    let listaHTML = registro.map(r => `<li><span class="hora">${r.hora}</span> - ${r.texto}</li>`).join('\n');
+    
+    const formatoEuro = (num) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
 
-    const htmlContent = `
-<!DOCTYPE html>
+    let htmlPlantilla = '';
+    const MAX_JUGADORES = process.env.MAX_JUGADORES_PLANTILLA ? parseInt(process.env.MAX_JUGADORES_PLANTILLA) : 14;
+    
+    if (jugadoresEnPlantilla >= MAX_JUGADORES) {
+        htmlPlantilla = `
+        <div class="section-card danger" style="border-top-color: #ef4444; background: rgba(239, 68, 68, 0.1);">
+            <h2 style="color: #fca5a5;">🛑 Límite de Plantilla Superado o Alcanzado</h2>
+            <p>Tienes <strong>${jugadoresEnPlantilla} jugadores</strong> en tu equipo. El límite de la liga es de <strong>${MAX_JUGADORES}</strong>.</p>
+            <p><strong>REGLA 26-27:</strong> No puedes fichar a nadie nuevo a menos que vendas jugadores para hacer hueco en tu plantilla. Solo se permite vender al Computer.</p>
+        </div>`;
+    }
+
+    let htmlVentas = '';
+    const alertaUrgenciaVenta = (horasJornada <= 48) ? `<div style="background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #fca5a5; font-weight: bold; font-size: 1.1rem; text-align: center;">⏳ ¡QUEDAN ${Math.round(horasJornada)} HORAS PARA LA JORNADA! PUNTUARÁS 0 SI NO VENDES AHORA.</div>` : '';
+
+    if (saldo < 0 && recomVenta.length > 0) {
+        htmlVentas = `
+        <div class="section-card danger">
+            <h2>🚨 Alerta de Saldo Negativo</h2>
+            ${alertaUrgenciaVenta}
+            <p>Para salir del negativo, el analista recomienda aceptar las siguientes ofertas del computer:</p>
+            <div class="grid-cards">
+                ${recomVenta.map(v => `
+                    <div class="card sell-card">
+                        <div class="card-title">${v.nombre}</div>
+                        <div class="card-price">${formatoEuro(v.oferta)}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    } else if (saldo < 0) {
+        htmlVentas = `
+        <div class="section-card danger">
+            <h2>🚨 Alerta de Saldo Negativo</h2>
+            ${alertaUrgenciaVenta}
+            <p>Estás en negativo pero no tienes ofertas suficientes del computer para cuadrar cuentas. ¡Pon jugadores a la venta hoy mismo!</p>
+        </div>`;
+    } else {
+        htmlVentas = `
+        <div class="section-card success">
+            <h2>✅ Cuentas Saneadas</h2>
+            <p>Tu saldo es positivo. No tienes obligación de vender para cuadrar cuentas.</p>
+        </div>`;
+    }
+
+    let htmlMercado = '';
+    if (recomMercado.length > 0) {
+        htmlMercado = `
+        <div class="section-card market">
+            <h2>🎯 Recomendaciones de Fichajes</h2>
+            <p>El algoritmo ha detectado estos jugadores interesantes en el mercado hoy:</p>
+            <div class="grid-cards">
+                ${recomMercado.map(m => `
+                    <div class="card buy-card">
+                        <div class="card-title">${m.nombre} ${m.clausula ? '🏷️ (Cláusula)' : ''}</div>
+                        <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
+                        <div class="card-bid">Puja Sugerida:<br>${formatoEuro(m.puja)}</div>
+                        ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    } else {
+        htmlMercado = `
+        <div class="section-card neutral">
+            <h2>🤷‍♂️ Sin Objetivos en el Mercado</h2>
+            <p>Hoy no hay ningún jugador en el mercado que encaje con tus necesidades o presupuesto.</p>
+        </div>`;
+    }
+
+    let htmlPretemporada = '';
+    if (analisisPretemporada) {
+        htmlPretemporada = `
+        <div class="section-card" style="border-top-color: #f472b6;">
+            <h2>🧐 Análisis de Plantilla Inicial</h2>
+            <p>El asesor ha evaluado tu equipo inicial. Aquí tienes el desglose:</p>
+            
+            <h3 style="color: var(--success); margin-top: 20px;">🛡️ Jugadores a Mantener (Claves/Especulación)</h3>
+            <div class="grid-cards">
+                ${analisisPretemporada.mantener.map(m => `
+                    <div class="card">
+                        <div class="card-title">${m.nombre}</div>
+                        <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
+                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">${m.motivo}</div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <h3 style="color: var(--danger); margin-top: 20px;">👋 Jugadores a Vender (Descartes/Bajando)</h3>
+            <div class="grid-cards">
+                ${analisisPretemporada.vender.map(m => `
+                    <div class="card">
+                        <div class="card-title">${m.nombre}</div>
+                        <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
+                        <div class="card-alert" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);">${m.motivo}</div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <h3 style="color: #94a3b8; margin-top: 20px;">🤔 Dudas / Parches</h3>
+            <div class="grid-cards">
+                ${analisisPretemporada.duda.map(m => `
+                    <div class="card">
+                        <div class="card-title">${m.nombre}</div>
+                        <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
+                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">${m.motivo}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+        
+        // Sobrescribir las secciones normales ya que no hay mercado aún
+        htmlVentas = '';
+        htmlMercado = '';
+    }
+
+    let htmlDetective = '';
+    if (expedienteRivales && expedienteRivales.length > 0) {
+        htmlDetective = `
+        <div class="section-card" style="border-top-color: #f59e0b;">
+            <h2>🕵️ Expediente de Rivales y Analítica de Pujas</h2>
+            <p>El Asesor ha investigado a tus contrincantes para detectar sus puntos débiles y predecir sus pujas.</p>
+            <div class="grid-cards">
+                ${expedienteRivales.map(r => `
+                    <div class="card" style="border-left: 3px solid #f59e0b;">
+                        <div class="card-title">${r.nombre}</div>
+                        <div class="card-detail">Valor Plantilla: ${formatoEuro(r.valor)}</div>
+                        <div style="margin-top: 10px;">
+                            <strong>Busca urgentemente:</strong><br>
+                            ${r.urgencias.map(u => `<span style="display:inline-block; margin-right:5px; background:#475569; padding:2px 8px; border-radius:12px; font-size:0.8rem;">${u}</span>`).join('')}
+                        </div>
+                        ${r.statsPuja && r.statsPuja.fichajesAnalizados > 0 ? `
+                        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.85rem;">
+                            <div style="color: #cbd5e1;">💰 <strong>Perfil Comprador</strong></div>
+                            <div style="color: #94a3b8; margin-top: 5px;">Sobrepuja media: <span style="color: #f87171;">+${Math.round(r.statsPuja.sobrepujaMedia * 100)}%</span></div>
+                            <div style="color: #94a3b8;">Fichaje +Caro: ${formatoEuro(r.statsPuja.pujaMaxima)}</div>
+                            <div style="color: #64748b; font-size: 0.75rem;">(Analizados ${r.statsPuja.fichajesAnalizados} fichajes)</div>
+                        </div>
+                        ` : `
+                        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.85rem; color: #64748b;">
+                            💰 Sin datos históricos de fichajes
+                        </div>
+                        `}
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+    }
+
+    let listaHTML = registro.map(r => `<li><span class="hora">${r.hora}</span> ${r.texto.replace(/<.*?>/g, '')}</li>`).join('\n');
+
+    const htmlContent = `<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte Diario - Biwenger Bot</title>
+    <title>Biwenger Advisor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background-color: #1e1e1e; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
-        h1 { color: #4caf50; border-bottom: 2px solid #4caf50; padding-bottom: 10px; }
-        .stats { display: flex; justify-content: space-between; background-color: #2c2c2c; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .stat-box { text-align: center; }
-        .stat-value { font-size: 1.5em; font-weight: bold; color: #4fc3f7; }
-        ul { list-style: none; padding: 0; }
-        li { background-color: #2a2a2a; margin-bottom: 10px; padding: 15px; border-radius: 5px; border-left: 4px solid #4caf50; }
-        .hora { color: #aaa; font-size: 0.8em; margin-right: 10px; }
+        :root {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --card-bg: #1e293b;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h1 { margin: 0; font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; margin-top: 5px; }
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+        }
+        .stats-hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease;
+        }
+        .stat-box:hover { transform: translateY(-5px); }
+        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
+        .stat-value { font-size: 2.5rem; font-weight: 800; margin-top: 10px; }
+        .val-positive { color: var(--success); }
+        .val-negative { color: var(--danger); }
+        
+        .section-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent);
+        }
+        .section-card.danger { border-top-color: var(--danger); }
+        .section-card.success { border-top-color: var(--success); }
+        .section-card.market { border-top-color: #8b5cf6; }
+        
+        .section-card h2 { margin-top: 0; }
+        
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+        }
+        .card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: scale(1.02);
+        }
+        .card-title { font-weight: 600; font-size: 1.2rem; margin-bottom: 10px; }
+        .sell-card .card-price { color: var(--success); font-size: 1.4rem; font-weight: 800; }
+        .buy-card .card-bid { margin-top: 15px; color: #a78bfa; font-size: 1.3rem; font-weight: 800; }
+        .card-detail { font-size: 0.9rem; color: #94a3b8; }
+        .card-alert { margin-top: 10px; font-size: 0.8rem; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 5px; border-radius: 4px; }
+        
+        .logs-section {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+        }
+        .logs-section h3 { margin-top: 0; color: #94a3b8; font-size: 1rem; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 0.95rem; }
+        li:last-child { border-bottom: none; }
+        .hora { color: #64748b; font-family: monospace; margin-right: 15px; }
+        
     </style>
 </head>
 <body>
+    <header>
+        <h1>Biwenger Advisor</h1>
+        <div class="subtitle">Análisis Estratégico - ${fecha}</div>
+    </header>
+    
     <div class="container">
-        <h1>Informe del Bot - ${fecha}</h1>
-        <div class="stats">
+        <div class="stats-hero">
             <div class="stat-box">
-                <div>Saldo Estimado Fin del Día</div>
-                <div class="stat-value">${saldo} €</div>
+                <div class="stat-label">Saldo de Cuenta</div>
+                <div class="stat-value ${saldo >= 0 ? 'val-positive' : 'val-negative'}">${formatoEuro(saldo)}</div>
             </div>
             <div class="stat-box">
-                <div>Valor del Equipo</div>
-                <div class="stat-value">${valor} €</div>
+                <div class="stat-label">Valor de Plantilla</div>
+                <div class="stat-value" style="color: #60a5fa;">${formatoEuro(valor)}</div>
             </div>
         </div>
-        <h2>Registro de Acciones</h2>
-        <ul>
-            ${listaHTML}
-        </ul>
+
+        ${htmlPlantilla}
+        ${htmlPretemporada}
+        ${htmlVentas}
+        ${htmlMercado}
+        ${htmlDetective}
+
+        <div class="logs-section">
+            <h3>Terminal de Análisis</h3>
+            <ul>
+                ${listaHTML}
+            </ul>
+        </div>
     </div>
 </body>
 </html>`;
 
     fs.writeFileSync(path.join(dirDocs, 'index.html'), htmlContent);
-    console.log("📄 Reporte HTML generado en docs/index.html");
+    console.log("📄 Dashboard HTML generado en docs/index.html");
 }
 
 module.exports = {
