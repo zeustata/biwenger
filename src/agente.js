@@ -310,7 +310,10 @@ async function ejecutarAgente() {
     }
     
     // Cálculo del Contador Regresivo a la Jornada 1
-    const fechaPujas = process.env.FECHA_INICIO_PUJAS ? new Date(process.env.FECHA_INICIO_PUJAS) : new Date(Date.now() + 10 * 24 * 60 * 60 * 1000);
+    let fechaPujas = process.env.FECHA_INICIO_PUJAS ? new Date(process.env.FECHA_INICIO_PUJAS) : null;
+    if (!fechaPujas || isNaN(fechaPujas.getTime()) || fechaPujas.getTime() <= Date.now()) {
+        fechaPujas = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000); // 10 días de margen por defecto
+    }
     const diffMs = fechaPujas - new Date();
     const diasCuentaAtras = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
     const horasCuentaAtras = Math.max(0, Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
