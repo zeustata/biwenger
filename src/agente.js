@@ -388,8 +388,10 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 </div>
                 <span class="toggle-arrow">🔽</span>
             </div>
-            <div class="card-collapsible-content">
-                ${contenido}
+            <div class="card-collapsible-wrapper">
+                <div class="card-collapsible-content">
+                    ${contenido}
+                </div>
             </div>
         </div>`;
     }
@@ -779,40 +781,42 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
             <span class="toggle-arrow">🔽</span>
         </div>
-        <div class="card-collapsible-content">
-            <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
-                ${planDiario.consejo}
-            </div>
-            <div class="action-grid">
-                <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
-                    <div class="action-icon">🛒</div>
-                    <div class="action-title">Hoy Puja Por</div>
-                    <div class="action-body">
-                        ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
-                    </div>
+        <div class="card-collapsible-wrapper">
+            <div class="card-collapsible-content">
+                <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
+                    ${planDiario.consejo}
                 </div>
-
-                <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
-                    <div class="action-icon">💵</div>
-                    <div class="action-title">Hoy Vende A</div>
-                    <div class="action-body">
-                        ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
+                <div class="action-grid">
+                    <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
+                        <div class="action-icon">🛒</div>
+                        <div class="action-title">Hoy Puja Por</div>
+                        <div class="action-body">
+                            ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
+                        </div>
                     </div>
-                </div>
 
-                <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
-                    <div class="action-icon">🥷</div>
-                    <div class="action-title">Hoy Paga Cláusula</div>
-                    <div class="action-body">
-                        ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
+                    <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
+                        <div class="action-icon">💵</div>
+                        <div class="action-title">Hoy Vende A</div>
+                        <div class="action-body">
+                            ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
+                        </div>
                     </div>
-                </div>
 
-                <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
-                    <div class="action-icon">⚽</div>
-                    <div class="action-title">Hoy Alinea Esto</div>
-                    <div class="action-body">
-                        ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
+                    <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
+                        <div class="action-icon">🥷</div>
+                        <div class="action-title">Hoy Paga Cláusula</div>
+                        <div class="action-body">
+                            ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
+                        </div>
+                    </div>
+
+                    <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
+                        <div class="action-icon">⚽</div>
+                        <div class="action-title">Hoy Alinea Esto</div>
+                        <div class="action-body">
+                            ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1166,11 +1170,13 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         
         .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.5rem; color: #ffffff; }
 
-        /* Collapsible Accordion Cards */
+        /* Collapsible Accordion Cards - Smooth Mobile & Desktop Animation */
         .collapsible-card {
             padding: 0 !important;
             overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
         .card-header-toggle {
             padding: 22px 28px;
@@ -1180,7 +1186,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             cursor: pointer;
             user-select: none;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%);
-            transition: all 0.25s ease;
+            transition: background 0.25s ease;
         }
         .card-header-toggle:hover {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(251, 191, 36, 0.15) 100%);
@@ -1206,6 +1212,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             font-size: 0.75rem;
             font-weight: 700;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .toggle-arrow {
             font-size: 1.1rem;
@@ -1213,22 +1220,49 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             opacity: 0.9;
             color: #34d399;
         }
+        .card-collapsible-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: grid-template-rows;
+        }
+        .collapsible-card.is-open .card-collapsible-wrapper {
+            grid-template-rows: 1fr;
+        }
         .card-collapsible-content {
-            max-height: 0;
-            opacity: 0;
+            min-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
             padding: 0 28px;
+            transition: opacity 0.3s ease, padding 0.35s ease;
         }
         .collapsible-card.is-open .card-collapsible-content {
-            max-height: 5000px;
             opacity: 1;
             padding: 0 28px 28px 28px;
-            transition: max-height 0.5s ease-in, opacity 0.3s ease, padding 0.3s ease;
         }
         .collapsible-card.is-open .toggle-arrow {
             transform: rotate(180deg);
             color: #fbbf24;
+        }
+
+        @media (max-width: 768px) {
+            .section-card {
+                padding: 16px;
+                border-radius: 18px;
+                margin-bottom: 18px;
+            }
+            .card-header-toggle {
+                padding: 16px 18px;
+            }
+            .card-collapsible-content {
+                padding: 0 18px;
+            }
+            .collapsible-card.is-open .card-collapsible-content {
+                padding: 0 18px 18px 18px;
+            }
+            .header-title-group h2 {
+                font-size: 1.1rem;
+            }
         }
         .global-controls-bar {
             display: flex;
