@@ -1012,21 +1012,28 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
         </div>
 
-        ${htmlBuscador}
+        <!-- 1. SECCIONES DE TU USUARIO Y TU EQUIPO (USER FIRST) -->
         ${htmlOrdenesDia}
-        ${htmlGraficos}
-        ${htmlCaraACara}
-        ${htmlSalud}
         ${htmlOnce}
+        ${htmlSalud}
+        ${htmlPretemporada}
+        ${htmlPlantilla}
+        ${htmlVentas}
+        ${htmlGraficos}
+
+        <!-- 2. OPORTUNIDADES Y FICHAJES DE MERCADO -->
+        ${htmlMercado}
         ${htmlTrading}
         ${htmlChollos}
-        ${htmlPlantilla}
-        ${htmlPretemporada}
-        ${htmlVentas}
-        ${htmlMercado}
         ${htmlRobos}
-        ${htmlTablon}
+
+        <!-- 3. ESPIONAJE Y COMPARADOR DE RIVALES -->
+        ${htmlCaraACara}
         ${htmlDetective}
+
+        <!-- 4. BUSCADOR, NOTICIAS DE LIGA Y CALENDARIO -->
+        ${htmlBuscador}
+        ${htmlTablon}
         ${htmlCalendario}
 
         <div class="logs-section">
