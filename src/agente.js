@@ -910,18 +910,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         DL: jugPlantilla.filter(p => p.position === 4 || p.posicion === 4).length
     };
 
-    let htmlBuscador = `
-    <div class="search-container" style="margin-bottom: 25px; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(16px); padding: 15px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-        <span style="font-size: 1.2rem;">🔍</span>
-        <input type="text" id="searchInput" onkeyup="filtrarContenido()" placeholder="Buscar jugador, posición (PT, DF, MC, DL) o rival en vivo..." style="flex: 1; min-width: 250px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 16px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none;">
-        <div style="font-size: 0.8rem; color: #94a3b8; display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="filter-chip" onclick="filtrarPosicion('')" style="cursor:pointer; padding: 5px 12px; background: rgba(255,255,255,0.1); border-radius: 8px; font-weight: 600;">Todos</span>
-            <span class="filter-chip" onclick="filtrarPosicion('PT')" style="cursor:pointer; padding: 5px 12px; background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-radius: 8px; font-weight: 600;">🧤 PT</span>
-            <span class="filter-chip" onclick="filtrarPosicion('DF')" style="cursor:pointer; padding: 5px 12px; background: rgba(16, 185, 129, 0.2); color: #34d399; border-radius: 8px; font-weight: 600;">🛡️ DF</span>
-            <span class="filter-chip" onclick="filtrarPosicion('MC')" style="cursor:pointer; padding: 5px 12px; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-radius: 8px; font-weight: 600;">⚙️ MC</span>
-            <span class="filter-chip" onclick="filtrarPosicion('DL')" style="cursor:pointer; padding: 5px 12px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-radius: 8px; font-weight: 600;">⚽ DL</span>
-        </div>
-    </div>`;
+    let htmlBuscador = '';
 
     let htmlGraficos = crearSeccionDesplegable({
         id: 'sec-graficos',
@@ -1312,8 +1301,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         ${htmlCaraACara}
         ${htmlDetective}
 
-        <!-- 4. BUSCADOR, NOTICIAS DE LIGA Y CALENDARIO -->
-        ${htmlBuscador}
+        <!-- 4. NOTICIAS DE LIGA Y CALENDARIO -->
         ${htmlTablon}
         ${htmlCalendario}
 
@@ -1502,21 +1490,6 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 '<div style="font-size: 0.9rem; font-weight: bold; color: #60a5fa; margin-bottom: 8px;">📋 Plantilla de ' + rival.nombre + ' (' + (rival.team ? rival.team.length : 0) + ' Jugadores):</div>' +
                 jugRivalHTML +
             '</div>';
-    }
-
-    function filtrarContenido() {
-        const input = document.getElementById('searchInput');
-        const query = input ? input.value.toLowerCase().trim() : '';
-        const cards = document.querySelectorAll('.grid-cards .card');
-
-        cards.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            if (!query || text.includes(query)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
     }
 
         let deferredPrompt;

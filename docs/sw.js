@@ -1,4 +1,4 @@
-const CACHE_NAME = 'biwenger-ai-v5';
+const CACHE_NAME = 'biwenger-ai-v6';
 const ASSETS = [
     './index.html',
     './manifest.json',
