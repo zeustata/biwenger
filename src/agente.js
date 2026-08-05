@@ -1338,7 +1338,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <header>
         <h1>Biwenger Advisor</h1>
         <div class="subtitle">Análisis Estratégico - ${fecha}</div>
-        <div style="font-size:0.8rem; color:#fbbf24; margin-top:6px; font-weight:700; text-shadow:0 0 12px rgba(251,191,36,0.4);">✨ v2.4 - Liquid Glass Biwenger & Comunio (Refresco Inmediato)</div>
+        <div style="font-size:0.8rem; color:#fbbf24; margin-top:6px; font-weight:700; text-shadow:0 0 12px rgba(251,191,36,0.4);">✨ v2.5 - Liquid Glass Fluido Móvil (Desplegables 60 FPS)</div>
     </header>
     
     <div class="container">
