@@ -43,8 +43,7 @@ function detectarNecesidadesPlantilla(plantilla) {
  * Sigue la doctrina "Biwenger Optimizer 3.0" de especulación.
  */
 function evaluarJugador(jugador, esClausula = false, necesidades = {}, saldoDisponible = 0, valorEquipo = 0) {
-    const nombre = (jugador && (jugador.name || jugador.nombre)) || 'Jugador';
-    console.log(`\n<analisis_financiero> Evaluando a ${nombre}...`);
+    console.log(`\n<analisis_financiero> Evaluando a ${jugador.name}...`);
     
     // 1. Comprobar Liquidez
     const precioCompra = esClausula ? jugador.clause : jugador.price;

@@ -388,10 +388,8 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 </div>
                 <span class="toggle-arrow">🔽</span>
             </div>
-            <div class="card-collapsible-wrapper">
-                <div class="card-collapsible-content">
-                    ${contenido}
-                </div>
+            <div class="card-collapsible-content">
+                ${contenido}
             </div>
         </div>`;
     }
@@ -781,42 +779,40 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
             <span class="toggle-arrow">🔽</span>
         </div>
-        <div class="card-collapsible-wrapper">
-            <div class="card-collapsible-content">
-                <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
-                    ${planDiario.consejo}
+        <div class="card-collapsible-content">
+            <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
+                ${planDiario.consejo}
+            </div>
+            <div class="action-grid">
+                <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
+                    <div class="action-icon">🛒</div>
+                    <div class="action-title">Hoy Puja Por</div>
+                    <div class="action-body">
+                        ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
+                    </div>
                 </div>
-                <div class="action-grid">
-                    <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
-                        <div class="action-icon">🛒</div>
-                        <div class="action-title">Hoy Puja Por</div>
-                        <div class="action-body">
-                            ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
-                        </div>
-                    </div>
 
-                    <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
-                        <div class="action-icon">💵</div>
-                        <div class="action-title">Hoy Vende A</div>
-                        <div class="action-body">
-                            ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
-                        </div>
+                <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
+                    <div class="action-icon">💵</div>
+                    <div class="action-title">Hoy Vende A</div>
+                    <div class="action-body">
+                        ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
                     </div>
+                </div>
 
-                    <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
-                        <div class="action-icon">🥷</div>
-                        <div class="action-title">Hoy Paga Cláusula</div>
-                        <div class="action-body">
-                            ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
-                        </div>
+                <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
+                    <div class="action-icon">🥷</div>
+                    <div class="action-title">Hoy Paga Cláusula</div>
+                    <div class="action-body">
+                        ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
                     </div>
+                </div>
 
-                    <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
-                        <div class="action-icon">⚽</div>
-                        <div class="action-title">Hoy Alinea Esto</div>
-                        <div class="action-body">
-                            ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
-                        </div>
+                <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
+                    <div class="action-icon">⚽</div>
+                    <div class="action-title">Hoy Alinea Esto</div>
+                    <div class="action-body">
+                        ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
                     </div>
                 </div>
             </div>
@@ -988,81 +984,51 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <title>Biwenger Advisor AI</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="icon.svg">
-    <meta name="theme-color" content="#060b13">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for (let registration of registrations) {
-                    registration.unregister();
-                }
-            });
-        }
-        if ('caches' in window) {
-            caches.keys().then(function(names) {
-                for (let name of names) {
-                    caches.delete(name);
-                }
-            });
-        }
-    </script>
     <style>
         .badge {
             display: inline-block;
             font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 12px;
+            padding: 3px 8px;
+            border-radius: 10px;
             font-weight: 700;
             margin-left: 6px;
             vertical-align: middle;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
         .badge-emerald {
             background: rgba(16, 185, 129, 0.25) !important;
             color: #34d399 !important;
-            border: 1px solid rgba(16, 185, 129, 0.5) !important;
-            box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
+            border: 1px solid #10b981 !important;
         }
         .badge-warning {
             background: rgba(245, 158, 11, 0.25) !important;
             color: #fbbf24 !important;
-            border: 1px solid rgba(245, 158, 11, 0.5) !important;
-            box-shadow: 0 0 14px rgba(245, 158, 11, 0.25);
+            border: 1px solid #f59e0b !important;
         }
         .badge-danger {
             background: rgba(239, 68, 68, 0.25) !important;
-            color: #fca5a5 !important;
-            border: 1px solid rgba(239, 68, 68, 0.5) !important;
-            box-shadow: 0 0 14px rgba(239, 68, 68, 0.25);
+            color: #f87171 !important;
+            border: 1px solid #ef4444 !important;
         }
         :root {
-            --bg-color: #0c2419;
-            --text-main: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --accent: #10b981;
-            --comunio-green: #10b981;
-            --biwenger-gold: #fbbf24;
-            --success: #34d399;
-            --danger: #f87171;
-            --warning: #fbbf24;
-            --glass-border: rgba(255, 255, 255, 0.22);
-            --glass-shine: rgba(255, 255, 255, 0.35);
-        }
-        html, body {
-            overflow-x: hidden;
-            max-width: 100vw;
+            --bg-color: #0b0f19;
+            --text-main: #f8fafc;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #3b82f6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
         body {
             font-family: 'Outfit', 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(ellipse at 50% -10%, rgba(16, 185, 129, 0.35) 0%, transparent 65%),
-                radial-gradient(ellipse at 85% 90%, rgba(251, 191, 36, 0.20) 0%, transparent 55%),
-                radial-gradient(ellipse at 15% 75%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.12) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
@@ -1070,256 +1036,215 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             line-height: 1.6;
         }
         header {
-            background: rgba(12, 36, 25, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 40px 20px 50px 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            padding: 50px 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        h1 { 
-            margin: 0; 
-            font-weight: 800; 
-            font-size: 2.5rem; 
-            letter-spacing: -1px; 
-            background: linear-gradient(135deg, #34d399 0%, #10b981 35%, #fbbf24 70%, #f59e0b 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            filter: drop-shadow(0 3px 12px rgba(16, 185, 129, 0.4));
-        }
-        .subtitle { font-size: 1.05rem; color: #cbd5e1; margin-top: 8px; font-weight: 500; }
+        h1 { margin: 0; font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { font-size: 1.1rem; color: #94a3b8; margin-top: 8px; font-weight: 500; }
         
         .container {
             max-width: 1100px;
-            margin: -25px auto 50px auto;
-            padding: 0 16px;
-            box-sizing: border-box;
+            margin: -30px auto 50px auto;
+            padding: 0 20px;
         }
 
         .executive-banner {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(251, 191, 36, 0.4);
+            border: 1px solid rgba(244, 114, 182, 0.3);
             border-radius: 20px;
-            padding: 22px;
-            margin-bottom: 25px;
-            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.2);
         }
         .banner-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .banner-header h2 { margin: 0; color: #fbbf24; font-size: 1.3rem; text-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
-        .live-pill { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+        .banner-header h2 { margin: 0; color: #f472b6; font-size: 1.4rem; }
+        .live-pill { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #f472b6; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
 
-        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
-        .action-card { 
-            background: rgba(255, 255, 255, 0.05); 
-            border-radius: 14px; 
-            padding: 16px; 
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-            transition: transform 0.2s ease, border-color 0.2s ease; 
-        }
-        .action-card:hover { 
-            transform: translateY(-3px); 
-            border-color: rgba(16, 185, 129, 0.5); 
-        }
-        .action-icon { font-size: 1.5rem; margin-bottom: 6px; }
-        .action-title { font-size: 0.9rem; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
-        .action-body { font-size: 0.85rem; color: #cbd5e1; }
-        .action-item { margin-bottom: 6px; }
-        .action-empty { color: #94a3b8; font-style: italic; font-size: 0.8rem; }
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .action-card { background: rgba(15, 23, 42, 0.6); border-radius: 14px; padding: 18px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; }
+        .action-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+        .action-icon { font-size: 1.6rem; margin-bottom: 8px; }
+        .action-title { font-size: 0.95rem; font-weight: 700; color: #cbd5e1; margin-bottom: 10px; }
+        .action-body { font-size: 0.85rem; color: #94a3b8; }
+        .action-item { margin-bottom: 8px; }
+        .action-empty { color: #64748b; font-style: italic; font-size: 0.8rem; }
+
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-top: 4px; }
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-emerald { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .stats-hero {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
         .stat-box {
-            background: rgba(12, 32, 22, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 25px;
             border-radius: 18px;
             text-align: center;
-            box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.25);
-            border: 1px solid var(--glass-border);
-            transition: transform 0.2s ease;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.3s ease;
         }
-        .stat-box:hover { 
-            transform: translateY(-3px); 
-            border-color: rgba(16, 185, 129, 0.5); 
-        }
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #cbd5e1; font-weight: 700; }
-        .stat-value { font-size: 1.9rem; font-weight: 800; margin-top: 6px; }
-        .val-positive { color: #34d399; text-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
-        .val-negative { color: #f87171; text-shadow: 0 0 12px rgba(248, 113, 113, 0.4); }
+        .stat-box:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 600; }
+        .stat-value { font-size: 2.2rem; font-weight: 800; margin-top: 8px; }
+        .val-positive { color: var(--success); }
+        .val-negative { color: var(--danger); }
         
         .section-card {
-            background: rgba(12, 32, 22, 0.88);
+            background: var(--card-bg);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 24px;
+            padding: 30px;
             border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--glass-border);
-            border-top: 4px solid var(--comunio-green);
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-top: 4px solid var(--accent);
         }
         .section-card.danger { border-top-color: var(--danger); }
         .section-card.success { border-top-color: var(--success); }
-        .section-card.market { border-top-color: #fbbf24; }
+        .section-card.market { border-top-color: #8b5cf6; }
         
-        .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.4rem; color: #ffffff; }
+        .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.5rem; }
 
-        /* Collapsible Accordion Cards - GPU Safe Grid Animation */
+        /* Collapsible Accordion Cards */
         .collapsible-card {
             padding: 0 !important;
             overflow: hidden;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-header-toggle {
-            padding: 18px 22px;
+            padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            background: rgba(255, 255, 255, 0.02);
             transition: background 0.2s ease;
         }
         .card-header-toggle:hover {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.20) 0%, rgba(251, 191, 36, 0.12) 100%);
+            background: rgba(255, 255, 255, 0.06);
         }
         .header-title-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         .header-title-group h2 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #ffffff;
         }
         .section-badge-pill {
-            background: rgba(16, 185, 129, 0.25);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
             padding: 3px 10px;
-            border-radius: 14px;
+            border-radius: 12px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 600;
         }
         .toggle-arrow {
-            font-size: 1.05rem;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0.9;
-            color: #34d399;
-        }
-        .card-collapsible-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .collapsible-card.is-open .card-collapsible-wrapper {
-            grid-template-rows: 1fr;
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            opacity: 0.7;
         }
         .card-collapsible-content {
-            min-height: 0;
-            overflow: hidden;
+            max-height: 0;
             opacity: 0;
-            padding: 0 22px;
-            transition: opacity 0.25s ease, padding 0.3s ease;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease, padding 0.3s ease;
+            padding: 0 25px;
         }
         .collapsible-card.is-open .card-collapsible-content {
+            max-height: 5000px;
             opacity: 1;
-            padding: 0 22px 22px 22px;
+            padding: 0 25px 25px 25px;
+            transition: max-height 0.5s ease-in, opacity 0.3s ease, padding 0.3s ease;
         }
         .collapsible-card.is-open .toggle-arrow {
             transform: rotate(180deg);
-            color: #fbbf24;
         }
-
         .global-controls-bar {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
         .btn-control {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            color: #ffffff;
-            padding: 8px 18px;
-            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 10px;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .btn-control:hover {
-            background: rgba(16, 185, 129, 0.4);
-            border-color: #ffffff;
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #fff;
         }
         
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 14px;
-            margin-top: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.5);
             border-radius: 14px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-            border-color: rgba(16, 185, 129, 0.5);
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.15);
         }
-        .card-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #ffffff; }
-        .sell-card .card-price { color: #34d399; font-size: 1.3rem; font-weight: 800; }
-        .buy-card .card-bid { margin-top: 12px; color: #fbbf24; font-size: 1.25rem; font-weight: 800; }
-        .card-detail { font-size: 0.88rem; color: #e2e8f0; }
-        .card-alert { margin-top: 8px; font-size: 0.8rem; color: #fbbf24; background: rgba(245, 158, 11, 0.15); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.25); }
+        .card-title { font-weight: 600; font-size: 1.2rem; margin-bottom: 10px; }
+        .sell-card .card-price { color: var(--success); font-size: 1.4rem; font-weight: 800; }
+        .buy-card .card-bid { margin-top: 15px; color: #a78bfa; font-size: 1.3rem; font-weight: 800; }
+        .card-detail { font-size: 0.9rem; color: #94a3b8; }
+        .card-alert { margin-top: 10px; font-size: 0.8rem; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 5px; border-radius: 4px; }
         
         .logs-section {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 14px;
-            padding: 18px;
-            border: 1px solid var(--glass-border);
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
         }
-        .logs-section h3 { margin-top: 0; color: #cbd5e1; font-size: 0.95rem; }
+        .logs-section h3 { margin-top: 0; color: #94a3b8; font-size: 1rem; }
         ul { list-style: none; padding: 0; margin: 0; }
-        li { padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.9rem; }
+        li { padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 0.95rem; }
         li:last-child { border-bottom: none; }
-        .hora { color: #94a3b8; font-family: monospace; margin-right: 12px; }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .container { padding: 0 10px; margin-top: -15px; }
-            .section-card { padding: 14px; border-radius: 16px; margin-bottom: 14px; }
-            .card-header-toggle { padding: 14px 14px; }
-            .card-collapsible-content { padding: 0 14px; }
-            .collapsible-card.is-open .card-collapsible-content { padding: 0 14px 14px 14px; }
-            .grid-cards { grid-template-columns: 1fr; gap: 10px; }
-            .action-grid { grid-template-columns: 1fr; }
-            .stats-hero { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .header-title-group h2 { font-size: 1.05rem; }
-        }
+        .hora { color: #64748b; font-family: monospace; margin-right: 15px; }
+        
     </style>
 </head>
 <body>
     <header>
         <h1>Biwenger Advisor</h1>
         <div class="subtitle">Análisis Estratégico - ${fecha}</div>
-        <div style="font-size:0.8rem; color:#fbbf24; margin-top:6px; font-weight:700; text-shadow:0 0 12px rgba(251,191,36,0.4);">✨ v2.6 - Liquid Glass Móvil HD (Cero Artefactos GPU & 100% Adaptativo)</div>
+        <div style="font-size:0.8rem; color:#60a5fa; margin-top:6px; font-weight:600;">✨ v2.0 - Interfaz Plegable (Caché Renovada)</div>
     </header>
     
     <div class="container">
