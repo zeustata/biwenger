@@ -1,4 +1,4 @@
-const CACHE_NAME = 'biwenger-ai-v1';
+const CACHE_NAME = 'biwenger-ai-v2';
 const ASSETS = [
     './index.html',
     './manifest.json',
@@ -6,12 +6,12 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(ASSETS);
         })
     );
-    self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -31,8 +31,14 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        fetch(event.request).catch(() => {
-            return caches.match(event.request);
-        })
+        fetch(event.request)
+            .then((response) => {
+                if (response && response.status === 200) {
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+                }
+                return response;
+            })
+            .catch(() => caches.match(event.request))
     );
 });
