@@ -1052,13 +1052,17 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             --glass-border: rgba(255, 255, 255, 0.22);
             --glass-shine: rgba(255, 255, 255, 0.35);
         }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
         body {
             font-family: 'Outfit', 'Inter', sans-serif;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(ellipse at 50% -10%, rgba(16, 185, 129, 0.38) 0%, transparent 65%),
-                radial-gradient(ellipse at 85% 90%, rgba(251, 191, 36, 0.22) 0%, transparent 55%),
-                radial-gradient(ellipse at 15% 75%, rgba(59, 130, 246, 0.18) 0%, transparent 50%);
+                radial-gradient(ellipse at 50% -10%, rgba(16, 185, 129, 0.35) 0%, transparent 65%),
+                radial-gradient(ellipse at 85% 90%, rgba(251, 191, 36, 0.20) 0%, transparent 55%),
+                radial-gradient(ellipse at 15% 75%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
             background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
@@ -1066,101 +1070,99 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             line-height: 1.6;
         }
         header {
-            background: linear-gradient(135deg, rgba(12, 36, 25, 0.85) 0%, rgba(17, 48, 35, 0.75) 50%, rgba(10, 30, 21, 0.85) 100%);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            padding: 45px 20px 55px 20px;
+            background: rgba(12, 36, 25, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 40px 20px 50px 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
         }
         h1 { 
             margin: 0; 
             font-weight: 800; 
-            font-size: 2.9rem; 
+            font-size: 2.5rem; 
             letter-spacing: -1px; 
             background: linear-gradient(135deg, #34d399 0%, #10b981 35%, #fbbf24 70%, #f59e0b 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             filter: drop-shadow(0 3px 12px rgba(16, 185, 129, 0.4));
         }
-        .subtitle { font-size: 1.1rem; color: #cbd5e1; margin-top: 8px; font-weight: 500; }
+        .subtitle { font-size: 1.05rem; color: #cbd5e1; margin-top: 8px; font-weight: 500; }
         
         .container {
             max-width: 1100px;
             margin: -25px auto 50px auto;
-            padding: 0 20px;
+            padding: 0 16px;
+            box-sizing: border-box;
         }
 
         .executive-banner {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(251, 191, 36, 0.4);
-            border-radius: 24px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 var(--glass-shine);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 25px;
+            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.3);
         }
         .banner-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .banner-header h2 { margin: 0; color: #fbbf24; font-size: 1.4rem; text-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
-        .live-pill { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+        .banner-header h2 { margin: 0; color: #fbbf24; font-size: 1.3rem; text-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
+        .live-pill { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
 
-        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
         .action-card { 
-            background: rgba(255, 255, 255, 0.07); 
-            border-radius: 16px; 
-            padding: 18px; 
-            border: 1px solid var(--glass-border); 
-            backdrop-filter: blur(20px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 14px; 
+            padding: 16px; 
+            border: 1px solid rgba(255, 255, 255, 0.12); 
+            transition: transform 0.2s ease, border-color 0.2s ease; 
         }
         .action-card:hover { 
-            transform: translateY(-4px); 
+            transform: translateY(-3px); 
             border-color: rgba(16, 185, 129, 0.5); 
-            box-shadow: 0 12px 25px -5px rgba(16, 185, 129, 0.3);
         }
-        .action-icon { font-size: 1.6rem; margin-bottom: 8px; }
-        .action-title { font-size: 0.95rem; font-weight: 700; color: #f1f5f9; margin-bottom: 10px; }
+        .action-icon { font-size: 1.5rem; margin-bottom: 6px; }
+        .action-title { font-size: 0.9rem; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
         .action-body { font-size: 0.85rem; color: #cbd5e1; }
-        .action-item { margin-bottom: 8px; }
+        .action-item { margin-bottom: 6px; }
         .action-empty { color: #94a3b8; font-style: italic; font-size: 0.8rem; }
 
         .stats-hero {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
         }
         .stat-box {
-            background: rgba(255, 255, 255, 0.09);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            padding: 25px;
-            border-radius: 22px;
+            background: rgba(12, 32, 22, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 20px;
+            border-radius: 18px;
             text-align: center;
-            box-shadow: 0 16px 36px 0 rgba(0, 0, 0, 0.25), inset 0 1px 0 0 var(--glass-shine);
+            box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.25);
             border: 1px solid var(--glass-border);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s ease;
         }
         .stat-box:hover { 
-            transform: translateY(-5px) scale(1.015); 
+            transform: translateY(-3px); 
             border-color: rgba(16, 185, 129, 0.5); 
-            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
         }
-        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #cbd5e1; font-weight: 700; }
-        .stat-value { font-size: 2.2rem; font-weight: 800; margin-top: 8px; }
-        .val-positive { color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
-        .val-negative { color: #f87171; text-shadow: 0 0 15px rgba(248, 113, 113, 0.4); }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #cbd5e1; font-weight: 700; }
+        .stat-value { font-size: 1.9rem; font-weight: 800; margin-top: 6px; }
+        .val-positive { color: #34d399; text-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
+        .val-negative { color: #f87171; text-shadow: 0 0 12px rgba(248, 113, 113, 0.4); }
         
         .section-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            padding: 30px;
-            border-radius: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.25), inset 0 1px 0 0 var(--glass-shine);
+            background: rgba(12, 32, 22, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 24px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.3);
             border: 1px solid var(--glass-border);
             border-top: 4px solid var(--comunio-green);
         }
@@ -1168,55 +1170,51 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         .section-card.success { border-top-color: var(--success); }
         .section-card.market { border-top-color: #fbbf24; }
         
-        .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.5rem; color: #ffffff; }
+        .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.4rem; color: #ffffff; }
 
-        /* Collapsible Accordion Cards - Smooth Mobile & Desktop Animation */
+        /* Collapsible Accordion Cards - GPU Safe Grid Animation */
         .collapsible-card {
             padding: 0 !important;
             overflow: hidden;
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
         }
         .card-header-toggle {
-            padding: 22px 28px;
+            padding: 18px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%);
-            transition: background 0.25s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            transition: background 0.2s ease;
         }
         .card-header-toggle:hover {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(251, 191, 36, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.20) 0%, rgba(251, 191, 36, 0.12) 100%);
         }
         .header-title-group {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .header-title-group h2 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #ffffff;
         }
         .section-badge-pill {
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.25);
             color: #34d399;
             border: 1px solid rgba(16, 185, 129, 0.4);
-            padding: 4px 12px;
-            border-radius: 16px;
+            padding: 3px 10px;
+            border-radius: 14px;
             font-size: 0.75rem;
             font-weight: 700;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
         .toggle-arrow {
-            font-size: 1.1rem;
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.05rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.9;
             color: #34d399;
         }
@@ -1224,7 +1222,6 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             display: grid;
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: grid-template-rows;
         }
         .collapsible-card.is-open .card-collapsible-wrapper {
             grid-template-rows: 1fr;
@@ -1233,112 +1230,96 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             min-height: 0;
             overflow: hidden;
             opacity: 0;
-            padding: 0 28px;
-            transition: opacity 0.3s ease, padding 0.35s ease;
+            padding: 0 22px;
+            transition: opacity 0.25s ease, padding 0.3s ease;
         }
         .collapsible-card.is-open .card-collapsible-content {
             opacity: 1;
-            padding: 0 28px 28px 28px;
+            padding: 0 22px 22px 22px;
         }
         .collapsible-card.is-open .toggle-arrow {
             transform: rotate(180deg);
             color: #fbbf24;
         }
 
-        @media (max-width: 768px) {
-            .section-card {
-                padding: 16px;
-                border-radius: 18px;
-                margin-bottom: 18px;
-            }
-            .card-header-toggle {
-                padding: 16px 18px;
-            }
-            .card-collapsible-content {
-                padding: 0 18px;
-            }
-            .collapsible-card.is-open .card-collapsible-content {
-                padding: 0 18px 18px 18px;
-            }
-            .header-title-group h2 {
-                font-size: 1.1rem;
-            }
-        }
         .global-controls-bar {
             display: flex;
             justify-content: flex-end;
-            gap: 12px;
-            margin-bottom: 22px;
+            gap: 10px;
+            margin-bottom: 18px;
         }
         .btn-control {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(251, 191, 36, 0.15) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
             color: #ffffff;
-            padding: 10px 22px;
-            border-radius: 14px;
+            padding: 8px 18px;
+            border-radius: 12px;
             font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
         }
         .btn-control:hover {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.45) 0%, rgba(251, 191, 36, 0.35) 100%);
+            background: rgba(16, 185, 129, 0.4);
             border-color: #ffffff;
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
         }
         
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 18px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 18px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
         .card:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px) scale(1.015);
-            box-shadow: 0 16px 32px -5px rgba(16, 185, 129, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
             border-color: rgba(16, 185, 129, 0.5);
         }
-        .card-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; color: #ffffff; }
-        .sell-card .card-price { color: #34d399; font-size: 1.4rem; font-weight: 800; text-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
-        .buy-card .card-bid { margin-top: 15px; color: #fbbf24; font-size: 1.3rem; font-weight: 800; text-shadow: 0 0 12px rgba(251, 191, 36, 0.4); }
-        .card-detail { font-size: 0.9rem; color: #e2e8f0; }
-        .card-alert { margin-top: 10px; font-size: 0.82rem; color: #fbbf24; background: rgba(245, 158, 11, 0.18); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .card-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #ffffff; }
+        .sell-card .card-price { color: #34d399; font-size: 1.3rem; font-weight: 800; }
+        .buy-card .card-bid { margin-top: 12px; color: #fbbf24; font-size: 1.25rem; font-weight: 800; }
+        .card-detail { font-size: 0.88rem; color: #e2e8f0; }
+        .card-alert { margin-top: 8px; font-size: 0.8rem; color: #fbbf24; background: rgba(245, 158, 11, 0.15); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.25); }
         
         .logs-section {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 22px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            padding: 18px;
             border: 1px solid var(--glass-border);
         }
-        .logs-section h3 { margin-top: 0; color: #cbd5e1; font-size: 1rem; }
+        .logs-section h3 { margin-top: 0; color: #cbd5e1; font-size: 0.95rem; }
         ul { list-style: none; padding: 0; margin: 0; }
-        li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.95rem; }
+        li { padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.9rem; }
         li:last-child { border-bottom: none; }
-        .hora { color: #94a3b8; font-family: monospace; margin-right: 15px; }
+        .hora { color: #94a3b8; font-family: monospace; margin-right: 12px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 0 10px; margin-top: -15px; }
+            .section-card { padding: 14px; border-radius: 16px; margin-bottom: 14px; }
+            .card-header-toggle { padding: 14px 14px; }
+            .card-collapsible-content { padding: 0 14px; }
+            .collapsible-card.is-open .card-collapsible-content { padding: 0 14px 14px 14px; }
+            .grid-cards { grid-template-columns: 1fr; gap: 10px; }
+            .action-grid { grid-template-columns: 1fr; }
+            .stats-hero { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .header-title-group h2 { font-size: 1.05rem; }
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Biwenger Advisor</h1>
         <div class="subtitle">Análisis Estratégico - ${fecha}</div>
-        <div style="font-size:0.8rem; color:#fbbf24; margin-top:6px; font-weight:700; text-shadow:0 0 12px rgba(251,191,36,0.4);">✨ v2.5 - Liquid Glass Fluido Móvil (Desplegables 60 FPS)</div>
+        <div style="font-size:0.8rem; color:#fbbf24; margin-top:6px; font-weight:700; text-shadow:0 0 12px rgba(251,191,36,0.4);">✨ v2.6 - Liquid Glass Móvil HD (Cero Artefactos GPU & 100% Adaptativo)</div>
     </header>
     
     <div class="container">
