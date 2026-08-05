@@ -29,12 +29,37 @@ function generarPlanDiario({
     if (recomMercado.length > 0) {
         recomMercado.forEach(p => {
             let nota = p.clausula ? ' (Cláusula)' : ' (Mercado Libre)';
-            if (estaLleno) nota += ' ⚠️ *Atención: Plantilla en 14/14. Requiere venta antes.*';
-            planPujas.push(`<strong>${p.nombre}</strong>: Pujar <strong>${formatoEuro(p.puja)}</strong>${nota}`);
+            if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Requiere venta antes)</em>';
+            const sobrepuja = p.precio > 0 ? Math.round(((p.puja - p.precio) / p.precio) * 100) : 0;
+            const limite = p.puja ? Math.round(p.puja * 1.05) : Math.round(p.precio * 1.08);
+            planPujas.push(`
+                <div style="margin-bottom: 8px;">
+                    <strong>⚽ ${p.nombre}</strong>${nota}<br>
+                    <span style="font-size:0.85rem; color:#cbd5e1;">
+                        💵 Valor Oficial: <strong>${formatoEuro(p.precio)}</strong><br>
+                        🎯 <strong>Puja Recomendada: ${formatoEuro(p.puja)}</strong> <span style="color:#34d399;">(+${sobrepuja}% sobrepuja)</span><br>
+                        ⛔ Límite Máximo Rentable: <strong>${formatoEuro(limite)}</strong>
+                    </span>
+                </div>
+            `);
         });
     } else if (oportunidadesTrading.length > 0) {
-        const topTrading = oportunidadesTrading[0];
-        planPujas.push(`<strong>${topTrading.nombre}</strong> (Trading): Comprar a <strong>${formatoEuro(topTrading.precio)}</strong> (Subiendo +${(topTrading.subidaDiaria/1000).toFixed(0)}k€/día).`);
+        oportunidadesTrading.slice(0, 3).forEach(topTrading => {
+            const sobrepuja = topTrading.precio > 0 ? Math.round(((topTrading.puja - topTrading.precio) / topTrading.precio) * 100) : 0;
+            const limite = topTrading.limiteMaximo || Math.round(topTrading.precio * 1.05);
+            let nota = ' (Trading / Especulación)';
+            if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Vende suplente)</em>';
+            planPujas.push(`
+                <div style="margin-bottom: 8px;">
+                    <strong>🚀 ${topTrading.nombre}</strong>${nota}<br>
+                    <span style="font-size:0.85rem; color:#cbd5e1;">
+                        💵 Valor Oficial: <strong>${formatoEuro(topTrading.precio)}</strong><br>
+                        🎯 <strong>Puja Recomendada: ${formatoEuro(topTrading.puja)}</strong> <span style="color:#34d399;">(+${(topTrading.subidaDiaria/1000).toFixed(0)}k€/día)</span><br>
+                        ⛔ Límite Máximo Rentable: <strong>${formatoEuro(limite)}</strong>
+                    </span>
+                </div>
+            `);
+        });
     }
 
     // 2. Sintetizar VENTAS obligatorias o sugeridas para hoy

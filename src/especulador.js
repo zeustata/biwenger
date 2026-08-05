@@ -23,6 +23,8 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
 
         if (esChollo) {
             const gananciaEstimada3Dias = Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 3);
+            const pujaSugerida = precioActual + Math.min(Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 0.4), 50000);
+            const limiteMaximo = precioActual + Math.min(Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 1.2), 120000);
             
             let avisoHueco = tieneHueco 
                 ? `🚀 Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.` 
@@ -32,6 +34,8 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
                 id: idJugador,
                 nombre: jDatos.name || `Jugador #${idJugador}`,
                 precio: precioActual,
+                puja: pujaSugerida,
+                limiteMaximo: limiteMaximo,
                 subidaDiaria: incrementoPrecio,
                 gananciaEstimada3Dias,
                 vendedor: sale.user ? sale.user.name : 'Computer',
