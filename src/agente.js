@@ -26,7 +26,7 @@ async function ejecutarAgente() {
     };
 
     const recomendacionesMercado = [];
-    const recomendacionesVenta = [];
+    let recomendacionesVenta = [];
 
     registrarAccion("🚀", `[${new Date().toLocaleString()}] Iniciando el Biwenger Advisor Dashboard...`);
     
