@@ -59,6 +59,8 @@
 
 ---
 
-## 4. Regla Inquebrantable de Despliegue Git
+## 4. Regla Inquebrantable de Despliegue Git & Copias de Seguridad
 - **Auto-Push Obligatorio:** Cualquier modificación de código o ejecución de script que regenere `docs/index.html` DEBE subirse inmediatamente a GitHub ejecutando `git add .`, `git commit` y `git push` para desplegar la última versión en GitHub Pages.
+- **Versión Baseline Dorada (v2.0):** La versión v2.0 está etiquetada en Git como `v2.0-gold-backup` y guardada físicamente en `backups/agente_v2.0_gold.js`. **ESTÁ PROHIBIDO SOBREESCRIBIR ESTA COPIA DE SEGURIDAD** hasta que el usuario pruebe futuras actualizaciones y autorice explícitamente actualizar el baseline.
+
 
