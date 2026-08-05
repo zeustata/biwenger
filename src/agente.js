@@ -128,7 +128,7 @@ async function ejecutarAgente() {
         registrarAccion("🧤", `Ojeador FF: ${saludPorteria.mensaje}`);
     }
 
-    const alertasMedicas = dbJugadores ? generarParteMedico(estado.players || [], dbJugadores) : [];
+    const alertasMedicas = dbJugadores ? generarParteMedico(estado.players || [], dbJugadores, datosFF) : [];
     if (alertasMedicas.length > 0) {
         registrarAccion("🏥", `Parte Médico: ¡Atención! Tienes ${alertasMedicas.length} alertas en tu equipo.`);
     }
@@ -646,28 +646,42 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     }
 
     let htmlSalud = '';
-    const urgenteSalud = saludPorteria && saludPorteria.urgentePujar;
     if (alertasMedicas.length > 0 || saludPorteria) {
+        const bajasCount = alertasMedicas.filter(a => a.tipo === 'injured' || a.tipo === 'suspended').length;
+        const dudasCount = alertasMedicas.filter(a => a.tipo === 'doubt').length;
+        const aptosCount = alertasMedicas.filter(a => a.tipo === 'ok').length;
+
+        let badgeSalud = `${aptosCount}/${alertasMedicas.length} Aptos`;
+        if (bajasCount > 0) badgeSalud = `🚨 ${bajasCount} Bajas`;
+        else if (dudasCount > 0) badgeSalud = `⚠️ ${dudasCount} Dudas`;
+
+        const esPeligro = bajasCount > 0 || (saludPorteria && saludPorteria.urgentePujar);
+
         htmlSalud = crearSeccionDesplegable({
             id: 'sec-salud',
-            titulo: '🏥 Parte Médico & Estado de Portería',
-            badge: urgenteSalud ? '🚨 Alerta Portería' : (alertasMedicas.length > 0 ? `${alertasMedicas.length} Alertas` : 'OK'),
-            abierta: urgenteSalud,
-            borderTopColor: urgenteSalud ? '#ef4444' : '#10b981',
-            background: urgenteSalud ? 'rgba(239, 68, 68, 0.05)' : 'rgba(16, 185, 129, 0.03)',
+            titulo: '🏥 Parte Médico & Informe de Disponibilidad de la Plantilla',
+            badge: badgeSalud,
+            abierta: false,
+            borderTopColor: esPeligro ? '#ef4444' : (dudasCount > 0 ? '#f59e0b' : '#10b981'),
+            background: esPeligro ? 'rgba(239, 68, 68, 0.05)' : 'rgba(16, 185, 129, 0.03)',
             contenido: `
-                ${saludPorteria ? `<div style="margin-bottom:15px; font-weight:bold; color:#cbd5e1;">🧤 ${saludPorteria.estado}: ${saludPorteria.mensaje}</div>` : ''}
-                ${alertasMedicas.length > 0 ? `
-                <p>Se han detectado problemas en jugadores de tu plantilla. Te recomendamos buscarles recambio antes de la jornada:</p>
+                <p>Diagnóstico clínico y de titularidad de <strong>todos los jugadores de tu plantilla</strong> (Biwenger API & FútbolFantasy):</p>
+                ${saludPorteria ? `<div style="margin-bottom:20px; padding: 12px 16px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; font-weight:bold; color:#cbd5e1;">🧤 Estado Portería: ${saludPorteria.mensaje}</div>` : ''}
                 <div class="grid-cards">
-                    ${alertasMedicas.map(a => `
-                        <div class="card" style="border-left: 4px solid #ef4444;">
-                            <div class="card-title">${a.nombre}</div>
-                            <div class="card-alert" style="margin-top: 10px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: #fca5a5;">${a.mensaje}</div>
-                        </div>
-                    `).join('')}
+                    ${alertasMedicas.map(a => {
+                        const esBaja = a.tipo === 'injured' || a.tipo === 'suspended';
+                        const esDuda = a.tipo === 'doubt';
+                        const colorBorde = esBaja ? '#ef4444' : (esDuda ? '#f59e0b' : '#10b981');
+                        const bgAlert = esBaja ? 'rgba(239, 68, 68, 0.2)' : (esDuda ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.15)');
+                        const colorText = esBaja ? '#fca5a5' : (esDuda ? '#fcd34d' : '#6ee7b7');
+                        
+                        return `
+                        <div class="card" style="border-left: 4px solid ${colorBorde};">
+                            <div class="card-title">${a.nombre} <span class="badge ${a.badge}">${a.estado}</span></div>
+                            <div class="card-alert" style="margin-top: 10px; font-weight: bold; background: ${bgAlert}; color: ${colorText};">${a.mensaje}</div>
+                        </div>`;
+                    }).join('')}
                 </div>
-                ` : ''}
             `
         });
     }

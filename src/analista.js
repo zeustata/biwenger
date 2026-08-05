@@ -360,34 +360,80 @@ function buscarMejoresClausulazos(urgencias, rivales, dbJugadores, saldoDisponib
 }
 
 /**
- * Evalúa la salud de tu plantilla y alerta de lesiones o si alguien se va de la liga.
+ * Evalúa la salud de TODA la plantilla (Biwenger & FútbolFantasy) y genera un reporte clínico completo.
  */
-function generarParteMedico(plantilla, dbJugadores) {
-    const alertas = [];
-    if (!plantilla || !dbJugadores) return alertas;
+function generarParteMedico(plantilla, dbJugadores, datosFF = null) {
+    const reportes = [];
+    if (!plantilla || !dbJugadores) return reportes;
 
     plantilla.forEach(jugador => {
         const id = typeof jugador === 'object' ? jugador.id : jugador;
         const jDatos = dbJugadores[id];
+        const nombre = (jDatos && jDatos.name) || (typeof jugador === 'object' && jugador.name) || `ID: ${id}`;
         
-        if (!jDatos) {
-            alertas.push({
-                nombre: typeof jugador === 'object' && jugador.name ? jugador.name : `ID: ${id}`,
-                tipo: 'out',
-                mensaje: '⚠️ Posible salida de La Liga. No está en la base de datos.'
-            });
-        } else {
+        let estado = 'Apto / Disponible';
+        let tipo = 'ok'; // 'ok', 'doubt', 'injured', 'suspended'
+        let mensaje = '🟢 Disponible al 100% para la jornada.';
+        let badge = 'badge-emerald';
+
+        // 1. Estado según API Biwenger
+        if (jDatos) {
             if (jDatos.status === 'injured') {
-                alertas.push({ nombre: jDatos.name, tipo: 'injured', mensaje: '🏥 Lesionado. Tienes que buscarle recambio.' });
+                tipo = 'injured';
+                estado = 'Lesionado';
+                mensaje = '🏥 Lesión confirmada en Biwenger. Se recomienda buscar recambio.';
+                badge = 'badge-danger';
             } else if (jDatos.status === 'doubt') {
-                alertas.push({ nombre: jDatos.name, tipo: 'doubt', mensaje: '🤔 Es duda por molestias o recuperación.' });
+                tipo = 'doubt';
+                estado = 'Duda / Molestias';
+                mensaje = '🤔 Marcado como duda. Evolución pendiente.';
+                badge = 'badge-warning';
             } else if (jDatos.status === 'suspended') {
-                alertas.push({ nombre: jDatos.name, tipo: 'suspended', mensaje: '🟥 Sancionado. Te dará 0 puntos.' });
+                tipo = 'suspended';
+                estado = 'Sancionado';
+                mensaje = '🟥 Sancionado por tarjetas o expulsión. Puntuaría 0.';
+                badge = 'badge-danger';
             }
         }
+
+        // 2. Cruce con datos reales de FútbolFantasy
+        if (datosFF) {
+            const ffNombre = Object.keys(datosFF).find(k => k.toLowerCase().includes(nombre.toLowerCase()) || nombre.toLowerCase().includes(k.toLowerCase()));
+            if (ffNombre && datosFF[ffNombre]) {
+                const ffData = datosFF[ffNombre];
+                if (ffData.estado && ffData.estado.toLowerCase().includes('lesion')) {
+                    tipo = 'injured';
+                    estado = 'Lesionado (FF)';
+                    mensaje = `🏥 FútbolFantasy: ${ffData.motivo || 'Lesionado'}`;
+                    badge = 'badge-danger';
+                } else if (ffData.estado && ffData.estado.toLowerCase().includes('duda')) {
+                    if (tipo !== 'injured') {
+                        tipo = 'doubt';
+                        estado = 'Duda (FF)';
+                        mensaje = `🤔 FútbolFantasy: ${ffData.motivo || 'Duda / Molestias'}`;
+                        badge = 'badge-warning';
+                    }
+                } else if (ffData.probabilidad !== undefined && ffData.probabilidad < 40 && tipo === 'ok') {
+                    tipo = 'doubt';
+                    estado = 'Baja Titularidad FF';
+                    mensaje = `⚠️ Suplente o descarte en FF (${ffData.probabilidad}% prob).`;
+                    badge = 'badge-warning';
+                }
+            }
+        }
+
+        reportes.push({
+            id,
+            nombre,
+            posicion: (jDatos && jDatos.position) || (jugador && jugador.position) || 0,
+            estado,
+            tipo,
+            mensaje,
+            badge
+        });
     });
 
-    return alertas;
+    return reportes;
 }
 
 module.exports = {
