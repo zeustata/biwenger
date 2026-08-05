@@ -10,7 +10,7 @@ const {
 const { detectarNecesidadesPlantilla, evaluarJugador, evaluarPlantillaInicial, analizarRivales, calcularPerfilPujador, buscarMejoresClausulazos, generarParteMedico } = require('./analista');
 const { detectarOportunidadesTrading, evaluarActivosToxicos, calcularIndiceInflacion, buscarChollosBaratos } = require('./especulador');
 const { seleccionarOnceOptimo } = require('./alineador');
-const { verificarUnicoPortero } = require('./guardiaReglas');
+const { aplicarGuardiaReglas, verificarUnicoPortero } = require('./guardiaReglas');
 const { generarPlanDiario } = require('./directorTecnico');
 const { obtenerDatosFutbolFantasy, evaluarSaludPorteria, obtenerTitularidadJugador } = require('./ojeadorFantasy');
 
