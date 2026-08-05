@@ -985,50 +985,54 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="icon.svg">
     <link rel="apple-touch-icon" href="icon.svg">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
+    <meta name="theme-color" con    <style>
         .badge {
             display: inline-block;
             font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
             font-weight: 700;
             margin-left: 6px;
             vertical-align: middle;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .badge-emerald {
-            background: rgba(16, 185, 129, 0.25) !important;
+            background: rgba(16, 185, 129, 0.2) !important;
             color: #34d399 !important;
-            border: 1px solid #10b981 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
         }
         .badge-warning {
-            background: rgba(245, 158, 11, 0.25) !important;
+            background: rgba(245, 158, 11, 0.2) !important;
             color: #fbbf24 !important;
-            border: 1px solid #f59e0b !important;
+            border: 1px solid rgba(245, 158, 11, 0.4) !important;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
         }
         .badge-danger {
-            background: rgba(239, 68, 68, 0.25) !important;
-            color: #f87171 !important;
-            border: 1px solid #ef4444 !important;
+            background: rgba(239, 68, 68, 0.2) !important;
+            color: #fca5a5 !important;
+            border: 1px solid rgba(239, 68, 68, 0.4) !important;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.15);
         }
         :root {
-            --bg-color: #0b0f19;
+            --bg-color: #060b13;
             --text-main: #f8fafc;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --accent: #3b82f6;
-            --success: #10b981;
+            --card-bg: rgba(13, 22, 37, 0.65);
+            --accent: #10b981;
+            --success: #34d399;
             --danger: #ef4444;
             --warning: #f59e0b;
+            --gold: #fbbf24;
+            --glass-border: rgba(255, 255, 255, 0.12);
         }
         body {
             font-family: 'Outfit', 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
-                              radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.12) 0px, transparent 50%);
+            background-image: 
+                radial-gradient(ellipse at 50% -10%, rgba(16, 185, 129, 0.22) 0%, transparent 60%),
+                radial-gradient(ellipse at 85% 90%, rgba(59, 130, 246, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 15% 75%, rgba(168, 85, 247, 0.10) 0%, transparent 50%);
             background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
@@ -1036,36 +1040,60 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             line-height: 1.6;
         }
         header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(6, 16, 28, 0.95) 0%, rgba(15, 34, 48, 0.85) 50%, rgba(10, 22, 38, 0.95) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 45px 20px 55px 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.15);
         }
-        h1 { margin: 0; font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h1 { 
+            margin: 0; 
+            font-weight: 800; 
+            font-size: 2.8rem; 
+            letter-spacing: -1px; 
+            background: linear-gradient(135deg, #10b981 0%, #34d399 35%, #60a5fa 70%, #fbbf24 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            filter: drop-shadow(0 2px 10px rgba(16, 185, 129, 0.3));
+        }
         .subtitle { font-size: 1.1rem; color: #94a3b8; margin-top: 8px; font-weight: 500; }
         
         .container {
             max-width: 1100px;
-            margin: -30px auto 50px auto;
+            margin: -25px auto 50px auto;
             padding: 0 20px;
         }
 
         .executive-banner {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(244, 114, 182, 0.3);
-            border-radius: 20px;
+            background: rgba(13, 22, 37, 0.75);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            border-radius: 24px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.2);
+            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
         }
         .banner-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .banner-header h2 { margin: 0; color: #f472b6; font-size: 1.4rem; }
-        .live-pill { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #f472b6; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+        .banner-header h2 { margin: 0; color: #60a5fa; font-size: 1.4rem; }
+        .live-pill { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #60a5fa; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
 
         .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        .action-card { background: rgba(15, 23, 42, 0.6); border-radius: 14px; padding: 18px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; }
-        .action-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+        .action-card { 
+            background: rgba(10, 18, 30, 0.65); 
+            border-radius: 16px; 
+            padding: 18px; 
+            border: 1px solid var(--glass-border); 
+            backdrop-filter: blur(16px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .action-card:hover { 
+            transform: translateY(-4px); 
+            border-color: rgba(16, 185, 129, 0.4); 
+            box-shadow: 0 12px 25px -5px rgba(16, 185, 129, 0.2);
+        }
         .action-icon { font-size: 1.6rem; margin-bottom: 8px; }
         .action-title { font-size: 0.95rem; font-weight: 700; color: #cbd5e1; margin-bottom: 10px; }
         .action-body { font-size: 0.85rem; color: #94a3b8; }
@@ -1089,28 +1117,34 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         }
         .stat-box {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             padding: 25px;
-            border-radius: 18px;
+            border-radius: 22px;
             text-align: center;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.3s ease;
+            box-shadow: 0 16px 36px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .stat-box:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
-        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 600; }
+        .stat-box:hover { 
+            transform: translateY(-5px) scale(1.01); 
+            border-color: rgba(16, 185, 129, 0.4); 
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+        }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 700; }
         .stat-value { font-size: 2.2rem; font-weight: 800; margin-top: 8px; }
-        .val-positive { color: var(--success); }
-        .val-negative { color: var(--danger); }
+        .val-positive { color: var(--success); text-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+        .val-negative { color: var(--danger); text-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
         
         .section-card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
             padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
             border-top: 4px solid var(--accent);
         }
         .section-card.danger { border-top-color: var(--danger); }
@@ -1123,20 +1157,20 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         .collapsible-card {
             padding: 0 !important;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-header-toggle {
-            padding: 20px 25px;
+            padding: 22px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            background: rgba(255, 255, 255, 0.02);
-            transition: background 0.2s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            transition: all 0.25s ease;
         }
         .card-header-toggle:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
         }
         .header-title-group {
             display: flex;
@@ -1150,94 +1184,106 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             font-weight: 700;
         }
         .section-badge-pill {
-            background: rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
-            padding: 3px 10px;
-            border-radius: 12px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 4px 12px;
+            border-radius: 16px;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
+            backdrop-filter: blur(8px);
         }
         .toggle-arrow {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-            opacity: 0.7;
+            font-size: 1.1rem;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.8;
+            color: #10b981;
         }
         .card-collapsible-content {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
             transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease, padding 0.3s ease;
-            padding: 0 25px;
+            padding: 0 28px;
         }
         .collapsible-card.is-open .card-collapsible-content {
             max-height: 5000px;
             opacity: 1;
-            padding: 0 25px 25px 25px;
+            padding: 0 28px 28px 28px;
             transition: max-height 0.5s ease-in, opacity 0.3s ease, padding 0.3s ease;
         }
         .collapsible-card.is-open .toggle-arrow {
             transform: rotate(180deg);
+            color: #60a5fa;
         }
         .global-controls-bar {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 22px;
         }
         .btn-control {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #cbd5e1;
-            padding: 8px 16px;
-            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(13, 27, 42, 0.7) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #e2e8f0;
+            padding: 10px 20px;
+            border-radius: 14px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-control:hover {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: #3b82f6;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(59, 130, 246, 0.35) 100%);
+            border-color: #10b981;
             color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
         }
         
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 18px;
             margin-top: 20px;
         }
         .card {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 14px;
+            background: rgba(10, 18, 30, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card:hover {
-            background: rgba(30, 41, 59, 0.8);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.3);
-            border-color: rgba(255,255,255,0.15);
+            background: rgba(20, 32, 50, 0.85);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 16px 30px -5px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.4);
         }
-        .card-title { font-weight: 600; font-size: 1.2rem; margin-bottom: 10px; }
-        .sell-card .card-price { color: var(--success); font-size: 1.4rem; font-weight: 800; }
-        .buy-card .card-bid { margin-top: 15px; color: #a78bfa; font-size: 1.3rem; font-weight: 800; }
+        .card-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; color: #f8fafc; }
+        .sell-card .card-price { color: var(--success); font-size: 1.4rem; font-weight: 800; text-shadow: 0 0 10px rgba(52, 211, 153, 0.3); }
+        .buy-card .card-bid { margin-top: 15px; color: #c084fc; font-size: 1.3rem; font-weight: 800; text-shadow: 0 0 10px rgba(192, 132, 252, 0.3); }
         .card-detail { font-size: 0.9rem; color: #94a3b8; }
-        .card-alert { margin-top: 10px; font-size: 0.8rem; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 5px; border-radius: 4px; }
+        .card-alert { margin-top: 10px; font-size: 0.82rem; color: var(--warning); background: rgba(245, 158, 11, 0.12); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2); }
         
         .logs-section {
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
+            background: rgba(10, 18, 30, 0.8);
+            backdrop-filter: blur(16px);
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid var(--glass-border);
         }
         .logs-section h3 { margin-top: 0; color: #94a3b8; font-size: 1rem; }
         ul { list-style: none; padding: 0; margin: 0; }
-        li { padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 0.95rem; }
+        li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.95rem; }
         li:last-child { border-bottom: none; }
         .hora { color: #64748b; font-family: monospace; margin-right: 15px; }
-        
     </style>
 </head>
 <body>
