@@ -1295,64 +1295,15 @@
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "roberto fernandez": {
-      "nombreOriginal": "Roberto Fernández",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "pere milla": {
-      "nombreOriginal": "Pere Milla",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "marko dmitrovic": {
-      "nombreOriginal": "Marko Dmitrovic",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "tyrhys dolan": {
-      "nombreOriginal": "Tyrhys Dolan",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "edu exposito": {
-      "nombreOriginal": "Edu Expósito",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "urko gonzalez de zarate": {
-      "nombreOriginal": "Urko González de Zarate",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "clemens riedel": {
-      "nombreOriginal": "Clemens Riedel",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "leandro cabrera": {
-      "nombreOriginal": "Leandro Cabrera",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
     "quilindschy hartman": {
       "nombreOriginal": "Quilindschy Hartman",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "alex calatrava": {
+      "nombreOriginal": "Álex Calatrava",
       "equipo": "espanyol",
       "titularidad": 90,
       "estado": "titular",
@@ -1365,8 +1316,57 @@
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "alex calatrava": {
-      "nombreOriginal": "Álex Calatrava",
+    "leandro cabrera": {
+      "nombreOriginal": "Leandro Cabrera",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "clemens riedel": {
+      "nombreOriginal": "Clemens Riedel",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "urko gonzalez de zarate": {
+      "nombreOriginal": "Urko González de Zarate",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "edu exposito": {
+      "nombreOriginal": "Edu Expósito",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "tyrhys dolan": {
+      "nombreOriginal": "Tyrhys Dolan",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "marko dmitrovic": {
+      "nombreOriginal": "Marko Dmitrovic",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pere milla": {
+      "nombreOriginal": "Pere Milla",
+      "equipo": "espanyol",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "roberto fernandez": {
+      "nombreOriginal": "Roberto Fernández",
       "equipo": "espanyol",
       "titularidad": 90,
       "estado": "titular",
@@ -1423,13 +1423,6 @@
     },
     "rafel bauza": {
       "nombreOriginal": "Rafel Bauzà",
-      "equipo": "espanyol",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "pablo ramon": {
-      "nombreOriginal": "Pablo Ramón",
       "equipo": "espanyol",
       "titularidad": 90,
       "estado": "titular",
@@ -2835,34 +2828,6 @@
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "pape gueye": {
-      "nombreOriginal": "Pape Gueye",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "carlos romero": {
-      "nombreOriginal": "Carlos Romero",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "renato veiga": {
-      "nombreOriginal": "Renato Veiga",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "pau navarro": {
-      "nombreOriginal": "Pau Navarro",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
     "santi comesana": {
       "nombreOriginal": "Santi Comesaña",
       "equipo": "villarreal",
@@ -2870,22 +2835,8 @@
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "gerard moreno": {
-      "nombreOriginal": "Gerard Moreno",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "nicolas pepe": {
-      "nombreOriginal": "Nicolas Pépé",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "luiz junior": {
-      "nombreOriginal": "Luiz Junior",
+    "georges mikautadze": {
+      "nombreOriginal": "Georges Mikautadze",
       "equipo": "villarreal",
       "titularidad": 90,
       "estado": "titular",
@@ -2898,8 +2849,50 @@
       "estado": "titular",
       "fuente": "FútbolFantasy"
     },
-    "georges mikautadze": {
-      "nombreOriginal": "Georges Mikautadze",
+    "luiz junior": {
+      "nombreOriginal": "Luiz Junior",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "nicolas pepe": {
+      "nombreOriginal": "Nicolas Pépé",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "gerard moreno": {
+      "nombreOriginal": "Gerard Moreno",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pape gueye": {
+      "nombreOriginal": "Pape Gueye",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "pau navarro": {
+      "nombreOriginal": "Pau Navarro",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "renato veiga": {
+      "nombreOriginal": "Renato Veiga",
+      "equipo": "villarreal",
+      "titularidad": 90,
+      "estado": "titular",
+      "fuente": "FútbolFantasy"
+    },
+    "carlos romero": {
+      "nombreOriginal": "Carlos Romero",
       "equipo": "villarreal",
       "titularidad": 90,
       "estado": "titular",
@@ -2984,13 +2977,6 @@
     },
     "willy kambwala": {
       "nombreOriginal": "Willy Kambwala",
-      "equipo": "villarreal",
-      "titularidad": 90,
-      "estado": "titular",
-      "fuente": "FútbolFantasy"
-    },
-    "pau cabanes": {
-      "nombreOriginal": "Pau Cabanes",
       "equipo": "villarreal",
       "titularidad": 90,
       "estado": "titular",
@@ -4054,5 +4040,5 @@
     "Muriqi",
     "Stuani"
   ],
-  "ultimaActualizacion": "2026-08-04T23:34:21.501Z"
+  "ultimaActualizacion": "2026-08-05T11:44:34.717Z"
 }
