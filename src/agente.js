@@ -984,8 +984,12 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <title>Biwenger Advisor AI</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="icon.svg">
-    <link rel="apple-touch-icon" href="icon.svg">
-    <meta name="theme-color" con    <style>
+    <meta name="theme-color" content="#060b13">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
         .badge {
             display: inline-block;
             font-size: 0.75rem;
@@ -1290,7 +1294,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <header>
         <h1>Biwenger Advisor</h1>
         <div class="subtitle">Análisis Estratégico - ${fecha}</div>
-        <div style="font-size:0.8rem; color:#34d399; margin-top:6px; font-weight:700; text-shadow:0 0 10px rgba(16,185,129,0.3);">✨ v2.1 - Diseño Liquid Glass Football</div>
+        <div style="font-size:0.8rem; color:#34d399; margin-top:6px; font-weight:700; text-shadow:0 0 10px rgba(16,185,129,0.3);">✨ v2.2 - Diseño Liquid Glass Football (Estilos Corregidos)</div>
     </header>
     
     <div class="container">
