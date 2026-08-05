@@ -28,7 +28,7 @@ function generarPlanDiario({
 
     if (recomMercado.length > 0) {
         recomMercado.forEach(p => {
-            let nota = p.clausula ? ' (Cláusula)' : ' (Mercado Libre)';
+            let nota = ' (Mercado Libre / Computer)';
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Requiere venta antes)</em>';
             const sobrepuja = p.precio > 0 ? Math.round(((p.puja - p.precio) / p.precio) * 100) : 0;
             const limite = p.puja ? Math.round(p.puja * 1.05) : Math.round(p.precio * 1.08);
@@ -47,7 +47,7 @@ function generarPlanDiario({
         oportunidadesTrading.slice(0, 3).forEach(topTrading => {
             const sobrepuja = topTrading.precio > 0 ? Math.round(((topTrading.puja - topTrading.precio) / topTrading.precio) * 100) : 0;
             const limite = topTrading.limiteMaximo || Math.round(topTrading.precio * 1.05);
-            let nota = ' (Trading / Especulación)';
+            let nota = ' (Trading / Mercado Libre)';
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Vende suplente)</em>';
             planPujas.push(`
                 <div style="margin-bottom: 8px;">

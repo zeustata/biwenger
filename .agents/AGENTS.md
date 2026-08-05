@@ -9,6 +9,7 @@
 - **Rol del Bot:** ASESOR PASIVO EXCLUSIVO. Jamás realiza pujas ni ventas automáticas. Todo se muestra en el Dashboard para decisión del mánager.
 - **Liga Premium:** Comunidad Premium en Biwenger. **REGLAS LOCALES ACTUALIZADAS:** NO hay puntos por Capitán (sin x2) ni por Once Inicial/Once Ideal. Sí hay Ariete 🎯 (+3 pts por gol), cambios en jornada activa, etc.
 - **Límite de Plantilla:** Máximo 14 jugadores (`MAX_JUGADORES_PLANTILLA=14`). Si la plantilla está en 14/14 y se recomienda fichar, se exige indicar qué suplente vender para hacer hueco.
+- **Prohibición de Pujas entre Rivales:** PROHIBIDO realizar pujas/ofertas por jugadores pertenecientes a otros mánagers (puestos a la venta por ellos) para evitar alianzas o pactos. Las pujas son EXCLUSIVAMENTE para el Mercado Libre (Computer). La ÚNICA vía para conseguir un jugador de un rival es pagar su cláusula de rescisión (Clausulazo).
 - **Mecánica de Rivales:** Se puede espiar las plantillas de todos los rivales aunque sus jugadores no estén a la venta.
 - **Clausulazos Tácticos:** Búsqueda activa de robos de jugadores en plantillas rivales analizando perfil psicológico y sobreprecio de cláusula.
 

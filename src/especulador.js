@@ -10,6 +10,9 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
     const tieneHueco = jugadoresEnPlantilla < maxJugadores;
 
     sales.forEach(sale => {
+        // REGLA LOCAL: Prohibido pujar a rivales. Solo se permite pujar al Mercado Libre (Computer).
+        if (sale.user !== null && sale.user !== undefined) return;
+
         const idJugador = typeof sale.player === 'object' ? sale.player.id : sale.player;
         const jDatos = dbJugadores[idJugador] || (sale.player && typeof sale.player === 'object' ? sale.player : null);
 
@@ -27,7 +30,7 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
             const limiteMaximo = precioActual + Math.min(Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 1.2), 120000);
             
             let avisoHueco = tieneHueco 
-                ? `🚀 Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.` 
+                ? `🚀 Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy al Computer para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.` 
                 : `⚠️ Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. (Ojo: Plantilla llena ${jugadoresEnPlantilla}/${maxJugadores}. Debes vender a un suplente primero).`;
 
             oportunidades.push({
@@ -38,7 +41,7 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
                 limiteMaximo: limiteMaximo,
                 subidaDiaria: incrementoPrecio,
                 gananciaEstimada3Dias,
-                vendedor: sale.user ? sale.user.name : 'Computer',
+                vendedor: 'Computer',
                 recomendacion: avisoHueco
             });
         }
@@ -118,6 +121,9 @@ function buscarChollosBaratos(sales, dbJugadores = {}) {
     if (!sales || !Array.isArray(sales)) return chollos;
 
     sales.forEach(sale => {
+        // REGLA LOCAL: Prohibido pujar a rivales. Solo Mercado Libre (Computer).
+        if (sale.user !== null && sale.user !== undefined) return;
+
         const id = typeof sale.player === 'object' ? sale.player.id : sale.player;
         const jDatos = dbJugadores[id] || (sale.player && typeof sale.player === 'object' ? sale.player : null);
 
@@ -130,7 +136,7 @@ function buscarChollosBaratos(sales, dbJugadores = {}) {
                     precio: jDatos.price,
                     posicion: jDatos.position || 2,
                     subida,
-                    vendedor: sale.user ? sale.user.name : 'Computer',
+                    vendedor: 'Computer',
                     recomendacion: `💎 Chollo por ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(jDatos.price)}. Ideal para completar plantilla de 14.`
                 });
             }

@@ -216,7 +216,11 @@ async function ejecutarAgente() {
     }
 
     for (const venta of mercado.sales) {
-        const esClausula = (venta.user !== null && venta.user !== undefined);
+        // REGLA LOCAL: Prohibido hacer pujas a jugadores en venta por rivales (para evitar alianzas).
+        // Las pujas son EXCLUSIVAMENTE para el Mercado Libre (Computer).
+        if (venta.user !== null && venta.user !== undefined) continue;
+
+        const esClausula = false;
         const jugadorObj = venta.player ? venta.player : venta; 
         
         if (evaluarJugador(jugadorObj, esClausula, necesidades, saldoActual, valorEquipo)) {
@@ -391,52 +395,30 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
     let htmlMercado = '';
     if (recomMercado.length > 0) {
-        const recomComputer = recomMercado.filter(m => !m.clausula);
-        const recomRivales = recomMercado.filter(m => m.clausula);
-
-        let htmlCards = '';
-        
-        if (recomComputer.length > 0) {
-            htmlCards += `<h3 style="color: #60a5fa; margin-top: 15px;">🤖 Mercado Libre (Computer)</h3><div class="grid-cards">`;
-            htmlCards += recomComputer.map(m => {
-                const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
-                return `
-                <div class="card buy-card">
-                    <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
-                    <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
-                    <div class="card-bid">Puja Sugerida:<br>${formatoEuro(m.puja)}</div>
-                    ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
-                </div>`;
-            }).join('');
-            htmlCards += `</div>`;
-        }
-
-        if (recomRivales.length > 0) {
-            htmlCards += `<h3 style="color: #f472b6; margin-top: 25px;">🏃‍♂️ En Venta por Rivales</h3><div class="grid-cards">`;
-            htmlCards += recomRivales.map(m => {
-                const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
-                return `
-                <div class="card buy-card" style="border-left: 3px solid #f472b6;">
-                    <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
-                    <div class="card-detail">Valor: ${formatoEuro(m.precio)}</div>
-                    <div class="card-bid">Pagarás aprox:<br>${formatoEuro(m.puja)}</div>
-                    ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
-                </div>`;
-            }).join('');
-            htmlCards += `</div>`;
-        }
+        let htmlCards = `<h3 style="color: #60a5fa; margin-top: 15px;">🤖 Mercado Libre (Computer)</h3><div class="grid-cards">`;
+        htmlCards += recomMercado.map(m => {
+            const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
+            return `
+            <div class="card buy-card">
+                <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
+                <div class="card-detail">Valor Oficial: ${formatoEuro(m.precio)}</div>
+                <div class="card-bid">Puja Sugerida (Computer):<br>${formatoEuro(m.puja)}</div>
+                ${m.alerta ? `<div class="card-alert">${m.alerta}</div>` : ''}
+            </div>`;
+        }).join('');
+        htmlCards += `</div>`;
 
         htmlMercado = `
         <div class="section-card market">
-            <h2>🎯 Recomendaciones de Mercado</h2>
-            <p>El algoritmo ha detectado estos jugadores rentables a la venta hoy:</p>
+            <h2>🎯 Recomendaciones de Mercado (Mercado Libre / Computer)</h2>
+            <p>Jugadores rentables puestos a la venta por el Computer. <em>(Recordatorio: Prohibido pujar por jugadores de rivales; a los rivales solo se les roba con clausulazo)</em>.</p>
             ${htmlCards}
         </div>`;
     } else {
         htmlMercado = `
         <div class="section-card neutral">
-            <h2>🤷‍♂️ Sin Objetivos en el Mercado</h2>
-            <p>Hoy no hay ningún jugador en el mercado que encaje con tus necesidades o presupuesto.</p>
+            <h2>🤷‍♂️ Sin Objetivos en Mercado Libre</h2>
+            <p>Hoy no hay ningún jugador del Computer que encaje con tus necesidades o presupuesto.</p>
         </div>`;
     }
 
