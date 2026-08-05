@@ -1,28 +1,14 @@
-const CACHE_NAME = 'biwenger-ai-v6';
-const ASSETS = [
-    './index.html',
-    './manifest.json',
-    './icon.svg'
-];
+const CACHE_NAME = 'biwenger-ai-v7';
 
 self.addEventListener('install', (event) => {
     self.skipWaiting();
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS);
-        })
-    );
 });
 
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(
-                keys.map((key) => {
-                    if (key !== CACHE_NAME) {
-                        return caches.delete(key);
-                    }
-                })
+                keys.map((key) => caches.delete(key))
             );
         })
     );
@@ -30,15 +16,14 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    if (event.request.mode === 'navigate' || event.request.url.includes('index.html')) {
+        event.respondWith(
+            fetch(event.request, { cache: 'no-store' }).catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
     event.respondWith(
-        fetch(event.request)
-            .then((response) => {
-                if (response && response.status === 200) {
-                    const responseClone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
-                }
-                return response;
-            })
-            .catch(() => caches.match(event.request))
+        fetch(event.request).catch(() => caches.match(event.request))
     );
 });

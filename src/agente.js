@@ -1244,6 +1244,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     <header>
         <h1>Biwenger Advisor</h1>
         <div class="subtitle">Análisis Estratégico - ${fecha}</div>
+        <div style="font-size:0.8rem; color:#60a5fa; margin-top:6px; font-weight:600;">✨ v2.0 - Interfaz Plegable (Caché Renovada)</div>
     </header>
     
     <div class="container">
@@ -1519,6 +1520,11 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    for (let r of registrations) {
+                        r.update();
+                    }
+                });
                 navigator.serviceWorker.register('./sw.js?v=' + Date.now()).catch(function(err) {
                     console.log('Service Worker registration failed:', err);
                 });
