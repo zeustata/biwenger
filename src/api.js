@@ -109,10 +109,14 @@ async function pujarPorJugador(idJugador, monto) {
 async function obtenerOfertas() {
     try {
         const response = await biwengerApi.get('/market/offers');
-        return response.data.data;
+        const data = response ? response.data.data : null;
+        if (Array.isArray(data)) return data;
+        if (data && Array.isArray(data.received)) return data.received;
+        if (data && Array.isArray(data.offers)) return data.offers;
+        return [];
     } catch (error) {
         console.error("Error al obtener ofertas:", error.response ? error.response.data : error.message);
-        return null;
+        return [];
     }
 }
 

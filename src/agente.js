@@ -141,7 +141,8 @@ async function ejecutarAgente() {
     const chollosBaratos = mercado && mercado.sales ? buscarChollosBaratos(mercado.sales, dbJugadores) : [];
 
     // CUADRAR CUENTAS Y DESCHACAR JUGADORES SIN MINUTOS (FútbolFantasy & Pérdidas de Valor)
-    const ofertas = await obtenerOfertas();
+    const rawOfertas = await obtenerOfertas();
+    const ofertas = Array.isArray(rawOfertas) ? rawOfertas : [];
     if (saldoActual < 0) {
         const urgencia = esRiesgoJornada ? "¡CRÍTICO! PUNTUARÁS CERO SI NO VENDES YA." : "Analizando opciones de venta para cuadrar cuentas...";
         registrarAccion("⚠️", `¡SALDO NEGATIVO! ${urgencia}`);
