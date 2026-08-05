@@ -374,7 +374,9 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
     const fecha = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     
-     function crearSeccionDesplegable({ id, titulo, badge = '', contenido, abierta = false, borderTopColor = 'var(--accent)', background = 'var(--card-bg)', claseExtra = '' }) {
+    const formatoEuro = (num) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
+
+    function crearSeccionDesplegable({ id, titulo, badge = '', contenido, abierta = false, borderTopColor = 'var(--accent)', background = 'var(--card-bg)', claseExtra = '' }) {
         const isOpenClass = abierta ? 'is-open' : '';
         const styleAttr = `border-top-color: ${borderTopColor}; ${background ? `background: ${background};` : ''}`;
         return `
