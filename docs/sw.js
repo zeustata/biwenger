@@ -1,4 +1,4 @@
-const CACHE_NAME = 'biwenger-ai-v11';
+const CACHE_NAME = 'biwenger-ai-v12';
 
 self.addEventListener('install', (event) => {
     self.skipWaiting();
