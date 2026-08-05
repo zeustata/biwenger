@@ -374,67 +374,111 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
     const fecha = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     
-    const formatoEuro = (num) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
+     function crearSeccionDesplegable({ id, titulo, badge = '', contenido, abierta = false, borderTopColor = 'var(--accent)', background = 'var(--card-bg)', claseExtra = '' }) {
+        const isOpenClass = abierta ? 'is-open' : '';
+        const styleAttr = `border-top-color: ${borderTopColor}; ${background ? `background: ${background};` : ''}`;
+        return `
+        <div class="section-card collapsible-card ${isOpenClass} ${claseExtra}" id="${id}" style="${styleAttr}">
+            <div class="card-header-toggle" onclick="toggleCard('${id}')">
+                <div class="header-title-group">
+                    <h2>${titulo}</h2>
+                    ${badge ? `<span class="section-badge-pill">${badge}</span>` : ''}
+                </div>
+                <span class="toggle-arrow">🔽</span>
+            </div>
+            <div class="card-collapsible-content">
+                ${contenido}
+            </div>
+        </div>`;
+    }
 
     let htmlPlantilla = '';
     const MAX_JUGADORES = process.env.MAX_JUGADORES_PLANTILLA ? parseInt(process.env.MAX_JUGADORES_PLANTILLA) : 14;
     
     if (jugadoresEnPlantilla >= MAX_JUGADORES) {
-        htmlPlantilla = `
-        <div class="section-card danger" style="border-top-color: #ef4444; background: rgba(239, 68, 68, 0.1);">
-            <h2 style="color: #fca5a5;">🛑 Límite de Plantilla Superado o Alcanzado</h2>
-            <p>Tienes <strong>${jugadoresEnPlantilla} jugadores</strong> en tu equipo. El límite de la liga es de <strong>${MAX_JUGADORES}</strong>.</p>
-            <p><strong>REGLA 26-27:</strong> No puedes fichar a nadie nuevo a menos que vendas jugadores para hacer hueco en tu plantilla. Solo se permite vender al Computer.</p>
-        </div>`;
+        htmlPlantilla = crearSeccionDesplegable({
+            id: 'sec-plantilla',
+            titulo: '🛑 Límite de Plantilla Alcanzado (14/14)',
+            badge: `${jugadoresEnPlantilla}/${MAX_JUGADORES} Jugadores`,
+            abierta: false,
+            borderTopColor: '#ef4444',
+            background: 'rgba(239, 68, 68, 0.1)',
+            contenido: `
+                <p>Tienes <strong>${jugadoresEnPlantilla} jugadores</strong> en tu equipo. El límite de la liga es de <strong>${MAX_JUGADORES}</strong>.</p>
+                <p><strong>REGLA 26-27:</strong> No puedes fichar a nadie nuevo a menos que vendas jugadores para hacer hueco en tu plantilla. Solo se permite vender al Computer.</p>
+            `
+        });
     }
 
     let htmlVentas = '';
     const alertaUrgenciaVenta = (horasJornada <= 48) ? `<div style="background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #fca5a5; font-weight: bold; font-size: 1.1rem; text-align: center;">⏳ ¡QUEDAN ${Math.round(horasJornada)} HORAS PARA LA JORNADA! PUNTUARÁS 0 SI NO VENDES AHORA.</div>` : '';
 
     if (saldo < 0 && recomVenta.length > 0) {
-        htmlVentas = `
-        <div class="section-card danger">
-            <h2>🚨 Alerta de Saldo Negativo</h2>
-            ${alertaUrgenciaVenta}
-            <p>Para salir del negativo, el analista recomienda aceptar las siguientes ofertas del computer:</p>
-            <div class="grid-cards">
-                ${recomVenta.map(v => `
-                    <div class="card sell-card">
-                        <div class="card-title">${v.nombre}</div>
-                        <div class="card-price">${formatoEuro(v.oferta)}</div>
-                        ${v.motivo ? `<div class="card-alert" style="margin-top:5px; font-size:0.8rem;">${v.motivo}</div>` : ''}
-                    </div>
-                `).join('')}
-            </div>
-        </div>`;
+        htmlVentas = crearSeccionDesplegable({
+            id: 'sec-ventas',
+            titulo: '🚨 Alerta de Saldo Negativo',
+            badge: `Saldo: ${formatoEuro(saldo)}`,
+            abierta: true,
+            borderTopColor: '#ef4444',
+            background: 'rgba(239, 68, 68, 0.1)',
+            contenido: `
+                ${alertaUrgenciaVenta}
+                <p>Para salir del negativo, el analista recomienda aceptar las siguientes ofertas del computer:</p>
+                <div class="grid-cards">
+                    ${recomVenta.map(v => `
+                        <div class="card sell-card">
+                            <div class="card-title">${v.nombre}</div>
+                            <div class="card-price">${formatoEuro(v.oferta)}</div>
+                            ${v.motivo ? `<div class="card-alert" style="margin-top:5px; font-size:0.8rem;">${v.motivo}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `
+        });
     } else if (saldo < 0) {
-        htmlVentas = `
-        <div class="section-card danger">
-            <h2>🚨 Alerta de Saldo Negativo</h2>
-            ${alertaUrgenciaVenta}
-            <p>Estás en negativo pero no tienes ofertas suficientes del computer para cuadrar cuentas. ¡Pon jugadores a la venta hoy mismo!</p>
-        </div>`;
+        htmlVentas = crearSeccionDesplegable({
+            id: 'sec-ventas',
+            titulo: '🚨 Alerta de Saldo Negativo',
+            badge: `Saldo: ${formatoEuro(saldo)}`,
+            abierta: true,
+            borderTopColor: '#ef4444',
+            background: 'rgba(239, 68, 68, 0.1)',
+            contenido: `
+                ${alertaUrgenciaVenta}
+                <p>Estás en negativo pero no tienes ofertas suficientes del computer para cuadrar cuentas. ¡Pon jugadores a la venta hoy mismo!</p>
+            `
+        });
     } else if (recomVenta.length > 0) {
-        htmlVentas = `
-        <div class="section-card" style="border-top-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
-            <h2>🧹 Descartes y Ventas Recomendadas (FútbolFantasy & Devaluación)</h2>
-            <p>Tu saldo es positivo, pero el Asesor sugiere vender a estos jugadores por baja probabilidad de minutos en FF o pérdida de valor:</p>
-            <div class="grid-cards">
-                ${recomVenta.map(v => `
-                    <div class="card sell-card" style="border-left: 3px solid #f59e0b;">
-                        <div class="card-title">${v.nombre} ${v.labelFF ? `<span class="badge badge-danger" style="font-size:0.75rem; padding:2px 6px; border-radius:8px;">${v.labelFF}</span>` : ''}</div>
-                        <div class="card-price">Valor / Oferta: ${formatoEuro(v.oferta)}</div>
-                        <div class="card-alert" style="margin-top:8px; font-size:0.85rem; color:#fcd34d; background:rgba(245,158,11,0.15);">${v.motivo || 'Vender para liberar hueco en plantilla'}</div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>`;
+        htmlVentas = crearSeccionDesplegable({
+            id: 'sec-ventas',
+            titulo: '🧹 Descartes y Ventas Recomendadas (FútbolFantasy & Devaluación)',
+            badge: `${recomVenta.length} descartes`,
+            abierta: false,
+            borderTopColor: '#f59e0b',
+            background: 'rgba(245, 158, 11, 0.05)',
+            contenido: `
+                <p>Tu saldo es positivo, pero el Asesor sugiere vender a estos jugadores por baja probabilidad de minutos en FF o pérdida de valor:</p>
+                <div class="grid-cards">
+                    ${recomVenta.map(v => `
+                        <div class="card sell-card" style="border-left: 3px solid #f59e0b;">
+                            <div class="card-title">${v.nombre} ${v.labelFF ? `<span class="badge badge-danger" style="font-size:0.75rem; padding:2px 6px; border-radius:8px;">${v.labelFF}</span>` : ''}</div>
+                            <div class="card-price">Valor / Oferta: ${formatoEuro(v.oferta)}</div>
+                            <div class="card-alert" style="margin-top:8px; font-size:0.85rem; color:#fcd34d; background:rgba(245,158,11,0.15);">${v.motivo || 'Vender para liberar hueco en plantilla'}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `
+        });
     } else {
-        htmlVentas = `
-        <div class="section-card success">
-            <h2>✅ Plantilla Limpia y Cuentas Saneadas</h2>
-            <p>Tu saldo es positivo y todos tus jugadores tienen buena proyección de minutos en FútbolFantasy.</p>
-        </div>`;
+        htmlVentas = crearSeccionDesplegable({
+            id: 'sec-ventas',
+            titulo: '✅ Plantilla Limpia y Cuentas Saneadas',
+            badge: 'Cuentas en Orden',
+            abierta: false,
+            borderTopColor: '#10b981',
+            background: 'rgba(16, 185, 129, 0.03)',
+            contenido: `<p>Tu saldo es positivo y todos tus jugadores tienen buena proyección de minutos en FútbolFantasy.</p>`
+        });
     }
 
     let htmlMercado = '';
@@ -452,88 +496,109 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         }).join('');
         htmlCards += `</div>`;
 
-        htmlMercado = `
-        <div class="section-card market">
-            <h2>🎯 Recomendaciones de Mercado (Mercado Libre / Computer)</h2>
-            <p>Jugadores rentables puestos a la venta por el Computer. <em>(Recordatorio: Prohibido pujar por jugadores de rivales; a los rivales solo se les roba con clausulazo)</em>.</p>
-            ${htmlCards}
-        </div>`;
+        htmlMercado = crearSeccionDesplegable({
+            id: 'sec-mercado',
+            titulo: '🎯 Recomendaciones de Mercado (Mercado Libre / Computer)',
+            badge: `${recomMercado.length} objetivos`,
+            abierta: false,
+            borderTopColor: '#8b5cf6',
+            background: 'rgba(139, 92, 246, 0.03)',
+            contenido: `
+                <p>Jugadores rentables puestos a la venta por el Computer. <em>(Recordatorio: Prohibido pujar por jugadores de rivales; a los rivales solo se les roba con clausulazo)</em>.</p>
+                ${htmlCards}
+            `
+        });
     } else {
-        htmlMercado = `
-        <div class="section-card neutral">
-            <h2>🤷‍♂️ Sin Objetivos en Mercado Libre</h2>
-            <p>Hoy no hay ningún jugador del Computer que encaje con tus necesidades o presupuesto.</p>
-        </div>`;
+        htmlMercado = crearSeccionDesplegable({
+            id: 'sec-mercado',
+            titulo: '🤷‍♂️ Sin Objetivos en Mercado Libre',
+            badge: '0 objetivos',
+            abierta: false,
+            borderTopColor: '#64748b',
+            background: 'rgba(30, 41, 59, 0.4)',
+            contenido: `<p>Hoy no hay ningún jugador del Computer que encaje con tus necesidades o presupuesto.</p>`
+        });
     }
 
     let htmlRobos = '';
     if (robosSugeridos && robosSugeridos.length > 0) {
-        htmlRobos = `
-        <div class="section-card" style="border-top-color: #8b5cf6; background: rgba(139, 92, 246, 0.05);">
-            <h2>🥷 Robos Tácticos Sugeridos (Clausulazos)</h2>
-            <p>El Asesor ha escaneado a tus rivales y te recomienda estos "robos" para cubrir tus posiciones urgentes:</p>
-            <div class="grid-cards">
-                ${robosSugeridos.map(r => {
-                    const infoFF = obtenerTitularidadJugador(r.nombre, datosFF, r);
-                    return `
-                    <div class="card buy-card" style="border-left: 3px solid #8b5cf6;">
-                        <div class="card-title">${r.nombre} <span style="font-size: 0.8rem; background: #475569; padding: 2px 6px; border-radius: 8px;">${r.posicion}</span> <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
-                        <div class="card-detail">Pertenece a: <strong>${r.dueño}</strong></div>
-                        <div class="card-detail" style="margin-top: 5px;">Media: ⭐ ${r.mediaPuntos} pts</div>
-                        <div class="card-bid" style="margin-top: 10px;">Valor aprox.:<br>${formatoEuro(r.precioMercado)}</div>
-                        <div class="card-alert" style="margin-top: 10px; background: rgba(139, 92, 246, 0.1); color: #c4b5fd;">Alta rentabilidad. Verifica su cláusula real en la app.</div>
-                    </div>`;
-                }).join('')}
-            </div>
-        </div>`;
+        htmlRobos = crearSeccionDesplegable({
+            id: 'sec-robos',
+            titulo: '🥷 Robos Tácticos Sugeridos (Clausulazos a Rivales)',
+            badge: `${robosSugeridos.length} robos`,
+            abierta: false,
+            borderTopColor: '#8b5cf6',
+            background: 'rgba(139, 92, 246, 0.05)',
+            contenido: `
+                <p>El Asesor ha escaneado a tus rivales y te recomienda estos "robos" para cubrir tus posiciones urgentes:</p>
+                <div class="grid-cards">
+                    ${robosSugeridos.map(r => {
+                        const infoFF = obtenerTitularidadJugador(r.nombre, datosFF, r);
+                        return `
+                        <div class="card buy-card" style="border-left: 3px solid #8b5cf6;">
+                            <div class="card-title">${r.nombre} <span style="font-size: 0.8rem; background: #475569; padding: 2px 6px; border-radius: 8px;">${r.posicion}</span> <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
+                            <div class="card-detail">Pertenece a: <strong>${r.dueño}</strong></div>
+                            <div class="card-detail" style="margin-top: 5px;">Media: ⭐ ${r.mediaPuntos} pts</div>
+                            <div class="card-bid" style="margin-top: 10px;">Valor aprox.:<br>${formatoEuro(r.precioMercado)}</div>
+                            <div class="card-alert" style="margin-top: 10px; background: rgba(139, 92, 246, 0.1); color: #c4b5fd;">Alta rentabilidad. Verifica su cláusula real en la app.</div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            `
+        });
     }
 
     let htmlPretemporada = '';
     if (analisisPretemporada) {
-        htmlPretemporada = `
-        <div class="section-card" style="border-top-color: #f472b6;">
-            <h2>🧐 Análisis de Plantilla Inicial</h2>
-            <p>El asesor ha evaluado tu equipo inicial. Aquí tienes el desglose:</p>
-            
-            <h3 style="color: var(--success); margin-top: 20px;">🛡️ Jugadores a Mantener (Claves/Especulación)</h3>
-            <div class="grid-cards">
-                ${analisisPretemporada.mantener.map(m => {
-                    const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
-                    return `
-                    <div class="card">
-                        <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
-                        <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
-                        <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">${m.motivo}</div>
-                    </div>`;
-                }).join('')}
-            </div>
+        htmlPretemporada = crearSeccionDesplegable({
+            id: 'sec-pretemporada',
+            titulo: '🧐 Análisis de Plantilla Inicial',
+            badge: 'Pretemporada',
+            abierta: false,
+            borderTopColor: '#f472b6',
+            background: 'rgba(244, 114, 182, 0.03)',
+            contenido: `
+                <p>El asesor ha evaluado tu equipo inicial. Aquí tienes el desglose:</p>
+                <h3 style="color: var(--success); margin-top: 20px;">🛡️ Jugadores a Mantener (Claves/Especulación)</h3>
+                <div class="grid-cards">
+                    ${analisisPretemporada.mantener.map(m => {
+                        const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
+                        return `
+                        <div class="card">
+                            <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
+                            <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
+                            <div class="card-alert" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">${m.motivo}</div>
+                        </div>`;
+                    }).join('')}
+                </div>
 
-            <h3 style="color: var(--danger); margin-top: 20px;">👋 Jugadores a Vender (Descartes/Bajando)</h3>
-            <div class="grid-cards">
-                ${analisisPretemporada.vender.map(m => {
-                    const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
-                    return `
-                    <div class="card">
-                        <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
-                        <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
-                        <div class="card-alert" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);">${m.motivo}</div>
-                    </div>`;
-                }).join('')}
-            </div>
+                <h3 style="color: var(--danger); margin-top: 20px;">👋 Jugadores a Vender (Descartes/Bajando)</h3>
+                <div class="grid-cards">
+                    ${analisisPretemporada.vender.map(m => {
+                        const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
+                        return `
+                        <div class="card">
+                            <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
+                            <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
+                            <div class="card-alert" style="color: var(--danger); background: rgba(239, 68, 68, 0.1);">${m.motivo}</div>
+                        </div>`;
+                    }).join('')}
+                </div>
 
-            <h3 style="color: #94a3b8; margin-top: 20px;">🤔 Dudas / Parches</h3>
-            <div class="grid-cards">
-                ${analisisPretemporada.duda.map(m => {
-                    const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
-                    return `
-                    <div class="card">
-                        <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
-                        <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
-                        <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">${m.motivo}</div>
-                    </div>`;
-                }).join('')}
-            </div>
-        </div>`;
+                <h3 style="color: #94a3b8; margin-top: 20px;">🤔 Dudas / Parches</h3>
+                <div class="grid-cards">
+                    ${analisisPretemporada.duda.map(m => {
+                        const infoFF = obtenerTitularidadJugador(m.nombre, datosFF, m);
+                        return `
+                        <div class="card">
+                            <div class="card-title">${m.nombre} <span class="badge ${infoFF.badge}" style="font-size:0.75rem; padding:2px 8px; border-radius:10px; margin-left:6px; font-weight:bold;">${infoFF.label}</span></div>
+                            <div class="card-detail">Valor: ${formatoEuro(m.precio)} | Tendencia: ${m.incremento > 0 ? '+' : ''}${formatoEuro(m.incremento)}/día</div>
+                            <div class="card-alert" style="color: #94a3b8; background: rgba(148, 163, 184, 0.1);">${m.motivo}</div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            `
+        });
         
         // Mantener mercado visible si hay ofertas activas
         htmlVentas = '';
@@ -541,109 +606,137 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
     let htmlDetective = '';
     if (expedienteRivales && expedienteRivales.length > 0) {
-        htmlDetective = `
-        <div class="section-card" style="border-top-color: #f59e0b;">
-            <h2>🕵️ Expediente de Rivales y Analítica de Pujas</h2>
-            <p>El Asesor ha investigado a tus contrincantes para detectar sus puntos débiles y predecir sus pujas.</p>
-            <div class="grid-cards">
-                ${expedienteRivales.map(r => `
-                    <div class="card" style="border-left: 3px solid #f59e0b;">
-                        <div class="card-title">${r.nombre}</div>
-                        <div class="card-detail">Valor Plantilla: ${formatoEuro(r.valor)}</div>
-                        <div style="margin-top: 10px;">
-                            <strong>Busca urgentemente:</strong><br>
-                            ${r.urgencias.map(u => `<span style="display:inline-block; margin-right:5px; background:#475569; padding:2px 8px; border-radius:12px; font-size:0.8rem;">${u}</span>`).join('')}
+        htmlDetective = crearSeccionDesplegable({
+            id: 'sec-detective',
+            titulo: '🕵️ Expediente de Rivales y Analítica de Pujas',
+            badge: `${expedienteRivales.length} mánagers`,
+            abierta: false,
+            borderTopColor: '#f59e0b',
+            background: 'rgba(245, 158, 11, 0.03)',
+            contenido: `
+                <p>El Asesor ha investigado a tus contrincantes para detectar sus puntos débiles y predecir sus pujas.</p>
+                <div class="grid-cards">
+                    ${expedienteRivales.map(r => `
+                        <div class="card" style="border-left: 3px solid #f59e0b;">
+                            <div class="card-title">${r.nombre}</div>
+                            <div class="card-detail">Valor Plantilla: ${formatoEuro(r.valor)}</div>
+                            <div style="margin-top: 10px;">
+                                <strong>Busca urgentemente:</strong><br>
+                                ${r.urgencias.map(u => `<span style="display:inline-block; margin-right:5px; background:#475569; padding:2px 8px; border-radius:12px; font-size:0.8rem;">${u}</span>`).join('')}
+                            </div>
+                            ${r.statsPuja && r.statsPuja.fichajesAnalizados > 0 ? `
+                            <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.85rem;">
+                                <div style="color: #cbd5e1;">💰 <strong>Perfil Comprador</strong></div>
+                                <div style="color: #94a3b8; margin-top: 5px;">Sobrepuja media: <span style="color: #f87171;">+${Math.round(r.statsPuja.sobrepujaMedia * 100)}%</span></div>
+                                <div style="color: #94a3b8;">Fichaje +Caro: ${formatoEuro(r.statsPuja.pujaMaxima)}</div>
+                                <div style="color: #64748b; font-size: 0.75rem;">(Analizados ${r.statsPuja.fichajesAnalizados} fichajes)</div>
+                            </div>
+                            ` : `
+                            <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.85rem; color: #64748b;">
+                                💰 Sin datos históricos de fichajes
+                            </div>
+                            `}
                         </div>
-                        ${r.statsPuja && r.statsPuja.fichajesAnalizados > 0 ? `
-                        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.85rem;">
-                            <div style="color: #cbd5e1;">💰 <strong>Perfil Comprador</strong></div>
-                            <div style="color: #94a3b8; margin-top: 5px;">Sobrepuja media: <span style="color: #f87171;">+${Math.round(r.statsPuja.sobrepujaMedia * 100)}%</span></div>
-                            <div style="color: #94a3b8;">Fichaje +Caro: ${formatoEuro(r.statsPuja.pujaMaxima)}</div>
-                            <div style="color: #64748b; font-size: 0.75rem;">(Analizados ${r.statsPuja.fichajesAnalizados} fichajes)</div>
-                        </div>
-                        ` : `
-                        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.85rem; color: #64748b;">
-                            💰 Sin datos históricos de fichajes
-                        </div>
-                        `}
-                    </div>
-                `).join('')}
-            </div>
-        </div>`;
+                    `).join('')}
+                </div>
+            `
+        });
     }
 
     let htmlSalud = '';
-    if (alertasMedicas.length > 0) {
-        htmlSalud = `
-        <div class="section-card danger">
-            <h2>🏥 Parte Médico de tu Equipo</h2>
-            <p>Se han detectado problemas en jugadores de tu plantilla. Te recomendamos buscarles recambio antes de la jornada:</p>
-            <div class="grid-cards">
-                ${alertasMedicas.map(a => `
-                    <div class="card" style="border-left: 4px solid #ef4444;">
-                        <div class="card-title">${a.nombre}</div>
-                        <div class="card-alert" style="margin-top: 10px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: #fca5a5;">${a.mensaje}</div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>`;
+    const urgenteSalud = saludPorteria && saludPorteria.urgentePujar;
+    if (alertasMedicas.length > 0 || saludPorteria) {
+        htmlSalud = crearSeccionDesplegable({
+            id: 'sec-salud',
+            titulo: '🏥 Parte Médico & Estado de Portería',
+            badge: urgenteSalud ? '🚨 Alerta Portería' : (alertasMedicas.length > 0 ? `${alertasMedicas.length} Alertas` : 'OK'),
+            abierta: urgenteSalud,
+            borderTopColor: urgenteSalud ? '#ef4444' : '#10b981',
+            background: urgenteSalud ? 'rgba(239, 68, 68, 0.05)' : 'rgba(16, 185, 129, 0.03)',
+            contenido: `
+                ${saludPorteria ? `<div style="margin-bottom:15px; font-weight:bold; color:#cbd5e1;">🧤 ${saludPorteria.estado}: ${saludPorteria.mensaje}</div>` : ''}
+                ${alertasMedicas.length > 0 ? `
+                <p>Se han detectado problemas en jugadores de tu plantilla. Te recomendamos buscarles recambio antes de la jornada:</p>
+                <div class="grid-cards">
+                    ${alertasMedicas.map(a => `
+                        <div class="card" style="border-left: 4px solid #ef4444;">
+                            <div class="card-title">${a.nombre}</div>
+                            <div class="card-alert" style="margin-top: 10px; font-weight: bold; background: rgba(239, 68, 68, 0.2); color: #fca5a5;">${a.mensaje}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+            `
+        });
     }
 
     let htmlOnce = '';
     if (analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0) {
-        htmlOnce = `
-        <div class="section-card" style="border-top-color: #f59e0b; background: rgba(245, 158, 11, 0.03);">
-            <h2>👑 11 Titular Sugerido & Elección de Capitán (Formación: ${analisisOnce.formacion})</h2>
-            <p>El Superagente Táctico ha analizado el rendimiento proyectado de tus jugadores disponibles:</p>
-            <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
-                ${analisisOnce.capitan ? `
-                <div style="background: rgba(234, 179, 8, 0.15); border: 2px solid #eab308; border-radius: 12px; padding: 15px; flex: 1; min-width: 200px;">
-                    <div style="color: #fef08a; font-size: 0.85rem; font-weight: bold;">🌟 CAPITÁN RECOMENDADO (x2 Puntos)</div>
-                    <div style="font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px;">${analisisOnce.capitan.nombre}</div>
-                    <div style="color: #cbd5e1; font-size: 0.85rem;">Media Proyectada: ${analisisOnce.capitan.puntosMedia} pts/partido</div>
-                </div>` : ''}
-                ${analisisOnce.ariete ? `
-                <div style="background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 12px; padding: 15px; flex: 1; min-width: 200px;">
-                    <div style="color: #fca5a5; font-size: 0.85rem; font-weight: bold;">🎯 ARIETE RECOMENDADO (Goles Extra)</div>
-                    <div style="font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px;">${analisisOnce.ariete.nombre}</div>
-                    <div style="color: #cbd5e1; font-size: 0.85rem;">Media Proyectada: ${analisisOnce.ariete.puntosMedia} pts/partido</div>
-                </div>` : ''}
-            </div>
-            <div class="grid-cards">
-                ${analisisOnce.onceTitular.map(j => {
-                    const infoFF = obtenerTitularidadJugador(j.nombre, datosFF, j);
-                    return `
-                    <div class="card" style="border-left: 3px solid #f59e0b;">
-                        <div class="card-title">${j.nombre} ${j.id === (analisisOnce.capitan ? analisisOnce.capitan.id : null) ? '🌟 (Capitán)' : ''} ${j.id === (analisisOnce.ariete ? analisisOnce.ariete.id : null) ? '🎯 (Ariete)' : ''} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
-                        <div class="card-detail">Posición: ${j.posicion === 1 ? '🧤 Portero' : j.posicion === 2 ? '🛡️ Defensa' : j.posicion === 3 ? '⚙️ Medio' : '⚽ Delantero'}</div>
-                        <div style="margin-top: 5px; color: #f59e0b; font-weight: bold;">Expectativa: ~${j.puntosMedia} pts</div>
-                    </div>`;
-                }).join('')}
-            </div>
-        </div>`;
+        htmlOnce = crearSeccionDesplegable({
+            id: 'sec-once',
+            titulo: `👑 11 Titular Sugerido & Elección de Capitán (Formación: ${analisisOnce.formacion})`,
+            badge: `${analisisOnce.onceTitular.length}/11 Titulares`,
+            abierta: false,
+            borderTopColor: '#f59e0b',
+            background: 'rgba(245, 158, 11, 0.03)',
+            contenido: `
+                <p>El Superagente Táctico ha analizado el rendimiento proyectado de tus jugadores disponibles:</p>
+                <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+                    ${analisisOnce.capitan ? `
+                    <div style="background: rgba(234, 179, 8, 0.15); border: 2px solid #eab308; border-radius: 12px; padding: 15px; flex: 1; min-width: 200px;">
+                        <div style="color: #fef08a; font-size: 0.85rem; font-weight: bold;">🌟 CAPITÁN RECOMENDADO (x2 Puntos)</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px;">${analisisOnce.capitan.nombre}</div>
+                        <div style="color: #cbd5e1; font-size: 0.85rem;">Media Proyectada: ${analisisOnce.capitan.puntosMedia} pts/partido</div>
+                    </div>` : ''}
+                    ${analisisOnce.ariete ? `
+                    <div style="background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 12px; padding: 15px; flex: 1; min-width: 200px;">
+                        <div style="color: #fca5a5; font-size: 0.85rem; font-weight: bold;">🎯 ARIETE RECOMENDADO (Goles Extra)</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px;">${analisisOnce.ariete.nombre}</div>
+                        <div style="color: #cbd5e1; font-size: 0.85rem;">Media Proyectada: ${analisisOnce.ariete.puntosMedia} pts/partido</div>
+                    </div>` : ''}
+                </div>
+                <div class="grid-cards">
+                    ${analisisOnce.onceTitular.map(j => {
+                        const infoFF = obtenerTitularidadJugador(j.nombre, datosFF, j);
+                        return `
+                        <div class="card" style="border-left: 3px solid #f59e0b;">
+                            <div class="card-title">${j.nombre} ${j.id === (analisisOnce.capitan ? analisisOnce.capitan.id : null) ? '🌟 (Capitán)' : ''} ${j.id === (analisisOnce.ariete ? analisisOnce.ariete.id : null) ? '🎯 (Ariete)' : ''} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
+                            <div class="card-detail">Posición: ${j.posicion === 1 ? '🧤 Portero' : j.posicion === 2 ? '🛡️ Defensa' : j.posicion === 3 ? '⚙️ Medio' : '⚽ Delantero'}</div>
+                            <div style="margin-top: 5px; color: #f59e0b; font-weight: bold;">Expectativa: ~${j.puntosMedia} pts</div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            `
+        });
     }
 
     let htmlTrading = '';
     if (oportunidadesTrading && oportunidadesTrading.length > 0) {
-        htmlTrading = `
-        <div class="section-card" style="border-top-color: #10b981; background: rgba(16, 185, 129, 0.03);">
-            <h2>🚀 Mercado de Especulación Rápida (Trading)</h2>
-            <p>Jugadores en subida libre recomendados strictly para ganar dinero limpio en 3-4 días:</p>
-            <div class="grid-cards">
-                ${oportunidadesTrading.map(t => {
-                    const infoFF = obtenerTitularidadJugador(t.nombre, datosFF, t);
-                    return `
-                    <div class="card" style="border-left: 3px solid #10b981;">
-                        <div class="card-title" style="color: #34d399;">${t.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
-                        <div class="card-detail">Valor: ${formatoEuro(t.precio)}</div>
-                        <div style="color: #a7f3d0; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(t.subidaDiaria/1000).toFixed(0)}k€/día</div>
-                        <div class="card-alert" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px; font-size: 0.85rem;">
-                            ${t.recomendacion}
-                        </div>
-                    </div>`;
-                }).join('')}
-            </div>
-        </div>`;
+        htmlTrading = crearSeccionDesplegable({
+            id: 'sec-trading',
+            titulo: '🚀 Mercado de Especulación Rápida (Trading)',
+            badge: `${oportunidadesTrading.length} chollos`,
+            abierta: false,
+            borderTopColor: '#10b981',
+            background: 'rgba(16, 185, 129, 0.03)',
+            contenido: `
+                <p>Jugadores en subida libre recomendados para ganar dinero limpio en 3-4 días:</p>
+                <div class="grid-cards">
+                    ${oportunidadesTrading.map(t => {
+                        const infoFF = obtenerTitularidadJugador(t.nombre, datosFF, t);
+                        return `
+                        <div class="card" style="border-left: 3px solid #10b981;">
+                            <div class="card-title" style="color: #34d399;">${t.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
+                            <div class="card-detail">Valor: ${formatoEuro(t.precio)}</div>
+                            <div style="color: #a7f3d0; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(t.subidaDiaria/1000).toFixed(0)}k€/día</div>
+                            <div class="card-alert" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px; font-size: 0.85rem;">
+                                ${t.recomendacion}
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            `
+        });
     }
 
     // Sintetizar Plan de Acción Diario con el Superagente Director Técnico
@@ -660,46 +753,51 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     });
 
     let htmlOrdenesDia = `
-    <div class="executive-banner" style="border-color: #3b82f6; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.35) 100%);">
-        <div class="banner-header">
-            <h2 style="color: #60a5fa; display: flex; align-items: center; gap: 10px; margin: 0;">
-                <span>👔</span> PLAN DE ACCIÓN DIARIO DE TU DIRECTOR TÉCNICO
-            </h2>
-            <span class="live-pill" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-color: #60a5fa;">📋 HOY TIENES QUE HACER ESTO</span>
+    <div class="section-card collapsible-card is-open executive-banner" id="sec-plan-accion" style="border-top-color: #3b82f6; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.35) 100%);">
+        <div class="card-header-toggle" onclick="toggleCard('sec-plan-accion')">
+            <div class="header-title-group">
+                <h2 style="color: #60a5fa; display: flex; align-items: center; gap: 10px; margin: 0;">
+                    <span>👔</span> PLAN DE ACCIÓN DIARIO DE TU DIRECTOR TÉCNICO
+                </h2>
+                <span class="live-pill" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-color: #60a5fa;">📋 HOY TIENES QUE HACER ESTO</span>
+            </div>
+            <span class="toggle-arrow">🔽</span>
         </div>
-        <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
-            ${planDiario.consejo}
-        </div>
-        <div class="action-grid">
-            <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
-                <div class="action-icon">🛒</div>
-                <div class="action-title">Hoy Puja Por</div>
-                <div class="action-body">
-                    ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
-                </div>
+        <div class="card-collapsible-content">
+            <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px; margin-bottom: 20px; border-left: 2px solid #3b82f6; padding-left: 10px;">
+                ${planDiario.consejo}
             </div>
-
-            <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
-                <div class="action-icon">💵</div>
-                <div class="action-title">Hoy Vende A</div>
-                <div class="action-body">
-                    ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
+            <div class="action-grid">
+                <div class="action-card card-pujas" style="border-left: 3px solid #3b82f6;">
+                    <div class="action-icon">🛒</div>
+                    <div class="action-title">Hoy Puja Por</div>
+                    <div class="action-body">
+                        ${planDiario.pujas.length > 0 ? planDiario.pujas.map(p => `<div class="action-item">${p}</div>`).join('') : '<div class="action-empty">No hace falta pujar por nadie hoy. Guarda saldo.</div>'}
+                    </div>
                 </div>
-            </div>
 
-            <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
-                <div class="action-icon">🥷</div>
-                <div class="action-title">Hoy Paga Cláusula</div>
-                <div class="action-body">
-                    ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
+                <div class="action-card card-ventas" style="border-left: 3px solid #ef4444;">
+                    <div class="action-icon">💵</div>
+                    <div class="action-title">Hoy Vende A</div>
+                    <div class="action-body">
+                        ${planDiario.ventas.length > 0 ? planDiario.ventas.map(v => `<div class="action-item">${v}</div>`).join('') : '<div class="action-empty">No hace falta vender a nadie hoy. Cuentas saneadas ✅</div>'}
+                    </div>
                 </div>
-            </div>
 
-            <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
-                <div class="action-icon">⚽</div>
-                <div class="action-title">Hoy Alinea Esto</div>
-                <div class="action-body">
-                    ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
+                <div class="action-card card-clausulas" style="border-left: 3px solid #a855f7;">
+                    <div class="action-icon">🥷</div>
+                    <div class="action-title">Hoy Paga Cláusula</div>
+                    <div class="action-body">
+                        ${planDiario.clausulas.length > 0 ? planDiario.clausulas.map(c => `<div class="action-item">${c}</div>`).join('') : '<div class="action-empty">No pagar ninguna cláusula hoy.</div>'}
+                    </div>
+                </div>
+
+                <div class="action-card card-alineacion" style="border-left: 3px solid #eab308;">
+                    <div class="action-icon">⚽</div>
+                    <div class="action-title">Hoy Alinea Esto</div>
+                    <div class="action-body">
+                        ${planDiario.alineacion.map(a => `<div class="action-item">${a}</div>`).join('')}
+                    </div>
                 </div>
             </div>
         </div>
@@ -707,68 +805,85 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
     let htmlChollos = '';
     if (chollosBaratos && chollosBaratos.length > 0) {
-        htmlChollos = `
-        <div class="section-card" style="border-top-color: #06b6d4; background: rgba(6, 182, 212, 0.03);">
-            <h2>💎 Radar de Titulares Chollo (< 2.000.000€)</h2>
-            <p>Jugadores económicos recomendados para completar los 14 puestos de tu plantilla sin arruinarte:</p>
-            <div class="grid-cards">
-                ${chollosBaratos.map(c => {
-                    const infoFF = obtenerTitularidadJugador(c.nombre, datosFF, c);
-                    return `
-                    <div class="card" style="border-left: 3px solid #06b6d4;">
-                        <div class="card-title" style="color: #67e8f9;">${c.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
-                        <div class="card-detail">Precio: ${formatoEuro(c.precio)}</div>
-                        <div style="color: #a5f3fc; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(c.subida/1000).toFixed(0)}k€/día</div>
-                        <div class="card-alert" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; margin-top: 10px; font-size: 0.85rem;">
-                            ${c.recomendacion}
-                        </div>
-                    </div>`;
-                }).join('')}
-            </div>
-        </div>`;
+        htmlChollos = crearSeccionDesplegable({
+            id: 'sec-chollos',
+            titulo: '💎 Radar de Titulares Chollo (< 2.000.000€)',
+            badge: `${chollosBaratos.length} parches`,
+            abierta: false,
+            borderTopColor: '#06b6d4',
+            background: 'rgba(6, 182, 212, 0.03)',
+            contenido: `
+                <p>Jugadores económicos recomendados para completar los 14 puestos de tu plantilla sin arruinarte:</p>
+                <div class="grid-cards">
+                    ${chollosBaratos.map(c => {
+                        const infoFF = obtenerTitularidadJugador(c.nombre, datosFF, c);
+                        return `
+                        <div class="card" style="border-left: 3px solid #06b6d4;">
+                            <div class="card-title" style="color: #67e8f9;">${c.nombre} <span class="badge ${infoFF.badge}">${infoFF.label}</span></div>
+                            <div class="card-detail">Precio: ${formatoEuro(c.precio)}</div>
+                            <div style="color: #a5f3fc; margin-top: 5px; font-weight: bold;">📈 Subiendo +${(c.subida/1000).toFixed(0)}k€/día</div>
+                            <div class="card-alert" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; margin-top: 10px; font-size: 0.85rem;">
+                                ${c.recomendacion}
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            `
+        });
     }
 
     let htmlTablon = '';
     if (movimientos.length > 0) {
-        // Filtrar solo los fichajes (transfer)
         const fichajes = movimientos.filter(m => m.type === 'transfer' && Array.isArray(m.content)).flatMap(m => m.content);
         if (fichajes.length > 0) {
-            htmlTablon = `
-            <div class="section-card" style="border-top-color: #3b82f6;">
-                <h2>📰 Últimos Movimientos de la Liga</h2>
-                <p>El mercado se mueve. Estos han sido los últimos fichajes de tus rivales:</p>
-                <div class="grid-cards">
-                    ${fichajes.slice(0, 10).map(f => {
-                        const idJugador = typeof f.player === 'object' ? f.player.id : f.player;
-                        const nombreJugador = dbJugadores && dbJugadores[idJugador] ? dbJugadores[idJugador].name : 'Jugador Desconocido';
-                        const vendedor = f.from ? f.from.name : 'Computer';
-                        const comprador = f.to ? f.to.name : 'Computer';
-                        const esVenta = vendedor !== 'Computer' && comprador === 'Computer';
-                        const accionStr = esVenta ? 'Ha vendido a:' : 'Ha fichado a:';
-                        const usuarioDestacado = esVenta ? vendedor : comprador;
-                        
-                        return `
-                        <div class="card" style="background: rgba(59, 130, 246, 0.05);">
-                            <div style="color: #94a3b8; font-size: 0.85rem;"><strong>${usuarioDestacado}</strong> ${accionStr.toLowerCase()}</div>
-                            <div class="card-title" style="color: #60a5fa;">${nombreJugador}</div>
-                            <div class="card-detail">De: ${vendedor} ➡️ Para: ${comprador}</div>
-                            <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: ${formatoEuro(f.amount)}</div>
-                        </div>
-                        `;
-                    }).join('')}
-                </div>
-            </div>`;
+            htmlTablon = crearSeccionDesplegable({
+                id: 'sec-tablon',
+                titulo: '📰 Últimos Movimientos de la Liga',
+                badge: `${fichajes.length} fichajes`,
+                abierta: false,
+                borderTopColor: '#3b82f6',
+                background: 'rgba(30, 41, 59, 0.4)',
+                contenido: `
+                    <p>El mercado se mueve. Estos han sido los últimos fichajes de tus rivales:</p>
+                    <div class="grid-cards">
+                        ${fichajes.slice(0, 10).map(f => {
+                            const idJugador = typeof f.player === 'object' ? f.player.id : f.player;
+                            const nombreJugador = dbJugadores && dbJugadores[idJugador] ? dbJugadores[idJugador].name : 'Jugador Desconocido';
+                            const vendedor = f.from ? f.from.name : 'Computer';
+                            const comprador = f.to ? f.to.name : 'Computer';
+                            const esVenta = vendedor !== 'Computer' && comprador === 'Computer';
+                            const accionStr = esVenta ? 'Ha vendido a:' : 'Ha fichado a:';
+                            const usuarioDestacado = esVenta ? vendedor : comprador;
+                            
+                            return `
+                            <div class="card" style="background: rgba(59, 130, 246, 0.05);">
+                                <div style="color: #94a3b8; font-size: 0.85rem;"><strong>${usuarioDestacado}</strong> ${accionStr.toLowerCase()}</div>
+                                <div class="card-title" style="color: #60a5fa;">${nombreJugador}</div>
+                                <div class="card-detail">De: ${vendedor} ➡️ Para: ${comprador}</div>
+                                <div style="margin-top: 10px; color: #f8fafc; font-weight: bold;">Precio: ${formatoEuro(f.amount)}</div>
+                            </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `
+            });
         }
     }
 
-    let htmlCalendario = `
-    <div class="section-card" style="border-top-color: #10b981; background: rgba(16, 185, 129, 0.05);">
-        <h2>📅 Calendario de la Jornada</h2>
-        <div style="text-align: center; padding: 20px; color: #94a3b8; font-style: italic;">
-            <p>⏳ Esperando a que Biwenger publique los horarios oficiales de la jornada...</p>
-            <p style="font-size: 0.8rem;">(Este bloque se llenará automáticamente con los partidos en cuanto la API los habilite unos días antes del inicio de la liga)</p>
-        </div>
-    </div>`;
+    let htmlCalendario = crearSeccionDesplegable({
+        id: 'sec-calendario',
+        titulo: '📅 Calendario y Previa de Jornada',
+        badge: 'LaLiga 2026',
+        abierta: false,
+        borderTopColor: '#10b981',
+        background: 'rgba(16, 185, 129, 0.05)',
+        contenido: `
+            <div style="text-align: center; padding: 20px; color: #94a3b8; font-style: italic;">
+                <p>⏳ Esperando a que Biwenger publique los horarios oficiales de la jornada...</p>
+                <p style="font-size: 0.8rem;">(Este bloque se llenará automáticamente con los partidos en cuanto la API los habilite unos días antes del inicio de la liga)</p>
+            </div>
+        `
+    });
 
     // Conteo de posiciones para gráfico de donut
     const jugPlantilla = plantillaUsuario || [];
@@ -792,48 +907,66 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         </div>
     </div>`;
 
-    let htmlGraficos = `
-    <div class="section-card" style="border-top-color: #3b82f6; background: rgba(15, 23, 42, 0.4);">
-        <h2 style="display: flex; align-items: center; gap: 10px;">
-            <span>📊</span> Centro de Analítica Visual & Comparativa
-        </h2>
-        <p style="color: #94a3b8;">Visualización interactiva del valor de plantilla de la comunidad y desglose de tu equipo:</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px;">
-            <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
-                <h3 style="margin-top: 0; font-size: 1rem; color: #60a5fa; text-align: center;">🏆 Valores de Plantilla de la Liga (€)</h3>
-                <div style="position: relative; height: 260px; width: 100%;">
-                    <canvas id="chartRivales"></canvas>
+    let htmlGraficos = crearSeccionDesplegable({
+        id: 'sec-graficos',
+        titulo: '📊 Centro de Analítica Visual & Comparativa',
+        badge: 'Gráficos Chart.js',
+        abierta: false,
+        borderTopColor: '#3b82f6',
+        background: 'rgba(15, 23, 42, 0.4)',
+        contenido: `
+            <p style="color: #94a3b8;">Visualización interactiva del valor de plantilla de la comunidad y desglose de tu equipo:</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                    <h3 style="margin-top: 0; font-size: 1rem; color: #60a5fa; text-align: center;">🏆 Valores de Plantilla de la Liga (€)</h3>
+                    <div style="position: relative; height: 260px; width: 100%;">
+                        <canvas id="chartRivales"></canvas>
+                    </div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                    <h3 style="margin-top: 0; font-size: 1rem; color: #34d399; text-align: center;">⚽ Tu Plantilla por Posición</h3>
+                    <div style="position: relative; height: 260px; width: 100%;">
+                        <canvas id="chartPlantilla"></canvas>
+                    </div>
                 </div>
             </div>
-            
-            <div style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08);">
-                <h3 style="margin-top: 0; font-size: 1rem; color: #34d399; text-align: center;">⚽ Tu Plantilla por Posición</h3>
-                <div style="position: relative; height: 260px; width: 100%;">
-                    <canvas id="chartPlantilla"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>`;
+        `
+    });
 
-    let htmlCaraACara = `
-    <div class="section-card" style="border-top-color: #a855f7; background: rgba(168, 85, 247, 0.03);">
-        <h2 style="display: flex; align-items: center; gap: 10px; color: #c084fc;">
-            <span>⚔️</span> Comparador Cara a Cara (Head-to-Head)
-        </h2>
-        <p style="color: #94a3b8;">Selecciona a cualquier rival para analizar sus necesidades tácticas, perfil psicológico de sobrepuja y vulnerabilidad:</p>
-        
-        <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
-            <label for="selectRival" style="font-weight: bold; color: #e2e8f0;">Rival a Espiar:</label>
-            <select id="selectRival" onchange="actualizarCaraACara()" style="background: #0f172a; color: #a78bfa; border: 1px solid #a855f7; padding: 10px 15px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none; cursor: pointer;">
-            </select>
-        </div>
-        
-        <div id="panelCaraACara" style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 25px; border: 1px solid rgba(168, 85, 247, 0.2);">
-        </div>
-    </div>`;
+    let htmlCaraACara = crearSeccionDesplegable({
+        id: 'sec-h2h',
+        titulo: '⚔️ Comparador Cara a Cara (Head-to-Head)',
+        badge: 'Espionaje Rivales',
+        abierta: false,
+        borderTopColor: '#a855f7',
+        background: 'rgba(168, 85, 247, 0.03)',
+        contenido: `
+            <p style="color: #94a3b8;">Selecciona a cualquier rival para analizar sus necesidades tácticas, perfil psicológico de sobrepuja y vulnerabilidad:</p>
+            <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+                <label for="selectRival" style="font-weight: bold; color: #e2e8f0;">Rival a Espiar:</label>
+                <select id="selectRival" onchange="actualizarCaraACara()" style="background: #0f172a; color: #a78bfa; border: 1px solid #a855f7; padding: 10px 15px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline: none; cursor: pointer;">
+                </select>
+            </div>
+            <div id="panelCaraACara" style="background: rgba(15, 23, 42, 0.7); border-radius: 16px; padding: 25px; border: 1px solid rgba(168, 85, 247, 0.2);">
+            </div>
+        `
+    });
 
     let listaHTML = registro.map(r => `<li><span class="hora">${r.hora}</span> ${r.texto.replace(/<.*?>/g, '')}</li>`).join('\n');
+
+    let htmlTerminal = crearSeccionDesplegable({
+        id: 'sec-terminal',
+        titulo: '💻 Terminal de Análisis & Registros',
+        badge: 'Logs de Ejecución',
+        abierta: false,
+        borderTopColor: '#64748b',
+        background: '#0f172a',
+        contenido: `
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                ${listaHTML}
+            </ul>
+        `
+    });
 
     const htmlContent = `<!DOCTYPE html>
 <html lang="es">
@@ -977,6 +1110,88 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         .section-card.market { border-top-color: #8b5cf6; }
         
         .section-card h2 { margin-top: 0; font-weight: 700; font-size: 1.5rem; }
+
+        /* Collapsible Accordion Cards */
+        .collapsible-card {
+            padding: 0 !important;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-header-toggle {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.02);
+            transition: background 0.2s ease;
+        }
+        .card-header-toggle:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .header-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .header-title-group h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .section-badge-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .toggle-arrow {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            opacity: 0.7;
+        }
+        .card-collapsible-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease, padding 0.3s ease;
+            padding: 0 25px;
+        }
+        .collapsible-card.is-open .card-collapsible-content {
+            max-height: 5000px;
+            opacity: 1;
+            padding: 0 25px 25px 25px;
+            transition: max-height 0.5s ease-in, opacity 0.3s ease, padding 0.3s ease;
+        }
+        .collapsible-card.is-open .toggle-arrow {
+            transform: rotate(180deg);
+        }
+        .global-controls-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-control {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-control:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #fff;
+        }
         
         .grid-cards {
             display: grid;
@@ -1054,6 +1269,11 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             </div>
         </div>
 
+        <div class="global-controls-bar">
+            <button class="btn-control" onclick="expandAllCards()">📂 Desplegar Todo</button>
+            <button class="btn-control" onclick="collapseAllCards()">📁 Plegar Todo</button>
+        </div>
+
         <!-- 1. SECCIONES DE TU USUARIO Y TU EQUIPO (USER FIRST) -->
         ${htmlOrdenesDia}
         ${htmlOnce}
@@ -1078,12 +1298,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         ${htmlTablon}
         ${htmlCalendario}
 
-        <div class="logs-section">
-            <h3>Terminal de Análisis</h3>
-            <ul>
-                ${listaHTML}
-            </ul>
-        </div>
+        ${htmlTerminal}
     </div>
 
     <script>
@@ -1091,6 +1306,23 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     window.DATA_MI_VALOR = ${valor};
     window.DATA_PLANTILLA_COUNTS = ${JSON.stringify(plantillaCounts)};
     window.DATA_ROBOS = ${JSON.stringify(robosSugeridos || [])};
+
+    function toggleCard(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.toggle('is-open');
+        }
+    }
+    function expandAllCards() {
+        document.querySelectorAll('.collapsible-card').forEach(c => c.classList.add('is-open'));
+    }
+    function collapseAllCards() {
+        document.querySelectorAll('.collapsible-card').forEach(c => {
+            if (c.id !== 'sec-plan-accion') {
+                c.classList.remove('is-open');
+            }
+        });
+    }
 
     function formatoEuroJS(num) {
         return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
