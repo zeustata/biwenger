@@ -51,21 +51,40 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
     return oportunidades.sort((a, b) => b.subidaDiaria - a.subidaDiaria).slice(0, 5);
 }
 
-function evaluarActivosToxicos(plantilla, dbJugadores = {}) {
+const { obtenerTitularidadJugador } = require('./ojeadorFantasy');
+
+function evaluarActivosToxicos(plantilla, dbJugadores = {}, datosFF = null) {
     const toxicos = [];
     if (!plantilla || !Array.isArray(plantilla)) return toxicos;
 
     plantilla.forEach(jugador => {
         const id = typeof jugador === 'object' ? jugador.id : jugador;
-        const jDatos = dbJugadores[id];
+        const jDatos = dbJugadores[id] || (typeof jugador === 'object' ? jugador : null);
+        if (!jDatos) return;
 
-        if (jDatos && jDatos.priceIncrement && jDatos.priceIncrement <= -30000) {
+        const infoFF = obtenerTitularidadJugador(jDatos.name || jugador.name, datosFF, jDatos);
+
+        const caidaFinanciera = jDatos.priceIncrement && jDatos.priceIncrement <= -30000;
+        const bajaSinMinutosFF = infoFF && infoFF.titularidad < 40;
+
+        if (caidaFinanciera || bajaSinMinutosFF) {
+            let mensaje = "";
+            if (bajaSinMinutosFF && caidaFinanciera) {
+                mensaje = `🔴 ${infoFF.label} y perdiendo ${(jDatos.priceIncrement / 1000).toFixed(0)}k€/día. Descarte urgente.`;
+            } else if (bajaSinMinutosFF) {
+                mensaje = `⚠️ ${infoFF.label} en FútbolFantasy (${infoFF.titularidad}% probabilidad). Recomendado vender para liberar hueco.`;
+            } else {
+                mensaje = `📉 Perdiendo ${(jDatos.priceIncrement / 1000).toFixed(0)}k€ al día. Recomienda vender para frenar pérdidas.`;
+            }
+
             toxicos.push({
                 id,
-                nombre: jDatos.name,
-                precio: jDatos.price,
-                caidaDiaria: jDatos.priceIncrement,
-                mensaje: `📉 Perdiendo ${(jDatos.priceIncrement / 1000).toFixed(0)}k€ al día. Recomienda vender cuanto antes para frenar pérdidas.`
+                nombre: jDatos.name || jugador.name,
+                precio: jDatos.price || jugador.price || 0,
+                caidaDiaria: jDatos.priceIncrement || 0,
+                titularidadFF: infoFF ? infoFF.titularidad : 60,
+                labelFF: infoFF ? infoFF.label : '',
+                mensaje
             });
         }
     });

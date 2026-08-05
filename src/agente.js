@@ -93,39 +93,7 @@ async function ejecutarAgente() {
         registrarAccion("⏳", `¡Atención! Faltan aprox ${Math.round(horasHastaJornada)} horas para que empiece la jornada.`);
     }
 
-    // CUADRAR CUENTAS (Asesoramiento)
-    if (saldoActual < 0) {
-        const urgencia = esRiesgoJornada ? "¡CRÍTICO! PUNTUARÁS CERO SI NO VENDES YA." : "Analizando opciones de venta para cuadrar cuentas...";
-        registrarAccion("⚠️", `¡SALDO NEGATIVO! ${urgencia}`);
-        const ofertas = await obtenerOfertas();
-        if (ofertas && ofertas.length > 0) {
-            const jugadoresPorVender = [...estado.team].sort((a, b) => a.average - b.average);
-            let saldoSimulado = saldoActual;
 
-            for (const jugador of jugadoresPorVender) {
-                const ofertaComputer = ofertas.find(o => o.player === jugador.id && o.type === 'computer');
-                if (ofertaComputer) {
-                    recomendacionesVenta.push({
-                        nombre: jugador.name,
-                        oferta: ofertaComputer.amount
-                    });
-                    saldoSimulado += ofertaComputer.amount;
-                    registrarAccion("💡", `Recomendación: Vender a ${jugador.name} por ${ofertaComputer.amount}€ al computer.`);
-                    
-                    if (saldoSimulado >= 0) {
-                        registrarAccion("✅", "Con estas ventas simuladas cuadrarías el saldo.");
-                        break;
-                    }
-                }
-            }
-            if (saldoSimulado < 0) {
-                registrarAccion("❌", "Las ofertas actuales no son suficientes para salir del negativo.");
-            }
-        } else {
-            registrarAccion("❌", "No hay ofertas del computer disponibles para cuadrar el saldo negativo.");
-        }
-    }
-    
     // 2. Leer el mercado
     const mercado = await obtenerMercado();
     if (!mercado || !mercado.sales) {
@@ -168,9 +136,68 @@ async function ejecutarAgente() {
     // Superagente Especulador (Trading & Inflación)
     const MAX_JUGADORES = process.env.MAX_JUGADORES_PLANTILLA ? parseInt(process.env.MAX_JUGADORES_PLANTILLA) : 14;
     const oportunidadesTrading = mercado && mercado.sales ? detectarOportunidadesTrading(mercado.sales, dbJugadores, jugadoresEnPlantilla, MAX_JUGADORES) : [];
-    const activosToxicos = evaluarActivosToxicos(estado.players || [], dbJugadores);
+    const activosToxicos = evaluarActivosToxicos(estado.players || [], dbJugadores, datosFF);
     const inflacionMercado = dbJugadores ? calcularIndiceInflacion(dbJugadores) : { estado: '📈 Estable', cambioMedio: 0, consejo: '' };
     const chollosBaratos = mercado && mercado.sales ? buscarChollosBaratos(mercado.sales, dbJugadores) : [];
+
+    // CUADRAR CUENTAS Y DESCHACAR JUGADORES SIN MINUTOS (FútbolFantasy & Pérdidas de Valor)
+    const ofertas = await obtenerOfertas();
+    if (saldoActual < 0) {
+        const urgencia = esRiesgoJornada ? "¡CRÍTICO! PUNTUARÁS CERO SI NO VENDES YA." : "Analizando opciones de venta para cuadrar cuentas...";
+        registrarAccion("⚠️", `¡SALDO NEGATIVO! ${urgencia}`);
+        if (ofertas && ofertas.length > 0) {
+            const jugadoresPorVender = [...(estado.players || estado.team || [])].sort((a, b) => (a.average || 0) - (b.average || 0));
+            let saldoSimulado = saldoActual;
+
+            for (const jugador of jugadoresPorVender) {
+                const idJ = typeof jugador === 'object' ? jugador.id : jugador;
+                const jDatos = dbJugadores ? dbJugadores[idJ] : (typeof jugador === 'object' ? jugador : null);
+                const ofertaComputer = ofertas.find(o => o.player === idJ && o.type === 'computer');
+                if (ofertaComputer) {
+                    recomendacionesVenta.push({
+                        id: idJ,
+                        nombre: jDatos ? jDatos.name : (jugador.name || `Jugador #${idJ}`),
+                        oferta: ofertaComputer.amount,
+                        motivo: 'Venta obligatoria para salir de saldo negativo',
+                        posicion: jDatos ? jDatos.position : 0
+                    });
+                    saldoSimulado += ofertaComputer.amount;
+                    registrarAccion("💡", `Recomendación: Vender a ${jDatos ? jDatos.name : jugador.name} por ${ofertaComputer.amount}€ al computer.`);
+                    
+                    if (saldoSimulado >= 0) {
+                        registrarAccion("✅", "Con estas ventas simuladas cuadrarías el saldo.");
+                        break;
+                    }
+                }
+            }
+            if (saldoSimulado < 0) {
+                registrarAccion("❌", "Las ofertas actuales no son suficientes para salir del negativo.");
+            }
+        } else {
+            registrarAccion("❌", "No hay ofertas del computer disponibles para cuadrar el saldo negativo.");
+        }
+    } else {
+        // Saldo positivo: Proponer descartes proactivos por baja titularidad en FútbolFantasy (<40%) o activos tóxicos
+        if (activosToxicos && activosToxicos.length > 0) {
+            activosToxicos.forEach(toxic => {
+                const ofertaComp = ofertas ? ofertas.find(o => o.player === toxic.id && o.type === 'computer') : null;
+                const montoOferta = ofertaComp ? ofertaComp.amount : toxic.precio;
+                recomendacionesVenta.push({
+                    id: toxic.id,
+                    nombre: toxic.nombre,
+                    oferta: montoOferta,
+                    motivo: toxic.mensaje,
+                    titularidadFF: toxic.titularidadFF,
+                    labelFF: toxic.labelFF,
+                    posicion: toxic.posicion || 0
+                });
+                registrarAccion("🧹", `Descarte Sugerido: ${toxic.nombre} (${toxic.mensaje}). Oferta Computer: ${montoOferta}€`);
+            });
+        }
+    }
+
+    // Aplicar Guardián de Reglas (Evitar penalización de -4 pts por hueco vacío)
+    recomendacionesVenta = aplicarGuardiaReglas(estado.players || [], recomendacionesVenta, recomendacionesMercado);
 
     if (oportunidadesTrading.length > 0) {
         registrarAccion("🚀", `Superagente Especulador: Detectadas ${oportunidadesTrading.length} oportunidades de trading rápido.`);
@@ -374,6 +401,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                     <div class="card sell-card">
                         <div class="card-title">${v.nombre}</div>
                         <div class="card-price">${formatoEuro(v.oferta)}</div>
+                        ${v.motivo ? `<div class="card-alert" style="margin-top:5px; font-size:0.8rem;">${v.motivo}</div>` : ''}
                     </div>
                 `).join('')}
             </div>
@@ -385,11 +413,26 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             ${alertaUrgenciaVenta}
             <p>Estás en negativo pero no tienes ofertas suficientes del computer para cuadrar cuentas. ¡Pon jugadores a la venta hoy mismo!</p>
         </div>`;
+    } else if (recomVenta.length > 0) {
+        htmlVentas = `
+        <div class="section-card" style="border-top-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
+            <h2>🧹 Descartes y Ventas Recomendadas (FútbolFantasy & Devaluación)</h2>
+            <p>Tu saldo es positivo, pero el Asesor sugiere vender a estos jugadores por baja probabilidad de minutos en FF o pérdida de valor:</p>
+            <div class="grid-cards">
+                ${recomVenta.map(v => `
+                    <div class="card sell-card" style="border-left: 3px solid #f59e0b;">
+                        <div class="card-title">${v.nombre} ${v.labelFF ? `<span class="badge badge-danger" style="font-size:0.75rem; padding:2px 6px; border-radius:8px;">${v.labelFF}</span>` : ''}</div>
+                        <div class="card-price">Valor / Oferta: ${formatoEuro(v.oferta)}</div>
+                        <div class="card-alert" style="margin-top:8px; font-size:0.85rem; color:#fcd34d; background:rgba(245,158,11,0.15);">${v.motivo || 'Vender para liberar hueco en plantilla'}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
     } else {
         htmlVentas = `
         <div class="section-card success">
-            <h2>✅ Cuentas Saneadas</h2>
-            <p>Tu saldo es positivo. No tienes obligación de vender para cuadrar cuentas.</p>
+            <h2>✅ Plantilla Limpia y Cuentas Saneadas</h2>
+            <p>Tu saldo es positivo y todos tus jugadores tienen buena proyección de minutos en FútbolFantasy.</p>
         </div>`;
     }
 

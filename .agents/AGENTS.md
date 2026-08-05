@@ -39,6 +39,7 @@
   - Lector táctico ligero de `futbolfantasy.com` con **caché local de 12h** (cero sobrecarga y 100% de protección anti-baneo).
   - Evalúa los porcentajes de titularidad (%), estado real de la portería y lanzadores oficiales de penaltis/faltas.
   - Alerta de salud de portería en el Plan de Acción Diario si tu portero apunta a suplente o baja.
+  - **Descartes Tácticos por FútbolFantasy:** Recomienda activamente la venta de jugadores de tu plantilla que tengan pocas o nulas posibilidades de jugar (<40% titularidad en FF, lesionados o sancionados) para hacer caja y liberar puestos en la plantilla de 14.
 
 ---
 

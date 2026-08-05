@@ -66,11 +66,14 @@ function generarPlanDiario({
     let planVentas = [];
     if (saldoActual < 0 && recomVenta.length > 0) {
         recomVenta.forEach(v => {
-            planVentas.push(`🔴 <strong>${v.nombre}</strong>: Aceptar oferta del Computer por <strong>${formatoEuro(v.oferta)}</strong> para salir del saldo negativo.`);
+            const extra = v.motivo ? ` — <em>${v.motivo}</em>` : '';
+            planVentas.push(`🔴 <strong>${v.nombre}</strong>: Aceptar oferta por <strong>${formatoEuro(v.oferta)}</strong> para salir del saldo negativo.${extra}`);
         });
     } else if (recomVenta.length > 0) {
         recomVenta.forEach(v => {
-            planVentas.push(`🟡 <strong>${v.nombre}</strong>: Vender si necesitas hacer caja (Oferta: ${formatoEuro(v.oferta)}).`);
+            const motivoStr = v.motivo ? ` — <em>${v.motivo}</em>` : ' (Vender para hacer caja / hueco)';
+            const ofertaStr = v.oferta ? ` [Oferta Computer: ${formatoEuro(v.oferta)}]` : '';
+            planVentas.push(`🟡 <strong>${v.nombre}</strong>${motivoStr}${ofertaStr}`);
         });
     }
 
