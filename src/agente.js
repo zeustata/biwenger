@@ -814,7 +814,13 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biwenger Advisor</title>
+    <title>Biwenger Advisor AI</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -992,6 +998,16 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     </header>
     
     <div class="container">
+        <div id="pwaInstallBanner" style="display:none; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: #fff; padding: 14px 22px; border-radius: 16px; margin-bottom: 25px; text-align: center; font-weight: bold; box-shadow: 0 8px 25px rgba(59,130,246,0.4); align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border: 1px solid rgba(255,255,255,0.2);">
+            <div style="display:flex; align-items:center; gap: 12px; font-size: 1rem;">
+                <span style="font-size: 1.8rem;">📲</span>
+                <span style="text-align: left;">¿Quieres instalar <strong>Biwenger AI</strong> en tu Escritorio o Móvil como App nativa?</span>
+            </div>
+            <button id="btnPWAInstall" style="background: #ffffff; color: #1e1b4b; border: none; padding: 10px 22px; border-radius: 12px; font-weight: 800; cursor: pointer; font-family: inherit; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s;">
+                📥 INSTALAR APP
+            </button>
+        </div>
+
         <div class="stats-hero">
             <div class="stat-box" style="border-top-color: #ec4899;">
                 <div class="stat-label">⏳ Cuenta Atrás Jornada 1</div>
@@ -1230,13 +1246,38 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         });
     }
 
-    function filtrarPosicion(pos) {
-        const input = document.getElementById('searchInput');
-        if (input) {
-            input.value = pos;
-            filtrarContenido();
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner) banner.style.display = 'flex';
+        });
+
+        const btnInstall = document.getElementById('btnPWAInstall');
+        if (btnInstall) {
+            btnInstall.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        const banner = document.getElementById('pwaInstallBanner');
+                        if (banner) banner.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                } else {
+                    alert('Para instalar en iOS (iPhone/iPad): pulsa el botón Compartir de Safari y selecciona "Añadir a la pantalla de inicio". En Chrome/Edge: haz clic en el icono ⊕ o 📥 en la barra de direcciones.');
+                }
+            });
         }
-    }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(function(err) {
+                    console.log('Service Worker registration failed:', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>`;
