@@ -1546,7 +1546,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(function(err) {
+                navigator.serviceWorker.register('./sw.js?v=' + Date.now()).catch(function(err) {
                     console.log('Service Worker registration failed:', err);
                 });
             });
