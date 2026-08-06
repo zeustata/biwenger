@@ -1,7 +1,7 @@
 {
   "6536353": {
     "nombre": "Troy McClure",
-    "fichajesAnalizados": 43,
+    "fichajesAnalizados": 44,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 4012000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -22,6 +22,14 @@
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
+  },
+  "8089923": {
+    "nombre": "I.Canal",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 2820000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "sobrepujaMedia": 0
   },
   "9894889": {
     "nombre": "Nadalcarnero FC",
