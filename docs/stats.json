@@ -10,7 +10,7 @@
   "6537795": {
     "nombre": "Puxaoviedo",
     "pujaMaxima": 1540000,
-    "fichajesAnalizados": 14,
+    "fichajesAnalizados": 15,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
@@ -18,14 +18,14 @@
   "6537829": {
     "nombre": "Viji",
     "pujaMaxima": 1710000,
-    "fichajesAnalizados": 16,
+    "fichajesAnalizados": 17,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "8089923": {
     "nombre": "I.Canal",
-    "fichajesAnalizados": 5,
+    "fichajesAnalizados": 6,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 2820000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -49,7 +49,7 @@
   },
   "13527984": {
     "nombre": "R.S. Xixonin",
-    "fichajesAnalizados": 3,
+    "fichajesAnalizados": 4,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 380000,
     "perfilPsicologico": "⚖️ Conservador / Calculador",
