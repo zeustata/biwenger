@@ -9,23 +9,23 @@
   },
   "6537795": {
     "nombre": "Puxaoviedo",
-    "pujaMaxima": 1380000,
-    "fichajesAnalizados": 11,
+    "pujaMaxima": 1540000,
+    "fichajesAnalizados": 12,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "6537829": {
     "nombre": "Viji",
-    "pujaMaxima": 300000,
-    "fichajesAnalizados": 13,
+    "pujaMaxima": 1710000,
+    "fichajesAnalizados": 14,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "8089923": {
     "nombre": "I.Canal",
-    "fichajesAnalizados": 2,
+    "fichajesAnalizados": 3,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 2820000,
     "perfilPsicologico": "⚖️ Conservador / Calculador",
@@ -46,5 +46,13 @@
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
+  },
+  "13527984": {
+    "nombre": "R.S. Xixonin",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 380000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "sobrepujaMedia": 0
   }
 }
