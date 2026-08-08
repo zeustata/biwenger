@@ -301,40 +301,70 @@ async function ejecutarAgente() {
                 puedePujar = (saldoActual + valorEquipo * 0.20) >= pujaRecomendada;
             }
 
-            // Inteligencia de Rivales (Modo Detective)
+            // Inteligencia de Competencia Humana & Factor de Escasez (Modo Detective VIP)
             let posString = '';
             if (jugadorObj.position === 1) posString = 'PT';
             else if (jugadorObj.position === 2) posString = 'DF';
             else if (jugadorObj.position === 3) posString = 'MC';
             else if (jugadorObj.position === 4) posString = 'DL';
             
-            const rivalesInteresados = expedienteRivales.filter(r => r.urgencias.includes(posString));
+            const rivalesInteresados = expedienteRivales.filter(r => r.urgencias && r.urgencias.includes(posString));
+            const esNecesidadPropia = necesidades[posString] && necesidades[posString] > 0;
+            
+            // Factor de Escasez Táctica en liga de 21 personas:
+            // PT es crítico (21 mánagers para 20 porteros en LaLiga).
+            let factorEscasezPosicion = 0.05;
+            if (posString === 'PT') {
+                factorEscasezPosicion = esNecesidadPropia ? 0.30 : 0.20; // Portero urgente exige +30% de sobrepuja base
+            } else if (esNecesidadPropia) {
+                factorEscasezPosicion = 0.12;
+            }
+
             let alertaCompetencia = '';
+            let porcentajeAumento = factorEscasezPosicion;
+
             if (rivalesInteresados.length > 0) {
-                const nombres = rivalesInteresados.map(r => r.nombre).slice(0, 3).join(', '); // Mostramos max 3
+                const nombres = rivalesInteresados.map(r => r.nombre).slice(0, 3).join(', ');
                 
-                // Buscar si alguno de estos rivales tiene tendencia a sobrepujar
-                let maxSobrepujaMedia = 0;
+                let maxSobrepujaRival = 0;
+                let maxPoderFinancieroRival = 0;
+                
                 rivalesInteresados.forEach(r => {
-                    if (r.statsPuja && r.statsPuja.sobrepujaMedia > maxSobrepujaMedia) {
-                        maxSobrepujaMedia = r.statsPuja.sobrepujaMedia;
+                    if (r.statsPuja && r.statsPuja.sobrepujaMedia > maxSobrepujaRival) {
+                        maxSobrepujaRival = r.statsPuja.sobrepujaMedia;
+                    }
+                    if (r.poderFinanciero && r.poderFinanciero > maxPoderFinancieroRival) {
+                        maxPoderFinancieroRival = r.poderFinanciero;
                     }
                 });
 
-                let porcentajeAumento = 0.05; // Base 5% por competencia
-                if (maxSobrepujaMedia > 0) {
-                    // Si el rival suele sobrepujar un 20%, nosotros sugerimos un 21%
-                    porcentajeAumento = maxSobrepujaMedia + 0.01;
+                let bonusPoderRival = 0.05;
+                if (maxPoderFinancieroRival > 15000000) bonusPoderRival += 0.10;
+                else if (maxPoderFinancieroRival > 8000000) bonusPoderRival += 0.05;
+
+                if (maxSobrepujaRival > 0) {
+                    porcentajeAumento = Math.max(porcentajeAumento, maxSobrepujaRival + bonusPoderRival);
+                } else {
+                    porcentajeAumento += bonusPoderRival;
                 }
 
                 const porcentajeAumentoMostrar = Math.round(porcentajeAumento * 100);
-                alertaCompetencia = `🔥 ¡Peligro! ${nombres} necesitan un ${posString}. Incrementamos puja al +${porcentajeAumentoMostrar}% por su historial de compras.`;
-                
-                // En lugar de sobreescribir la puja, tomamos el valor del jugador + porcentaje de aumento táctico
-                const pujaCompetitiva = Math.floor(jugadorObj.price * (1 + porcentajeAumento));
-                if (pujaCompetitiva > pujaRecomendada) {
-                    pujaRecomendada = pujaCompetitiva;
-                }
+                const avisoEscasez = posString === 'PT' ? '🧤 ¡Escasez Extrema de Porteros! (21 mánagers). ' : '';
+                alertaCompetencia = `🔥 ${avisoEscasez}Peligro: ${nombres} también buscan ${posString} (Capacidad rival: hasta ${(maxPoderFinancieroRival/1000000).toFixed(1)}M€). Sobrepuja competitiva recomendada: +${porcentajeAumentoMostrar}%.`;
+            } else if (posString === 'PT' && esNecesidadPropia) {
+                const porcentajeAumentoMostrar = Math.round(porcentajeAumento * 100);
+                alertaCompetencia = `🧤 ¡Escasez Extrema de Porteros en la liga! Sobrepuja de seguridad recomendada: +${porcentajeAumentoMostrar}% para asegurar el puesto.`;
+            }
+
+            const pujaCompetitiva = Math.floor(jugadorObj.price * (1 + porcentajeAumento));
+            if (pujaCompetitiva > pujaRecomendada) {
+                pujaRecomendada = pujaCompetitiva;
+            }
+
+            // ESCUDO DE SALDO POSITIVO INVIOLABLE: Ajustar puja al saldo disponible si supera la liquidez
+            if (saldoActual > 0 && pujaRecomendada > saldoActual) {
+                pujaRecomendada = Math.floor(saldoActual);
+                alertaCompetencia += `<br>🛡️ <em>Puja top ajustada al límite de tu saldo disponible para garantizar Saldo Positivo.</em>`;
             }
 
             if (puedePujar) { 

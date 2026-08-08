@@ -203,14 +203,21 @@ function analizarRivales(standings, dbJugadores = null, miUserId = null) {
         const necesidades = detectarNecesidadesPlantilla(equipoRival);
         let urgencias = [];
         if (necesidades.PT > 0) urgencias.push('PT');
-        if (necesidades.DF > 1) urgencias.push('DF'); 
-        if (necesidades.MC > 1) urgencias.push('MC');
+        if (necesidades.DF > 0) urgencias.push('DF'); 
+        if (necesidades.MC > 0) urgencias.push('MC');
         if (necesidades.DL > 0) urgencias.push('DL');
+
+        // Poder Financiero / Capacidad de Sobrepuja del Rival
+        let poderFinanciero = Math.round(valorCalculado * 0.15); // Liquidez/capacidad estimada
+        if (rival.statsPuja && rival.statsPuja.pujaMaxima) {
+            poderFinanciero = Math.max(poderFinanciero, rival.statsPuja.pujaMaxima);
+        }
 
         expediente.push({
             id: rival.id || 'N/A',
             nombre: rival.name || 'Rival Desconocido',
             valor: valorCalculado,
+            poderFinanciero,
             urgencias: urgencias,
             team: equipoRival,
             necesidadesRaw: necesidades
