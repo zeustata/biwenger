@@ -157,14 +157,14 @@ function generarPlanDiario({
         informePresupuestario = `💰 <strong>AUDITORÍA FINANCIERA CONJUNTA:</strong> Si ejecutas la puja y el clausulazo sugeridos (Gasto total: ${formatoEuro(gastoTotalConjunto)}), tu saldo líquido resultante será de <strong>${formatoEuro(saldoRestanteConjunto)}</strong> (Garantía de Saldo Positivo ✅).`;
     }
 
-    // 5. Consejos Estratégicos del Director Técnico según el calendario
+    // 5. Consejos Estratégicos del Director Técnico (Filosofía Gradual a Largo Plazo: 38 Jornadas)
     let consejoEstrategico = "";
     if (diasCuentaAtras > 5) {
-        consejoEstrategico = "🛡️ <strong>Fase de Crecimiento Financiero:</strong> Centra tus esfuerzos en especular con jugadores al alza para aumentar el valor de tu plantilla antes de la Jornada 1.";
+        consejoEstrategico = "🌱 <strong>Filosofía de Construcción Gradual (Paciencia Táctica):</strong> En Biwenger el equipo se hace paso a paso a lo largo de las 38 jornadas. No hay ninguna prisa por fichar rápido en pretemporada. Guarda tu saldo líquido para los auténticos cracks y chollos de largo recorrido.";
     } else if (diasCuentaAtras > 2) {
-        consejoEstrategico = "⚖️ <strong>Fase de Consolidación de 11 Titular:</strong> Empieza a perfilar tus 11 titulares definitivos y asegura parches para no dejar casillas vacías.";
+        consejoEstrategico = "⚖️ <strong>Fase de Ajuste y Consolidación:</strong> Refuerza solo las posiciones desguarnecidas. Mantén la calma financiera y no quemes presupuesto en parches secundarios.";
     } else {
-        consejoEstrategico = "🚨 <strong>Fase de Emergencia (Previa de Jornada):</strong> Verifica que tu saldo esté POSITIVO y tengas un portero titular asignado para no perder puntos.";
+        consejoEstrategico = "🚨 <strong>Fase de Previa de Jornada:</strong> Revisa tu saldo (DEBE SER POSITIVO) y asegura tener un portero y 11 titulares alineados para evitar penalizaciones.";
     }
 
     if (informePresupuestario) {

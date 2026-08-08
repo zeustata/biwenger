@@ -12,6 +12,7 @@
 - **Prohibición de Pujas entre Rivales:** PROHIBIDO realizar pujas/ofertas por jugadores pertenecientes a otros mánagers (puestos a la venta por ellos) para evitar alianzas o pactos. Las pujas son EXCLUSIVAMENTE para el Mercado Libre (Computer). La ÚNICA vía para conseguir un jugador de un rival es pagar su cláusula de rescisión (Clausulazo).
 - **Mecánica de Rivales:** Se puede espiar las plantillas de todos los rivales aunque sus jugadores no estén a la venta.
 - **Clausulazos Tácticos:** Búsqueda activa de robos de jugadores en plantillas rivales analizando perfil psicológico y sobreprecio de cláusula.
+- **Filosofía de Construcción Gradual (38 Jornadas):** Un equipo campeón NO se hace en un día ni en pretemporada. Paciencia financiera ante todo. Si el mercado del día no ofrece una oportunidad de oro o un parche prioritario de calidad, la recomendación principal es guardarse el dinero y no forzar pujas innecesarias.
 
 ---
 
