@@ -93,16 +93,30 @@ async function obtenerPlantillasRivales() {
     }
 }
 
-// Función para poner un jugador en venta (DESACTIVADA EN MODO ASESOR)
+// Función para poner un jugador en venta
 async function ponerJugadorEnVenta(idJugador, precio) {
-    console.warn(`[MODO ASESOR] Acción bloqueada: Intento de poner en venta al jugador ${idJugador}.`);
-    return null;
+    try {
+        console.log(`⚡ [API] Poniendo en venta al jugador ${idJugador} por ${precio}€...`);
+        const response = await biwengerApi.post('/market/sales', { player: idJugador, price: precio });
+        console.log(`✅ [API] Jugador ${idJugador} puesto en venta con éxito.`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al poner jugador en venta:", error.response ? error.response.data : error.message);
+        return null;
+    }
 }
 
-// Función para pujar por un jugador (DESACTIVADA EN MODO ASESOR)
+// Función para pujar por un jugador
 async function pujarPorJugador(idJugador, monto) {
-    console.warn(`[MODO ASESOR] Acción bloqueada: Intento de pujar ${monto}€ por el jugador ${idJugador}.`);
-    return null;
+    try {
+        console.log(`⚡ [API] Enviando puja de ${monto}€ por el jugador ${idJugador}...`);
+        const response = await biwengerApi.post('/market/bids', { player: idJugador, amount: monto });
+        console.log(`✅ [API] Puja por el jugador ${idJugador} enviada con éxito.`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al enviar puja:", error.response ? error.response.data : error.message);
+        return null;
+    }
 }
 
 // Función para obtener ofertas recibidas
@@ -120,10 +134,30 @@ async function obtenerOfertas() {
     }
 }
 
-// Función para aceptar una oferta (DESACTIVADA EN MODO ASESOR)
+// Función para aceptar una oferta
 async function aceptarOferta(idOferta) {
-    console.warn(`[MODO ASESOR] Acción bloqueada: Intento de aceptar la oferta ${idOferta}.`);
-    return null;
+    try {
+        console.log(`⚡ [API] Aceptando oferta ${idOferta}...`);
+        const response = await biwengerApi.post(`/market/offers/${idOferta}/accept`, {});
+        console.log(`✅ [API] Oferta ${idOferta} aceptada con éxito.`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al aceptar oferta:", error.response ? error.response.data : error.message);
+        return null;
+    }
+}
+
+// Función para guardar la alineación titular en Biwenger
+async function guardarAlineacion(playerIds = []) {
+    try {
+        console.log(`⚡ [API] Guardando alineación de 11 titulares (${playerIds.length} jugadores)...`);
+        const response = await biwengerApi.post('/user/lineup', { players: playerIds });
+        console.log(`✅ [API] Alineación guardada con éxito en Biwenger.`);
+        return response.data;
+    } catch (error) {
+        console.error("Error al guardar alineación:", error.response ? error.response.data : error.message);
+        return null;
+    }
 }
 
 // Función para obtener la fecha de la próxima jornada (usando los datos de la liga)
@@ -186,6 +220,7 @@ module.exports = {
     pujarPorJugador,
     obtenerOfertas,
     aceptarOferta,
+    guardarAlineacion,
     obtenerInicioProximaJornada,
     obtenerUltimosMovimientos,
     obtenerBaseDatosJugadores
