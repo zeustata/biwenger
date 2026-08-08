@@ -47,7 +47,7 @@ function generarPlanDiario({
         // Ordenamos las pujas: primero las que cubran necesidades directas de línea
         const pujasTop = [...recomMercado].sort((a, b) => (b.esNecesidadDirecta ? 1 : 0) - (a.esNecesidadDirecta ? 1 : 0)).slice(0, 2);
         pujasTop.forEach(p => {
-            let nota = ' (Mercado Libre / Computer)';
+            let nota = ' 🎲 <em>(Subasta a ciegas: Si pierdes, recuperas el 100% del dinero)</em>';
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Requiere venta antes)</em>';
             const sobrepuja = p.precio > 0 ? Math.round(((p.puja - p.precio) / p.precio) * 100) : 0;
             const limite = p.puja ? Math.round(p.puja * 1.05) : Math.round(p.precio * 1.08);
