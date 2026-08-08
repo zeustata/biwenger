@@ -42,67 +42,78 @@ function generarPlanDiario({
         planPujas.push(`<strong>${saludPorteria.estado}:</strong> ${saludPorteria.mensaje}`);
     }
 
+    // 1. Sintetizar PUJAS recomendadas para hoy (Máximo 2 Objetivos Clave para no aturdir al mánager)
     if (recomMercado.length > 0) {
-        recomMercado.forEach(p => {
+        // Ordenamos las pujas: primero las que cubran necesidades directas de línea
+        const pujasTop = [...recomMercado].sort((a, b) => (b.esNecesidadDirecta ? 1 : 0) - (a.esNecesidadDirecta ? 1 : 0)).slice(0, 2);
+        pujasTop.forEach(p => {
             let nota = ' (Mercado Libre / Computer)';
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Requiere venta antes)</em>';
             const sobrepuja = p.precio > 0 ? Math.round(((p.puja - p.precio) / p.precio) * 100) : 0;
             const limite = p.puja ? Math.round(p.puja * 1.05) : Math.round(p.precio * 1.08);
-            const tagNecesidad = p.esNecesidadDirecta ? '🎯 [REFUERZO PRIORITARIO] ' : '';
+            const tagNecesidad = p.esNecesidadDirecta ? '🥇 [OBJETIVO #1 LÍNEA] ' : '🚀 [TRADING TOP] ';
             planPujas.push(`
-                <div style="margin-bottom: 8px;">
+                <div style="margin-bottom: 12px; background: rgba(59, 130, 246, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
                     <strong>⚽ ${tagNecesidad}${p.nombre}</strong>${nota}<br>
                     <span style="font-size:0.85rem; color:#cbd5e1;">
                         💵 Valor Oficial: <strong>${formatoEuro(p.precio)}</strong><br>
-                        🎯 <strong>Puja Recomendada: ${formatoEuro(p.puja)}</strong> <span style="color:#34d399;">(+${sobrepuja}% sobrepuja)</span><br>
-                        ⛔ Límite Máximo Rentable: <strong>${formatoEuro(limite)}</strong>
+                        🎯 <strong>Puja Sugerida: ${formatoEuro(p.puja)}</strong> <span style="color:#34d399;">(+${sobrepuja}% sobrepuja)</span><br>
+                        ⛔ Límite Máximo: <strong>${formatoEuro(limite)}</strong>
                     </span>
+                    ${p.alerta ? `<div style="font-size:0.8rem; color:#60a5fa; margin-top:4px;">${p.alerta}</div>` : ''}
                 </div>
             `);
         });
     } else if (oportunidadesTrading.length > 0) {
-        oportunidadesTrading.slice(0, 3).forEach(topTrading => {
+        oportunidadesTrading.slice(0, 1).forEach(topTrading => {
             const sobrepuja = topTrading.precio > 0 ? Math.round(((topTrading.puja - topTrading.precio) / topTrading.precio) * 100) : 0;
             const limite = topTrading.limiteMaximo || Math.round(topTrading.precio * 1.05);
             let nota = ' (Trading / Mercado Libre)';
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Vende suplente)</em>';
             planPujas.push(`
-                <div style="margin-bottom: 8px;">
-                    <strong>🚀 ${topTrading.nombre}</strong> (${topTrading.posicion || 'Trading'})${nota}<br>
+                <div style="margin-bottom: 12px; background: rgba(59, 130, 246, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
+                    <strong>🚀 🥇 [OBJETIVO #1 TRADING] ${topTrading.nombre}</strong> (${topTrading.posicion || 'Trading'})${nota}<br>
                     <span style="font-size:0.85rem; color:#cbd5e1;">
                         💵 Valor Oficial: <strong>${formatoEuro(topTrading.precio)}</strong><br>
-                        🎯 <strong>Puja Recomendada: ${formatoEuro(topTrading.puja)}</strong> <span style="color:#34d399;">(+${(topTrading.subidaDiaria/1000).toFixed(0)}k€/día)</span><br>
-                        ⛔ Límite Máximo Rentable: <strong>${formatoEuro(limite)}</strong>
+                        🎯 <strong>Puja Sugerida: ${formatoEuro(topTrading.puja)}</strong> <span style="color:#34d399;">(+${(topTrading.subidaDiaria/1000).toFixed(0)}k€/día)</span><br>
+                        ⛔ Límite Máximo: <strong>${formatoEuro(limite)}</strong>
                     </span>
                 </div>
             `);
         });
+    } else {
+        planPujas.push('<div class="action-empty">No pujar por nadie hoy. Guardar saldo.</div>');
     }
 
-    // 2. Sintetizar VENTAS obligatorias o sugeridas para hoy
+    // 2. Sintetizar VENTAS recomendadas (Máximo 2 Ventas Clave)
     let planVentas = [];
     if (saldoActual < 0 && recomVenta.length > 0) {
-        recomVenta.forEach(v => {
+        recomVenta.slice(0, 2).forEach(v => {
             const extra = v.motivo ? ` — <em>${v.motivo}</em>` : '';
-            planVentas.push(`🔴 <strong>${v.nombre}</strong>: Aceptar oferta por <strong>${formatoEuro(v.oferta)}</strong> para salir del saldo negativo.${extra}`);
+            planVentas.push(`🔴 <strong>${v.nombre}</strong>: Aceptar oferta por <strong>${formatoEuro(v.oferta)}</strong> para salir de saldo negativo.${extra}`);
         });
     } else if (recomVenta.length > 0) {
-        recomVenta.forEach(v => {
+        recomVenta.slice(0, 2).forEach(v => {
             const motivoStr = v.motivo ? ` — <em>${v.motivo}</em>` : ' (Vender para hacer caja / hueco)';
             const ofertaStr = v.oferta ? ` [Oferta Computer: ${formatoEuro(v.oferta)}]` : '';
             planVentas.push(`🟡 <strong>${v.nombre}</strong>${motivoStr}${ofertaStr}`);
         });
+    } else {
+        planVentas.push('<div class="action-empty">No vender a nadie hoy. Cuentas saneadas ✅</div>');
     }
 
-    // 3. Sintetizar CLAUSULAZOS para hoy
+    // 3. Sintetizar CLAUSULAZOS (Máximo 1 Robo Táctico Clave)
     let planClausulas = [];
     if (robosSugeridos.length > 0) {
-        robosSugeridos.forEach(r => {
-            const viab = r.viabilidadLabel || '🟡 MEDIA';
-            const motivo = r.motivoViabilidad ? ` — <em>${r.motivoViabilidad}</em>` : '';
-            const alContadoStr = r.esPagableAlContado ? ' ✅ [Pagable al contado: Saldo Positivo]' : ' ⚠️ [Requiere venta previa]';
-            planClausulas.push(`🥷 <strong>${r.nombre}</strong> (${r.posicion}) en plantilla de <strong>${r.equipoRival || r.dueño}</strong>: Cláusula <strong>${formatoEuro(r.clausula || r.precioMercado)}</strong>${alContadoStr}<br><span style="font-size:0.85rem; color:#cbd5e1;">Viabilidad: <strong>${viab}</strong>${motivo}</span>`);
-        });
+        const roboTop = robosSugeridos.find(r => r.esPagableAlContado) || robosSugeridos[0];
+        if (roboTop) {
+            const viab = roboTop.viabilidadLabel || '🟡 MEDIA';
+            const motivo = roboTop.motivoViabilidad ? ` — <em>${roboTop.motivoViabilidad}</em>` : '';
+            const alContadoStr = roboTop.esPagableAlContado ? ' ✅ [Pagable al contado]' : ' ⚠️ [Requiere venta previa]';
+            planClausulas.push(`🥷 <strong>🥇 [ROBO TOP DEL DÍA] ${roboTop.nombre}</strong> (${roboTop.posicion}) de <strong>${roboTop.equipoRival || roboTop.dueño}</strong><br><span style="font-size:0.85rem; color:#cbd5e1;">Cláusula: <strong>${formatoEuro(roboTop.clausula || roboTop.precioMercado)}</strong>${alContadoStr}<br>Viabilidad: <strong>${viab}</strong>${motivo}</span>`);
+        }
+    } else {
+        planClausulas.push('<div class="action-empty">No pagar ninguna cláusula hoy.</div>');
     }
 
     // 4. Sintetizar ALINEACIÓN para hoy
