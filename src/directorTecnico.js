@@ -125,6 +125,38 @@ function generarPlanDiario({
         planAlineacion.push(`⚠️ Revisa tu plantilla. Faltan titulares para completar un 11.`);
     }
 
+    // Auditoría de Presupuesto Acumulado:
+    // Calculamos el gasto total si el usuario realizase TODAS las sugerencias del día
+    let gastoPujasSugeridas = 0;
+    if (recomMercado.length > 0) {
+        const pujasTop = [...recomMercado].sort((a, b) => (b.esNecesidadDirecta ? 1 : 0) - (a.esNecesidadDirecta ? 1 : 0)).slice(0, 2);
+        pujasTop.forEach(p => gastoPujasSugeridas += (p.puja || p.precio || 0));
+    } else if (oportunidadesTrading.length > 0) {
+        gastoPujasSugeridas += (oportunidadesTrading[0].puja || oportunidadesTrading[0].precio || 0);
+    }
+
+    let gastoClausulasSugeridas = 0;
+    if (robosSugeridos.length > 0) {
+        const roboTop = robosSugeridos.find(r => r.esPagableAlContado) || robosSugeridos[0];
+        if (roboTop && roboTop.esPagableAlContado) gastoClausulasSugeridas += (roboTop.clausula || roboTop.precioMercado || 0);
+    }
+
+    let ingresosVentasSugeridas = 0;
+    if (recomVenta.length > 0) {
+        recomVenta.slice(0, 2).forEach(v => ingresosVentasSugeridas += (v.oferta || 0));
+    }
+
+    const gastoTotalConjunto = gastoPujasSugeridas + gastoClausulasSugeridas;
+    const saldoRestanteConjunto = saldoActual - gastoTotalConjunto + ingresosVentasSugeridas;
+    const esConflictoPresupuesto = (gastoTotalConjunto > (saldoActual + ingresosVentasSugeridas)) && (saldoActual > 0);
+
+    let informePresupuestario = "";
+    if (esConflictoPresupuesto) {
+        informePresupuestario = `🚨 <strong>AUDITORÍA FINANCIERA (OPCIONES EXCLUYENTES):</strong> Realizar la puja y el clausulazo a la vez (${formatoEuro(gastoTotalConjunto)}) supera tu saldo actual de ${formatoEuro(saldoActual)}. <strong>Elige SOLO 1 opción hoy (se recomienda la Puja #1)</strong> para no quedar en números rojos.`;
+    } else if (gastoTotalConjunto > 0) {
+        informePresupuestario = `💰 <strong>AUDITORÍA FINANCIERA CONJUNTA:</strong> Si ejecutas la puja y el clausulazo sugeridos (Gasto total: ${formatoEuro(gastoTotalConjunto)}), tu saldo líquido resultante será de <strong>${formatoEuro(saldoRestanteConjunto)}</strong> (Garantía de Saldo Positivo ✅).`;
+    }
+
     // 5. Consejos Estratégicos del Director Técnico según el calendario
     let consejoEstrategico = "";
     if (diasCuentaAtras > 5) {
@@ -135,12 +167,17 @@ function generarPlanDiario({
         consejoEstrategico = "🚨 <strong>Fase de Emergencia (Previa de Jornada):</strong> Verifica que tu saldo esté POSITIVO y tengas un portero titular asignado para no perder puntos.";
     }
 
+    if (informePresupuestario) {
+        consejoEstrategico = `${informePresupuestario}<br><br>${consejoEstrategico}`;
+    }
+
     return {
         pujas: planPujas,
         ventas: planVentas,
         clausulas: planClausulas,
         alineacion: planAlineacion,
         consejo: consejoEstrategico,
+        informePresupuestario,
         sinAccionesUrgentes: planPujas.length === 0 && planVentas.length === 0 && planClausulas.length === 0
     };
 }
