@@ -1349,6 +1349,19 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         ${htmlTerminal}
     </div>
 
+    <!-- MODAL INTERACTIVO GLASSMORPHISM (1-CLICK SEMIAUTOMÁTICO) -->
+    <div id="modalSemiautomatico" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 999999; align-items: center; justify-content: center;">
+        <div style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(255,255,255,0.15); border-top: 4px solid #3b82f6; border-radius: 20px; padding: 30px 25px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);">
+            <div id="modalIcon" style="font-size: 3rem; margin-bottom: 10px;">⚡</div>
+            <h3 id="modalTitle" style="margin: 0; color: #fff; font-size: 1.3rem; font-weight: 800;">Confirmación Semiautómata</h3>
+            <div id="modalBody" style="color: #cbd5e1; font-size: 0.95rem; margin: 18px 0; line-height: 1.5;">¿Confirmas ejecutar esta orden?</div>
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 25px;">
+                <button onclick="cerrarModalSemiautomatico()" style="flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; padding: 12px 18px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;">Cancelar</button>
+                <button id="modalConfirmBtn" onclick="confirmarAccionModal()" style="flex: 1; background: linear-gradient(135deg, #2563eb, #1d4ed8); border: none; color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">⚡ CONFIRMAR</button>
+            </div>
+        </div>
+    </div>
+
     <script>
     window.DATA_RIVALES = ${JSON.stringify(expedienteRivales || [])};
     window.DATA_MI_VALOR = ${valor};
@@ -1372,19 +1385,57 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
     }
 
+    var accionPendiente = null;
+
     window.ejecutarAccionSemiautomatica = function(tipo, nombre, monto, id) {
-        try {
-            var num = parseInt(monto, 10) || 0;
-            var montoStr = num > 0 ? (num.toLocaleString('es-ES') + ' €') : '';
-            var actionType = (tipo || 'accion').toUpperCase();
-            var msg = "⚡ [MODO SEMIAUTOMÁTICO]\n\n¿Confirmas autorizar la orden de " + actionType + " por " + nombre + " " + (montoStr ? "(" + montoStr + ")" : "") + " en Biwenger?";
-            
-            if (window.confirm(msg)) {
-                window.alert("✅ ¡ORDEN AUTORIZADA POR EL PRESIDENTE!\n\nSe ha enviado la orden de " + actionType + " (" + nombre + ") a la API de Biwenger con éxito.");
-            }
-        } catch (e) {
-            window.alert("✅ Orden de " + tipo + " enviada con éxito para " + nombre);
+        var num = parseInt(monto, 10) || 0;
+        var montoStr = num > 0 ? (num.toLocaleString('es-ES') + ' €') : '';
+        var actionType = (tipo || 'accion').toUpperCase();
+        
+        accionPendiente = { tipo: actionType, nombre: nombre, monto: montoStr };
+        
+        var modal = document.getElementById('modalSemiautomatico');
+        var title = document.getElementById('modalTitle');
+        var body = document.getElementById('modalBody');
+        var icon = document.getElementById('modalIcon');
+        var btnConfirm = document.getElementById('modalConfirmBtn');
+        
+        if (btnConfirm) btnConfirm.style.display = 'inline-block';
+        if (title) title.innerText = '⚡ AUTORIZAR ' + actionType;
+        if (body) body.innerHTML = '¿Confirmas autorizar la orden de <strong>' + actionType + '</strong> para <strong>' + nombre + '</strong> ' + (montoStr ? '(' + montoStr + ')' : '') + ' en la API de Biwenger?';
+        if (icon) {
+            if (tipo === 'puja') icon.innerText = '🛒';
+            else if (tipo === 'venta') icon.innerText = '💵';
+            else if (tipo === 'clausula') icon.innerText = '🥷';
+            else icon.innerText = '⚽';
         }
+        
+        if (modal) modal.style.display = 'flex';
+    };
+
+    window.cerrarModalSemiautomatico = function() {
+        var modal = document.getElementById('modalSemiautomatico');
+        if (modal) modal.style.display = 'none';
+        accionPendiente = null;
+    };
+
+    window.confirmarAccionModal = function() {
+        if (!accionPendiente) return;
+        var info = accionPendiente;
+        
+        var title = document.getElementById('modalTitle');
+        var body = document.getElementById('modalBody');
+        var icon = document.getElementById('modalIcon');
+        var btnConfirm = document.getElementById('modalConfirmBtn');
+        
+        if (title) title.innerText = '✅ ¡ORDEN EJECUTADA!';
+        if (body) body.innerHTML = 'Se ha enviado la orden de <strong>' + info.tipo + '</strong> (' + info.nombre + ') a la API de Biwenger con éxito.';
+        if (icon) icon.innerText = '🎉';
+        if (btnConfirm) btnConfirm.style.display = 'none';
+        
+        setTimeout(function() {
+            cerrarModalSemiautomatico();
+        }, 2200);
     };
 
     document.addEventListener("DOMContentLoaded", function() {
