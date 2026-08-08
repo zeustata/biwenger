@@ -809,7 +809,7 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     });
 
     let htmlOrdenesDia = `
-    <div class="section-card collapsible-card executive-banner" id="sec-plan-accion" style="border-top-color: #3b82f6; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.35) 100%);">
+    <div class="section-card collapsible-card executive-banner is-open" id="sec-plan-accion" style="border-top-color: #3b82f6; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.35) 100%);">
         <div class="card-header-toggle" onclick="toggleCard('sec-plan-accion')">
             <div class="header-title-group">
                 <h2 style="color: #60a5fa; display: flex; align-items: center; gap: 10px; margin: 0;">
