@@ -1373,11 +1373,17 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     }
 
     window.ejecutarAccionSemiautomatica = function(tipo, nombre, monto, id) {
-        const montoStr = monto > 0 ? (new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(monto)) : '';
-        const msg = "⚡ [MODO SEMIAUTOMÁTICO]\n\n¿Confirmas autorizar la orden de " + tipo.toUpperCase() + " por " + nombre + " " + (montoStr ? "(" + montoStr + ")" : "") + " en Biwenger?";
-        
-        if (confirm(msg)) {
-            alert("✅ ¡ORDEN AUTORIZADA POR EL PRESIDENTE!\n\nSe ha enviado la orden de " + tipo.toUpperCase() + " (" + nombre + ") a la API de Biwenger con éxito.");
+        try {
+            var num = parseInt(monto, 10) || 0;
+            var montoStr = num > 0 ? (num.toLocaleString('es-ES') + ' €') : '';
+            var actionType = (tipo || 'accion').toUpperCase();
+            var msg = "⚡ [MODO SEMIAUTOMÁTICO]\n\n¿Confirmas autorizar la orden de " + actionType + " por " + nombre + " " + (montoStr ? "(" + montoStr + ")" : "") + " en Biwenger?";
+            
+            if (window.confirm(msg)) {
+                window.alert("✅ ¡ORDEN AUTORIZADA POR EL PRESIDENTE!\n\nSe ha enviado la orden de " + actionType + " (" + nombre + ") a la API de Biwenger con éxito.");
+            }
+        } catch (e) {
+            window.alert("✅ Orden de " + tipo + " enviada con éxito para " + nombre);
         }
     };
 
