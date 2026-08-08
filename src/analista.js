@@ -7,92 +7,102 @@
  * @returns {Object} Un objeto con las necesidades, ej: { PT: 1, DF: 0, MC: 0, DL: 1 }
  */
 function detectarNecesidadesPlantilla(plantilla) {
-    let necesidades = {
-        PT: 1, // Asumimos que necesitamos 1 portero titular por defecto
-        DF: 3, // Mínimo 3 defensas
-        MC: 4, // Mínimo 4 medios
-        DL: 2  // Mínimo 2 delanteros
+    const objetivos = {
+        PT: 2, // 1 Titular + 1 Reserva/Parche para evitar casillas vacías o rotaciones
+        DF: 4, // Mínimo 4 defensas
+        MC: 5, // Mínimo 5 medios
+        DL: 3  // Mínimo 3 delanteros
     };
 
-    if (!plantilla || plantilla.length === 0) return necesidades;
+    let conteo = { PT: 0, DF: 0, MC: 0, DL: 0 };
 
-    // Restamos las posiciones que ya tenemos cubiertas por TITULARES o jugadores válidos
-    plantilla.forEach(jugador => {
-        // En Biwenger, position suele ser: 1 (PT), 2 (DF), 3 (MC), 4 (DL)
-        // Y tenemos que verificar si es titular habitual (basado en sus últimos puntos/estado)
-        const esTitular = jugador.status === 'ok' && jugador.average > 2.5;
+    if (plantilla && Array.isArray(plantilla)) {
+        plantilla.forEach(jugador => {
+            const pos = jugador.position || jugador.posicion;
+            const esValido = jugador.status !== 'injured';
+            if (esValido) {
+                if (pos === 1) conteo.PT++;
+                else if (pos === 2) conteo.DF++;
+                else if (pos === 3) conteo.MC++;
+                else if (pos === 4) conteo.DL++;
+            }
+        });
+    }
 
-        if (esTitular) {
-            if (jugador.position === 1) necesidades.PT -= 1;
-            else if (jugador.position === 2) necesidades.DF -= 1;
-            else if (jugador.position === 3) necesidades.MC -= 1;
-            else if (jugador.position === 4) necesidades.DL -= 1;
+    let necesidades = {
+        conteo,
+        objetivos,
+        PT: Math.max(0, objetivos.PT - conteo.PT),
+        DF: Math.max(0, objetivos.DF - conteo.DF),
+        MC: Math.max(0, objetivos.MC - conteo.MC),
+        DL: Math.max(0, objetivos.DL - conteo.DL),
+        saturadas: {
+            PT: conteo.PT >= 3,
+            DF: conteo.DF >= 5,
+            MC: conteo.MC >= 6,
+            DL: conteo.DL >= 4
         }
-    });
+    };
 
-    // Nos aseguramos de no devolver números negativos si tenemos de sobra
-    Object.keys(necesidades).forEach(key => {
-        if (necesidades[key] < 0) necesidades[key] = 0;
-    });
+    necesidades.tieneDeficitUrgente = necesidades.PT > 0 || necesidades.DF > 0 || necesidades.MC > 0 || necesidades.DL > 0;
 
     return necesidades;
 }
 
 /**
  * Evalúa si un jugador es apto para fichar basándose en las necesidades, el saldo y la RENTABILIDAD.
- * Sigue la doctrina "Biwenger Optimizer 3.0" de especulación.
+ * Sigue la doctrina de priorización táctica de líneas desguarnecidas.
  */
 function evaluarJugador(jugador, esClausula = false, necesidades = {}, saldoDisponible = 0, valorEquipo = 0) {
     const nombreJugador = jugador.name || jugador.nombre || (jugador.id ? `Jugador #${jugador.id}` : 'Jugador');
-    console.log(`\n<analisis_financiero> Evaluando a ${nombreJugador}...`);
+    const posNum = jugador.position || jugador.posicion || 2;
+    const posKey = posNum === 1 ? 'PT' : posNum === 2 ? 'DF' : posNum === 3 ? 'MC' : 'DL';
     
-    // 1. Comprobar Liquidez
-    const precioCompra = esClausula ? jugador.clause : jugador.price;
+    console.log(`\n<analisis_financiero> Evaluando a ${nombreJugador} (${posKey})...`);
+    
+    // 1. Comprobar Liquidez Estricta (Garantizar Saldo >= 0)
+    const precioCompra = esClausula ? (jugador.clause || jugador.price) : (jugador.price || 0);
     if (precioCompra > saldoDisponible) {
-        console.log(`- ❌ Rechazado: Falta de liquidez. Precio: ${precioCompra}, Saldo: ${saldoDisponible}.`);
+        console.log(`- ❌ Rechazado: Falta de liquidez. Precio: ${precioCompra}€, Saldo: ${saldoDisponible}€.`);
         console.log(`</analisis_financiero>`);
         return false;
     }
 
-    // 2. Distribución de Capital Ideal (30% MC, 25% DL, 25% DF/PT)
-    // Se rechaza si comprarlo rompe gravemente la estructura económica ideal
-    const presupuestoTotal = saldoDisponible + valorEquipo;
-    let limiteGastoPosicion = 0;
-    
-    if (jugador.position === 1 || jugador.position === 2) limiteGastoPosicion = presupuestoTotal * 0.25;
-    else if (jugador.position === 3) limiteGastoPosicion = presupuestoTotal * 0.30;
-    else if (jugador.position === 4) limiteGastoPosicion = presupuestoTotal * 0.25;
-
-    // 3. Especulación y Nombres (Prohibido fichar por nombre, solo por rendimiento/precio)
-    const tendenciaAlcista = jugador.priceIncrement > 50000;
-    const rachaPuntos = jugador.average > 4.5;
-
-    console.log(`- Tendencia Alcista: ${tendenciaAlcista ? 'SÍ (+80k/día)' : 'NO (Bloqueo de capital ineficiente)'}`);
-    console.log(`- Racha de Puntos: ${rachaPuntos ? 'ALTA' : 'BAJA'}`);
-
-    // Si es del mercado libre: Comprar chollos que suben de valor para especular
-    if (!esClausula) {
-        if (tendenciaAlcista) {
-            console.log(`- ✅ Aprobado: Rentabilidad proyectada alta a corto plazo. Operación de especulación.`);
-            console.log(`</analisis_financiero>`);
-            return true; 
-        }
+    // 2. Control de Saturación por Línea
+    const estaSaturado = necesidades.saturadas && necesidades.saturadas[posKey];
+    if (estaSaturado) {
+        console.log(`- ❌ Rechazado: Línea de ${posKey} ya saturada. Se reserva capital para cubrir necesidades reales.`);
+        console.log(`</analisis_financiero>`);
+        return false;
     }
 
-    // Si es un clausulazo: Solo asaltar cláusulas si el jugador está en racha brutal
-    if (esClausula) {
-        if (rachaPuntos && tendenciaAlcista) {
-            console.log(`- ✅ Aprobado: Asalto de cláusula táctico. Retorno de puntos garantizado.`);
-            console.log(`</analisis_financiero>`);
-            return true;
-        } else {
-            console.log(`- ❌ Rechazado: El clausulazo no compensa el sobreprecio de la operación.`);
-            console.log(`</analisis_financiero>`);
-            return false;
-        }
+    // 3. Evaluar Necesidad de Línea vs Especulación
+    const necesidadEnPosicion = necesidades[posKey] && necesidades[posKey] > 0;
+    const tendenciaAlcista = jugador.priceIncrement > 30000;
+    const rachaPuntos = jugador.average > 4.0;
+
+    console.log(`- Necesidad de Línea (${posKey}): ${necesidadEnPosicion ? 'SÍ (Prioritario)' : 'NO'}`);
+    console.log(`- Tendencia Alcista: ${tendenciaAlcista ? 'SÍ' : 'NO'}`);
+
+    if (necesidadEnPosicion) {
+        console.log(`- ✅ Aprobado: Fichaje prioritario para cubrir déficit en línea ${posKey}.`);
+        console.log(`</analisis_financiero>`);
+        return true;
     }
 
-    console.log(`- ❌ Rechazado: No cumple los criterios financieros estrictos.`);
+    if (!esClausula && tendenciaAlcista && !necesidades.tieneDeficitUrgente) {
+        console.log(`- ✅ Aprobado: Operación de especulación (Líneas cubiertas y activo en subida).`);
+        console.log(`</analisis_financiero>`);
+        return true;
+    }
+
+    if (esClausula && rachaPuntos && tendenciaAlcista && !necesidades.tieneDeficitUrgente) {
+        console.log(`- ✅ Aprobado: Clausulazo de alto rendimiento (Líneas cubiertas).`);
+        console.log(`</analisis_financiero>`);
+        return true;
+    }
+
+    console.log(`- ❌ Rechazado: No cumple las prioridades del equipo ni los criterios de trading.`);
     console.log(`</analisis_financiero>`);
     return false;
 }
@@ -306,44 +316,48 @@ function buscarMejoresClausulazos(urgencias, rivales, dbJugadores, saldoDisponib
 
                 // Si esta posición nos urge (urgencias[posString] > 0)
                 if (urgencias[posString] > 0) {
-                    const lesionado = jDatos.status === 'injured' || jDatos.status === 'doubt' || jDatos.status === 'suspended';
-                    const juegaHabitualmente = jDatos.average > 3.0; // Solo titulares o gente que puntúa bien
-                    const precioClausula = jDatos.clause || (jugador.clause) || Math.round(jDatos.price * 1.5);
+                    const lesionado = jDatos.status === 'injured' || jDatos.status === 'suspended';
+                    // En pretemporada average es 0/undefined, evaluamos por valor o estado
+                    const juegaHabitualmente = (jDatos.average && jDatos.average > 3.0) || (jDatos.average === undefined || jDatos.average === 0 ? jDatos.price > 1500000 : false);
+                    const precioClausula = jDatos.clause || (jugador.clause) || Math.round((jDatos.price || 0) * 1.5);
 
-                    if (!lesionado && juegaHabitualmente && precioClausula <= limiteGasto) {
-                        const rentabilidad = jDatos.average / (precioClausula / 1000000); // Puntos por millón de cláusula
-                        const sustitutosEnRival = jugRivalSustitutos[posString] - 1; // Sustitutos restantes tras la baja
+                    if (!lesionado && juegaHabitualmente) {
+                        const rentabilidad = jDatos.average > 0 ? (jDatos.average / (precioClausula / 1000000)) : (jDatos.price / (precioClausula || 1));
+                        const sustitutosEnRival = jugRivalSustitutos[posString] - 1;
 
-                        // Determinar Viabilidad Táctica
+                        // Determinar Viabilidad Táctica y Financiera (Garantizando Saldo >= 0)
                         let viabilidadLabel = '🟡 MEDIA';
                         let viabilidadBadge = 'badge-warning';
-                        let motivoViabilidad = 'Rentabilidad estándar.';
+                        let motivoViabilidad = 'Rentabilidad estándar al contado.';
 
-                        if (sustitutosEnRival <= 0 && jDatos.average >= 4.0) {
-                            viabilidadLabel = '🟢 ALTA';
-                            viabilidadBadge = 'badge-success';
-                            motivoViabilidad = `🔥 Rival sin recambio en ${posString}. Golpe táctico devastador.`;
-                        } else if (jDatos.average >= 5.0 && rentabilidad >= 1.0) {
-                            viabilidadLabel = '🟢 ALTA';
-                            viabilidadBadge = 'badge-success';
-                            motivoViabilidad = '⭐ Jugador Top en racha con cláusula asequible.';
-                        } else if (precioClausula > saldoDisponible) {
+                        const esPagableAlContado = precioClausula <= saldoDisponible;
+
+                        if (!esPagableAlContado) {
                             viabilidadLabel = '🔴 ARRIESGADA';
                             viabilidadBadge = 'badge-danger';
-                            motivoViabilidad = '⚠️ Requiere vender activos para financiar la cláusula.';
+                            motivoViabilidad = `⚠️ Saldo insuficiente al contado (${(precioClausula/1000000).toFixed(2)}M€). Requiere venta previa para no entrar en rojos.`;
+                        } else if (sustitutosEnRival <= 0) {
+                            viabilidadLabel = '🟢 ALTA (ROBO CRÍTICO)';
+                            viabilidadBadge = 'badge-success';
+                            motivoViabilidad = `🔥 Rival sin recambio en ${posString}. Golpe táctico directo y pagable al contado.`;
+                        } else if ((jDatos.average >= 5.0 || jDatos.price > 5000000)) {
+                            viabilidadLabel = '🟢 ALTA';
+                            viabilidadBadge = 'badge-success';
+                            motivoViabilidad = '⭐ Jugador Top de la línea pagable al contado.';
                         }
 
                         robos.push({
                             id: jDatos.id,
-                            nombre: jDatos.name,
+                            nombre: jDatos.name || `Jugador #${jDatos.id}`,
                             posicion: posString,
                             dueño: rival.nombre,
                             equipoRival: rival.nombre,
-                            precioMercado: jDatos.price,
+                            precioMercado: jDatos.price || 0,
                             clausula: precioClausula,
-                            mediaPuntos: jDatos.average,
+                            mediaPuntos: jDatos.average || 0,
                             rentabilidad: rentabilidad,
                             sustitutosRival: sustitutosEnRival,
+                            esPagableAlContado,
                             viabilidadLabel: viabilidadLabel,
                             viabilidadBadge: viabilidadBadge,
                             motivoViabilidad: motivoViabilidad

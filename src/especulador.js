@@ -3,7 +3,7 @@
  * Analiza activos en subida libre para obtener liquidez rápida.
  */
 
-function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlantilla = 0, maxJugadores = 14) {
+function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlantilla = 0, maxJugadores = 14, necesidades = {}) {
     const oportunidades = [];
     if (!sales || !Array.isArray(sales)) return oportunidades;
 
@@ -18,6 +18,12 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
 
         if (!jDatos) return;
 
+        const posNum = jDatos.position || 2;
+        const posKey = posNum === 1 ? 'PT' : posNum === 2 ? 'DF' : posNum === 3 ? 'MC' : 'DL';
+
+        // Bloquear si la línea del jugador está ya saturada
+        if (necesidades.saturadas && necesidades.saturadas[posKey]) return;
+
         const precioActual = jDatos.price || sale.price || 0;
         const incrementoPrecio = jDatos.priceIncrement || jDatos.fitness || 0; 
 
@@ -29,26 +35,35 @@ function detectarOportunidadesTrading(sales, dbJugadores = {}, jugadoresEnPlanti
             const pujaSugerida = precioActual + Math.min(Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 0.4), 50000);
             const limiteMaximo = precioActual + Math.min(Math.round((incrementoPrecio > 0 ? incrementoPrecio : 50000) * 1.2), 120000);
             
+            const esNecesidadDirecta = necesidades[posKey] && necesidades[posKey] > 0;
+            let etiqueta = esNecesidadDirecta ? `🎯 REFUERZO DE LÍNEA (${posKey})` : '🚀 TRADING';
+
             let avisoHueco = tieneHueco 
-                ? `🚀 Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy al Computer para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.` 
-                : `⚠️ Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. (Ojo: Plantilla llena ${jugadoresEnPlantilla}/${maxJugadores}. Debes vender a un suplente primero).`;
+                ? `${etiqueta}: Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. Comprar hoy al Computer para vender en 3 días con ~+${(gananciaEstimada3Dias / 1000).toFixed(0)}k€ de beneficio.` 
+                : `⚠️ ${etiqueta}: Subiendo +${(incrementoPrecio / 1000).toFixed(0)}k€/día. (Ojo: Plantilla llena ${jugadoresEnPlantilla}/${maxJugadores}. Debes vender a un suplente primero).`;
 
             oportunidades.push({
                 id: idJugador,
                 nombre: jDatos.name || `Jugador #${idJugador}`,
+                posicion: posKey,
                 precio: precioActual,
                 puja: pujaSugerida,
                 limiteMaximo: limiteMaximo,
                 subidaDiaria: incrementoPrecio,
                 gananciaEstimada3Dias,
+                esNecesidadDirecta,
                 vendedor: 'Computer',
                 recomendacion: avisoHueco
             });
         }
     });
 
-    // Ordenar de mayor a menor subida diaria
-    return oportunidades.sort((a, b) => b.subidaDiaria - a.subidaDiaria).slice(0, 5);
+    // Priorizamos primero las necesidades directas de línea y luego mayor subida
+    return oportunidades.sort((a, b) => {
+        if (a.esNecesidadDirecta && !b.esNecesidadDirecta) return -1;
+        if (!a.esNecesidadDirecta && b.esNecesidadDirecta) return 1;
+        return b.subidaDiaria - a.subidaDiaria;
+    }).slice(0, 5);
 }
 
 const { obtenerTitularidadJugador } = require('./ojeadorFantasy');
@@ -135,7 +150,7 @@ function calcularIndiceInflacion(dbJugadores = {}) {
 /**
  * Busca jugadores en el mercado por debajo de 2M€ que sean parches de garantías.
  */
-function buscarChollosBaratos(sales, dbJugadores = {}) {
+function buscarChollosBaratos(sales, dbJugadores = {}, necesidades = {}) {
     const chollos = [];
     if (!sales || !Array.isArray(sales)) return chollos;
 
@@ -147,16 +162,21 @@ function buscarChollosBaratos(sales, dbJugadores = {}) {
         const jDatos = dbJugadores[id] || (sale.player && typeof sale.player === 'object' ? sale.player : null);
 
         if (jDatos && jDatos.price <= 2000000 && jDatos.status !== 'injured' && jDatos.status !== 'suspended') {
+            const posNum = jDatos.position || 2;
+            const posKey = posNum === 1 ? 'PT' : posNum === 2 ? 'DF' : posNum === 3 ? 'MC' : 'DL';
+            
+            if (necesidades.saturadas && necesidades.saturadas[posKey]) return;
+
             const subida = jDatos.priceIncrement || 0;
             if (subida >= 10000 || (jDatos.points && jDatos.points > 20)) {
                 chollos.push({
                     id,
                     nombre: jDatos.name,
                     precio: jDatos.price,
-                    posicion: jDatos.position || 2,
+                    posicion: posKey,
                     subida,
                     vendedor: 'Computer',
-                    recomendacion: `💎 Chollo por ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(jDatos.price)}. Ideal para completar plantilla de 14.`
+                    recomendacion: `💎 Chollo (${posKey}) por ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(jDatos.price)}. Ideal para completar línea.`
                 });
             }
         }

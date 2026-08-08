@@ -763,16 +763,19 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
     }
 
     // Sintetizar Plan de Acción Diario con el Superagente Director Técnico
+    const necesidadesPlantilla = detectarNecesidadesPlantilla(plantillaUsuario || []);
+
     const planDiario = generarPlanDiario({
         recomMercado,
         recomVenta,
         oportunidadesTrading,
         robosSugeridos,
         analisisOnce,
-        plantilla: [],
+        plantilla: plantillaUsuario || [],
         saldoActual: saldo,
         diasCuentaAtras,
-        saludPorteria
+        saludPorteria,
+        necesidades: necesidadesPlantilla
     });
 
     let htmlOrdenesDia = `

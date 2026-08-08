@@ -13,7 +13,8 @@ function generarPlanDiario({
     plantilla = [],
     saldoActual = 0,
     diasCuentaAtras = 10,
-    saludPorteria = null
+    saludPorteria = null,
+    necesidades = null
 }) {
     const porteros = plantilla.filter(j => j.position === 1 || j.posicion === 1);
     const numJugadores = plantilla.length;
@@ -21,6 +22,21 @@ function generarPlanDiario({
 
     // 1. Sintetizar PUJAS recomendadas para hoy
     let planPujas = [];
+
+    if (necesidades && necesidades.conteo) {
+        const c = necesidades.conteo;
+        const o = necesidades.objetivos;
+        let resumenLineas = `📊 <strong>Estado de Líneas:</strong> PT: ${c.PT}/${o.PT} | DF: ${c.DF}/${o.DF} | MC: ${c.MC}/${o.MC} | DL: ${c.DL}/${o.DL}`;
+        if (necesidades.tieneDeficitUrgente) {
+            let faltan = [];
+            if (necesidades.PT > 0) faltan.push(`${necesidades.PT} PT`);
+            if (necesidades.DF > 0) faltan.push(`${necesidades.DF} DF`);
+            if (necesidades.MC > 0) faltan.push(`${necesidades.MC} MC`);
+            if (necesidades.DL > 0) faltan.push(`${necesidades.DL} DL`);
+            resumenLineas += `<br>⚠️ <strong>Déficit Detectado:</strong> Necesitas reforzar: ${faltan.join(', ')}.`;
+        }
+        planPujas.push(resumenLineas);
+    }
 
     if (saludPorteria && saludPorteria.urgentePujar) {
         planPujas.push(`<strong>${saludPorteria.estado}:</strong> ${saludPorteria.mensaje}`);
@@ -32,9 +48,10 @@ function generarPlanDiario({
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Requiere venta antes)</em>';
             const sobrepuja = p.precio > 0 ? Math.round(((p.puja - p.precio) / p.precio) * 100) : 0;
             const limite = p.puja ? Math.round(p.puja * 1.05) : Math.round(p.precio * 1.08);
+            const tagNecesidad = p.esNecesidadDirecta ? '🎯 [REFUERZO PRIORITARIO] ' : '';
             planPujas.push(`
                 <div style="margin-bottom: 8px;">
-                    <strong>⚽ ${p.nombre}</strong>${nota}<br>
+                    <strong>⚽ ${tagNecesidad}${p.nombre}</strong>${nota}<br>
                     <span style="font-size:0.85rem; color:#cbd5e1;">
                         💵 Valor Oficial: <strong>${formatoEuro(p.precio)}</strong><br>
                         🎯 <strong>Puja Recomendada: ${formatoEuro(p.puja)}</strong> <span style="color:#34d399;">(+${sobrepuja}% sobrepuja)</span><br>
@@ -51,7 +68,7 @@ function generarPlanDiario({
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Vende suplente)</em>';
             planPujas.push(`
                 <div style="margin-bottom: 8px;">
-                    <strong>🚀 ${topTrading.nombre}</strong>${nota}<br>
+                    <strong>🚀 ${topTrading.nombre}</strong> (${topTrading.posicion || 'Trading'})${nota}<br>
                     <span style="font-size:0.85rem; color:#cbd5e1;">
                         💵 Valor Oficial: <strong>${formatoEuro(topTrading.precio)}</strong><br>
                         🎯 <strong>Puja Recomendada: ${formatoEuro(topTrading.puja)}</strong> <span style="color:#34d399;">(+${(topTrading.subidaDiaria/1000).toFixed(0)}k€/día)</span><br>
@@ -83,7 +100,8 @@ function generarPlanDiario({
         robosSugeridos.forEach(r => {
             const viab = r.viabilidadLabel || '🟡 MEDIA';
             const motivo = r.motivoViabilidad ? ` — <em>${r.motivoViabilidad}</em>` : '';
-            planClausulas.push(`🥷 <strong>${r.nombre}</strong> (${r.equipoRival || r.dueño}): Cláusula de <strong>${formatoEuro(r.clausula || r.precioMercado)}</strong> [Viabilidad: ${viab}]${motivo}`);
+            const alContadoStr = r.esPagableAlContado ? ' ✅ [Pagable al contado: Saldo Positivo]' : ' ⚠️ [Requiere venta previa]';
+            planClausulas.push(`🥷 <strong>${r.nombre}</strong> (${r.posicion}) en plantilla de <strong>${r.equipoRival || r.dueño}</strong>: Cláusula <strong>${formatoEuro(r.clausula || r.precioMercado)}</strong>${alContadoStr}<br><span style="font-size:0.85rem; color:#cbd5e1;">Viabilidad: <strong>${viab}</strong>${motivo}</span>`);
         });
     }
 
