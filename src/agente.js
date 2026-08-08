@@ -249,7 +249,14 @@ async function ejecutarAgente() {
         if (venta.user !== null && venta.user !== undefined) continue;
 
         const esClausula = false;
-        const jugadorObj = venta.player ? venta.player : venta; 
+        const idJ = typeof venta.player === 'object' ? (venta.player.id || venta.player) : (typeof venta.player === 'number' || typeof venta.player === 'string' ? venta.player : (venta.id || venta));
+        const dbInfo = (dbJugadores && dbJugadores[idJ]) ? dbJugadores[idJ] : {};
+        const jugadorObj = {
+            ...(typeof venta.player === 'object' ? venta.player : (typeof venta === 'object' ? venta : {})),
+            ...dbInfo,
+            price: venta.price || dbInfo.price || (typeof venta.player === 'object' ? venta.player.price : 0)
+        };
+        if (!jugadorObj.name) jugadorObj.name = dbInfo.name || (typeof venta.player === 'object' ? venta.player.name : `Jugador #${idJ}`);
         
         if (evaluarJugador(jugadorObj, esClausula, necesidades, saldoActual, valorEquipo)) {
             let pujaRecomendada = jugadorObj.price;
