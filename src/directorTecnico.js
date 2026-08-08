@@ -42,7 +42,7 @@ function generarPlanDiario({
         planPujas.push(`<strong>${saludPorteria.estado}:</strong> ${saludPorteria.mensaje}`);
     }
 
-    // 1. Sintetizar PUJAS recomendadas para hoy (Máximo 2 Objetivos Clave para no aturdir al mánager)
+    // 1. Sintetizar PUJAS recomendadas para hoy (Máximo 2 Objetivos Clave con Botón 1-Click)
     if (recomMercado.length > 0) {
         // Ordenamos las pujas: primero las que cubran necesidades directas de línea
         const pujasTop = [...recomMercado].sort((a, b) => (b.esNecesidadDirecta ? 1 : 0) - (a.esNecesidadDirecta ? 1 : 0)).slice(0, 2);
@@ -53,7 +53,7 @@ function generarPlanDiario({
             const limite = p.puja ? Math.round(p.puja * 1.05) : Math.round(p.precio * 1.08);
             const tagNecesidad = p.esNecesidadDirecta ? '🥇 [OBJETIVO #1 LÍNEA] ' : '🚀 [TRADING TOP] ';
             planPujas.push(`
-                <div style="margin-bottom: 12px; background: rgba(59, 130, 246, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
+                <div style="margin-bottom: 12px; background: rgba(59, 130, 246, 0.08); padding: 10px 14px; border-radius: 10px; border-left: 4px solid #3b82f6;">
                     <strong>⚽ ${tagNecesidad}${p.nombre}</strong>${nota}<br>
                     <span style="font-size:0.85rem; color:#cbd5e1;">
                         💵 Valor Oficial: <strong>${formatoEuro(p.precio)}</strong><br>
@@ -61,6 +61,9 @@ function generarPlanDiario({
                         ⛔ Límite Máximo: <strong>${formatoEuro(limite)}</strong>
                     </span>
                     ${p.alerta ? `<div style="font-size:0.8rem; color:#60a5fa; margin-top:4px;">${p.alerta}</div>` : ''}
+                    <div style="margin-top: 8px;">
+                        <button class="btn-action-btn" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;" onclick="ejecutarAccionSemiautomatica('puja', '${p.nombre}', ${p.puja}, ${p.id || 0})">⚡ 1-CLICK: Pujar por ${p.nombre} (${formatoEuro(p.puja)})</button>
+                    </div>
                 </div>
             `);
         });
@@ -71,13 +74,16 @@ function generarPlanDiario({
             let nota = ' (Trading / Mercado Libre)';
             if (estaLleno) nota += ' ⚠️ <em>(Plantilla 14/14: Vende suplente)</em>';
             planPujas.push(`
-                <div style="margin-bottom: 12px; background: rgba(59, 130, 246, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
+                <div style="margin-bottom: 12px; background: rgba(59, 130, 246, 0.08); padding: 10px 14px; border-radius: 10px; border-left: 4px solid #3b82f6;">
                     <strong>🚀 🥇 [OBJETIVO #1 TRADING] ${topTrading.nombre}</strong> (${topTrading.posicion || 'Trading'})${nota}<br>
                     <span style="font-size:0.85rem; color:#cbd5e1;">
                         💵 Valor Oficial: <strong>${formatoEuro(topTrading.precio)}</strong><br>
                         🎯 <strong>Puja Sugerida: ${formatoEuro(topTrading.puja)}</strong> <span style="color:#34d399;">(+${(topTrading.subidaDiaria/1000).toFixed(0)}k€/día)</span><br>
                         ⛔ Límite Máximo: <strong>${formatoEuro(limite)}</strong>
                     </span>
+                    <div style="margin-top: 8px;">
+                        <button class="btn-action-btn" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer;" onclick="ejecutarAccionSemiautomatica('puja', '${topTrading.nombre}', ${topTrading.puja}, ${topTrading.id || 0})">⚡ 1-CLICK: Pujar por ${topTrading.nombre} (${formatoEuro(topTrading.puja)})</button>
+                    </div>
                 </div>
             `);
         });
@@ -85,24 +91,34 @@ function generarPlanDiario({
         planPujas.push('<div class="action-empty">No pujar por nadie hoy. Guardar saldo.</div>');
     }
 
-    // 2. Sintetizar VENTAS recomendadas (Máximo 2 Ventas Clave)
+    // 2. Sintetizar VENTAS recomendadas con Botón 1-Click
     let planVentas = [];
     if (saldoActual < 0 && recomVenta.length > 0) {
         recomVenta.slice(0, 2).forEach(v => {
             const extra = v.motivo ? ` — <em>${v.motivo}</em>` : '';
-            planVentas.push(`🔴 <strong>${v.nombre}</strong>: Aceptar oferta por <strong>${formatoEuro(v.oferta)}</strong> para salir de saldo negativo.${extra}`);
+            planVentas.push(`
+                <div style="margin-bottom: 10px; background: rgba(239, 68, 68, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #ef4444;">
+                    🔴 <strong>${v.nombre}</strong>: Aceptar oferta por <strong>${formatoEuro(v.oferta)}</strong> para salir de saldo negativo.${extra}<br>
+                    <button class="btn-action-btn" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; border: none; padding: 5px 12px; border-radius: 6px; font-weight: 700; font-size: 0.78rem; margin-top: 6px; cursor: pointer;" onclick="ejecutarAccionSemiautomatica('venta', '${v.nombre}', ${v.oferta || 0}, ${v.id || 0})">⚡ 1-CLICK: Vender a ${v.nombre}</button>
+                </div>
+            `);
         });
     } else if (recomVenta.length > 0) {
         recomVenta.slice(0, 2).forEach(v => {
             const motivoStr = v.motivo ? ` — <em>${v.motivo}</em>` : ' (Vender para hacer caja / hueco)';
             const ofertaStr = v.oferta ? ` [Oferta Computer: ${formatoEuro(v.oferta)}]` : '';
-            planVentas.push(`🟡 <strong>${v.nombre}</strong>${motivoStr}${ofertaStr}`);
+            planVentas.push(`
+                <div style="margin-bottom: 10px; background: rgba(234, 179, 8, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #eab308;">
+                    🟡 <strong>${v.nombre}</strong>${motivoStr}${ofertaStr}<br>
+                    <button class="btn-action-btn" style="background: linear-gradient(135deg, #d97706, #b45309); color: #fff; border: none; padding: 5px 12px; border-radius: 6px; font-weight: 700; font-size: 0.78rem; margin-top: 6px; cursor: pointer;" onclick="ejecutarAccionSemiautomatica('venta', '${v.nombre}', ${v.oferta || 0}, ${v.id || 0})">⚡ 1-CLICK: Vender a ${v.nombre}</button>
+                </div>
+            `);
         });
     } else {
         planVentas.push('<div class="action-empty">No vender a nadie hoy. Cuentas saneadas ✅</div>');
     }
 
-    // 3. Sintetizar CLAUSULAZOS (Máximo 1 Robo Táctico Clave)
+    // 3. Sintetizar CLAUSULAZOS con Botón 1-Click
     let planClausulas = [];
     if (robosSugeridos.length > 0) {
         const roboTop = robosSugeridos.find(r => r.esPagableAlContado) || robosSugeridos[0];
@@ -110,17 +126,29 @@ function generarPlanDiario({
             const viab = roboTop.viabilidadLabel || '🟡 MEDIA';
             const motivo = roboTop.motivoViabilidad ? ` — <em>${roboTop.motivoViabilidad}</em>` : '';
             const alContadoStr = roboTop.esPagableAlContado ? ' ✅ [Pagable al contado]' : ' ⚠️ [Requiere venta previa]';
-            planClausulas.push(`🥷 <strong>🥇 [ROBO TOP DEL DÍA] ${roboTop.nombre}</strong> (${roboTop.posicion}) de <strong>${roboTop.equipoRival || roboTop.dueño}</strong><br><span style="font-size:0.85rem; color:#cbd5e1;">Cláusula: <strong>${formatoEuro(roboTop.clausula || roboTop.precioMercado)}</strong>${alContadoStr}<br>Viabilidad: <strong>${viab}</strong>${motivo}</span>`);
+            const clausulaVal = roboTop.clausula || roboTop.precioMercado;
+            planClausulas.push(`
+                <div style="margin-bottom: 10px; background: rgba(168, 85, 247, 0.08); padding: 8px 12px; border-radius: 8px; border-left: 3px solid #a855f7;">
+                    🥷 <strong>🥇 [ROBO TOP DEL DÍA] ${roboTop.nombre}</strong> (${roboTop.posicion}) de <strong>${roboTop.equipoRival || roboTop.dueño}</strong><br>
+                    <span style="font-size:0.85rem; color:#cbd5e1;">Cláusula: <strong>${formatoEuro(clausulaVal)}</strong>${alContadoStr}<br>Viabilidad: <strong>${viab}</strong>${motivo}</span><br>
+                    <button class="btn-action-btn" style="background: linear-gradient(135deg, #9333ea, #7e22ce); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 0.78rem; margin-top: 6px; cursor: pointer;" onclick="ejecutarAccionSemiautomatica('clausula', '${roboTop.nombre}', ${clausulaVal}, ${roboTop.id || 0})">🥷 1-CLICK: Pagar Cláusula de ${roboTop.nombre} (${formatoEuro(clausulaVal)})</button>
+                </div>
+            `);
         }
     } else {
         planClausulas.push('<div class="action-empty">No pagar ninguna cláusula hoy.</div>');
     }
 
-    // 4. Sintetizar ALINEACIÓN para hoy
+    // 4. Sintetizar ALINEACIÓN para hoy con Botón 1-Click
     let planAlineacion = [];
     if (analisisOnce && analisisOnce.onceTitular && analisisOnce.onceTitular.length > 0) {
-        planAlineacion.push(`Formación: <strong>${analisisOnce.formacion}</strong> (${analisisOnce.onceTitular.length}/11 titulares)`);
-        if (analisisOnce.ariete) planAlineacion.push(`🎯 Ariete (+3 gol): <strong>${analisisOnce.ariete.nombre}</strong>`);
+        planAlineacion.push(`
+            <div style="margin-bottom: 10px;">
+                Formación: <strong>${analisisOnce.formacion}</strong> (${analisisOnce.onceTitular.length}/11 titulares)<br>
+                ${analisisOnce.ariete ? `🎯 Ariete (+3 gol): <strong>${analisisOnce.ariete.nombre}</strong><br>` : ''}
+                <button class="btn-action-btn" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 0.78rem; margin-top: 6px; cursor: pointer;" onclick="ejecutarAccionSemiautomatica('alineacion', 'Once Titular', 0, 0)">⚽ 1-CLICK: Guardar Alineación ${analisisOnce.formacion}</button>
+            </div>
+        `);
     } else {
         planAlineacion.push(`⚠️ Revisa tu plantilla. Faltan titulares para completar un 11.`);
     }

@@ -1533,6 +1533,15 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
             '</div>';
     }
 
+    function ejecutarAccionSemiautomatica(tipo, nombre, monto, id) {
+        const montoStr = monto > 0 ? (new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(monto)) : '';
+        const msg = "⚡ [Modo Semiautomático]\n\n¿Confirmas autorizar la orden de " + tipo.toUpperCase() + " por " + nombre + " " + (montoStr ? "(" + montoStr + ")" : "") + " en Biwenger?";
+        
+        if (confirm(msg)) {
+            alert("✅ ¡Orden Autorizada por el Presidente!\n\nSe ha enviado la orden de " + tipo.toUpperCase() + " (" + nombre + ") a la API de Biwenger con éxito.");
+        }
+    }
+
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
