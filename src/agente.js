@@ -1372,6 +1372,15 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
         return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
     }
 
+    window.ejecutarAccionSemiautomatica = function(tipo, nombre, monto, id) {
+        const montoStr = monto > 0 ? (new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(monto)) : '';
+        const msg = "⚡ [MODO SEMIAUTOMÁTICO]\n\n¿Confirmas autorizar la orden de " + tipo.toUpperCase() + " por " + nombre + " " + (montoStr ? "(" + montoStr + ")" : "") + " en Biwenger?";
+        
+        if (confirm(msg)) {
+            alert("✅ ¡ORDEN AUTORIZADA POR EL PRESIDENTE!\n\nSe ha enviado la orden de " + tipo.toUpperCase() + " (" + nombre + ") a la API de Biwenger con éxito.");
+        }
+    };
+
     document.addEventListener("DOMContentLoaded", function() {
         // Chart 1: Rivales vs Tu Equipo
         const ctxRivales = document.getElementById('chartRivales');
@@ -1531,15 +1540,6 @@ function generarHTML(registro, saldo, valor, recomMercado, recomVenta, analisisP
                 '<div style="font-size: 0.9rem; font-weight: bold; color: #60a5fa; margin-bottom: 8px;">📋 Plantilla de ' + rival.nombre + ' (' + (rival.team ? rival.team.length : 0) + ' Jugadores):</div>' +
                 jugRivalHTML +
             '</div>';
-    }
-
-    function ejecutarAccionSemiautomatica(tipo, nombre, monto, id) {
-        const montoStr = monto > 0 ? (new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(monto)) : '';
-        const msg = "⚡ [Modo Semiautomático]\n\n¿Confirmas autorizar la orden de " + tipo.toUpperCase() + " por " + nombre + " " + (montoStr ? "(" + montoStr + ")" : "") + " en Biwenger?";
-        
-        if (confirm(msg)) {
-            alert("✅ ¡Orden Autorizada por el Presidente!\n\nSe ha enviado la orden de " + tipo.toUpperCase() + " (" + nombre + ") a la API de Biwenger con éxito.");
-        }
     }
 
         let deferredPrompt;
