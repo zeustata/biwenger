@@ -7,6 +7,14 @@
     "perfilPsicologico": "💼 Especulador / Tacaño",
     "sobrepujaMedia": 0
   },
+  "6537778": {
+    "nombre": "El letrado",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 300000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "sobrepujaMedia": 0
+  },
   "6537795": {
     "nombre": "Puxaoviedo",
     "pujaMaxima": 1380000,
@@ -41,7 +49,7 @@
   },
   "13527984": {
     "nombre": "R.S. Xixonin",
-    "fichajesAnalizados": 35,
+    "fichajesAnalizados": 36,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 6273000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
