@@ -9,7 +9,7 @@
   },
   "6537778": {
     "nombre": "El letrado",
-    "fichajesAnalizados": 6,
+    "fichajesAnalizados": 7,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 300000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -41,7 +41,7 @@
   },
   "11386707": {
     "nombre": "Sergioapg",
-    "fichajesAnalizados": 2,
+    "fichajesAnalizados": 3,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 600000,
     "perfilPsicologico": "⚖️ Conservador / Calculador",
@@ -61,6 +61,14 @@
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 6273000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
+    "sobrepujaMedia": 0
+  },
+  "14045303": {
+    "nombre": "Campeonesfc",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 6873000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
     "sobrepujaMedia": 0
   }
 }
