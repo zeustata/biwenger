@@ -9,10 +9,10 @@
   },
   "6537778": {
     "nombre": "El letrado",
-    "fichajesAnalizados": 4,
+    "fichajesAnalizados": 5,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 300000,
-    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "perfilPsicologico": "💼 Especulador / Tacaño",
     "sobrepujaMedia": 0
   },
   "6537795": {
@@ -38,6 +38,14 @@
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
+  },
+  "11386707": {
+    "nombre": "Sergioapg",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 600000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "sobrepujaMedia": 0
   },
   "12693423": {
     "nombre": "Montes",
