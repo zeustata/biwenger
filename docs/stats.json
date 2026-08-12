@@ -31,10 +31,18 @@
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
+  "9893707": {
+    "nombre": "Víctor",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 1120000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "sobrepujaMedia": 0
+  },
   "9894889": {
     "nombre": "Nadalcarnero FC",
     "pujaMaxima": 7055000,
-    "fichajesAnalizados": 23,
+    "fichajesAnalizados": 24,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
