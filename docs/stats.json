@@ -1,7 +1,7 @@
 {
   "6536353": {
     "nombre": "Troy McClure",
-    "fichajesAnalizados": 42,
+    "fichajesAnalizados": 43,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 4012000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -33,7 +33,7 @@
   },
   "6538595": {
     "nombre": "CD Carrapucho",
-    "fichajesAnalizados": 1,
+    "fichajesAnalizados": 2,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 1940000,
     "perfilPsicologico": "⚖️ Conservador / Calculador",
@@ -50,7 +50,7 @@
   "9894889": {
     "nombre": "Nadalcarnero FC",
     "pujaMaxima": 7055000,
-    "fichajesAnalizados": 31,
+    "fichajesAnalizados": 32,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
@@ -97,7 +97,7 @@
   },
   "14045303": {
     "nombre": "Campeonesfc",
-    "fichajesAnalizados": 8,
+    "fichajesAnalizados": 9,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 6873000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
