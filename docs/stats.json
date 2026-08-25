@@ -9,7 +9,7 @@
   },
   "6537778": {
     "nombre": "El letrado",
-    "fichajesAnalizados": 23,
+    "fichajesAnalizados": 24,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 500000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -41,7 +41,7 @@
   },
   "6538595": {
     "nombre": "CD Carrapucho",
-    "fichajesAnalizados": 20,
+    "fichajesAnalizados": 22,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 1960000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -79,6 +79,14 @@
     "perfilPsicologico": "💼 Especulador / Tacaño",
     "sobrepujaMedia": 0
   },
+  "11518429": {
+    "nombre": "Angerengere",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 380000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
+    "sobrepujaMedia": 0
+  },
   "11518464": {
     "nombre": "El Miserias",
     "fichajesAnalizados": 4,
@@ -89,7 +97,7 @@
   },
   "12444272": {
     "nombre": "Aston Birra",
-    "fichajesAnalizados": 20,
+    "fichajesAnalizados": 22,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 2060000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
