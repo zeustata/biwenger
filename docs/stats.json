@@ -9,7 +9,7 @@
   },
   "6537778": {
     "nombre": "El letrado",
-    "fichajesAnalizados": 27,
+    "fichajesAnalizados": 28,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 3080000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -25,15 +25,15 @@
   },
   "6537829": {
     "nombre": "Viji",
-    "pujaMaxima": 3502000,
-    "fichajesAnalizados": 20,
+    "pujaMaxima": 5338000,
+    "fichajesAnalizados": 21,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
   },
   "6537851": {
     "nombre": "Alberto Fernández Del Brio",
-    "fichajesAnalizados": 14,
+    "fichajesAnalizados": 15,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 5236000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -58,7 +58,7 @@
   "9894889": {
     "nombre": "Nadalcarnero FC",
     "pujaMaxima": 7055000,
-    "fichajesAnalizados": 41,
+    "fichajesAnalizados": 42,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
