@@ -18,7 +18,7 @@
   "6537795": {
     "nombre": "Puxaoviedo",
     "pujaMaxima": 7854000,
-    "fichajesAnalizados": 26,
+    "fichajesAnalizados": 27,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
@@ -33,7 +33,7 @@
   },
   "6537851": {
     "nombre": "Alberto Fernández Del Brio",
-    "fichajesAnalizados": 20,
+    "fichajesAnalizados": 21,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 11781000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -49,7 +49,7 @@
   },
   "9893707": {
     "nombre": "Víctor",
-    "fichajesAnalizados": 22,
+    "fichajesAnalizados": 23,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 2540000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -89,17 +89,25 @@
   },
   "11518464": {
     "nombre": "El Miserias",
-    "fichajesAnalizados": 4,
+    "fichajesAnalizados": 5,
     "sumaSobrepujaRatio": 0,
-    "pujaMaxima": 3080000,
+    "pujaMaxima": 3710000,
+    "perfilPsicologico": "💼 Especulador / Tacaño",
+    "sobrepujaMedia": 0
+  },
+  "11550899": {
+    "nombre": "Eltirodeltigre",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 740000,
     "perfilPsicologico": "⚖️ Conservador / Calculador",
     "sobrepujaMedia": 0
   },
   "12444272": {
     "nombre": "Aston Birra",
-    "fichajesAnalizados": 38,
+    "fichajesAnalizados": 39,
     "sumaSobrepujaRatio": 0,
-    "pujaMaxima": 2060000,
+    "pujaMaxima": 9375000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
     "sobrepujaMedia": 0
   },
