@@ -58,7 +58,7 @@
   "9894889": {
     "nombre": "Nadalcarnero FC",
     "pujaMaxima": 8458935,
-    "fichajesAnalizados": 64,
+    "fichajesAnalizados": 66,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
@@ -89,9 +89,9 @@
   },
   "11518464": {
     "nombre": "El Miserias",
-    "fichajesAnalizados": 13,
+    "fichajesAnalizados": 14,
     "sumaSobrepujaRatio": 0,
-    "pujaMaxima": 3710000,
+    "pujaMaxima": 5508000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
     "sobrepujaMedia": 0
   },
@@ -137,7 +137,7 @@
   },
   "14045303": {
     "nombre": "Campeonesfc",
-    "fichajesAnalizados": 18,
+    "fichajesAnalizados": 19,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 6873000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
