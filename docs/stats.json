@@ -9,7 +9,7 @@
   },
   "6537778": {
     "nombre": "El letrado",
-    "fichajesAnalizados": 45,
+    "fichajesAnalizados": 47,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 3080000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
@@ -18,7 +18,7 @@
   "6537795": {
     "nombre": "Puxaoviedo",
     "pujaMaxima": 12688402,
-    "fichajesAnalizados": 40,
+    "fichajesAnalizados": 42,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
@@ -45,6 +45,14 @@
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 6062217,
     "perfilPsicologico": "💼 Especulador / Tacaño",
+    "sobrepujaMedia": 0
+  },
+  "8089923": {
+    "nombre": "I.Canal",
+    "fichajesAnalizados": 1,
+    "sumaSobrepujaRatio": 0,
+    "pujaMaxima": 7765000,
+    "perfilPsicologico": "⚖️ Conservador / Calculador",
     "sobrepujaMedia": 0
   },
   "9893707": {
@@ -97,7 +105,7 @@
   },
   "11550899": {
     "nombre": "Eltirodeltigre",
-    "fichajesAnalizados": 11,
+    "fichajesAnalizados": 12,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 804200,
     "perfilPsicologico": "💼 Especulador / Tacaño",
