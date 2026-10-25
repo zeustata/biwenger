@@ -18,7 +18,7 @@
   "6537795": {
     "nombre": "Puxaoviedo",
     "pujaMaxima": 12688402,
-    "fichajesAnalizados": 59,
+    "fichajesAnalizados": 60,
     "sobrepujaAcumulada": 0,
     "sobrepujaMedia": null,
     "perfilPsicologico": "⚖️ Conservador / Calculador"
@@ -73,9 +73,9 @@
   },
   "11386707": {
     "nombre": "Sergioapg",
-    "fichajesAnalizados": 20,
+    "fichajesAnalizados": 21,
     "sumaSobrepujaRatio": 0,
-    "pujaMaxima": 1702000,
+    "pujaMaxima": 5423000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
     "sobrepujaMedia": 0
   },
@@ -113,7 +113,7 @@
   },
   "12444272": {
     "nombre": "Aston Birra",
-    "fichajesAnalizados": 69,
+    "fichajesAnalizados": 70,
     "sumaSobrepujaRatio": 0,
     "pujaMaxima": 9375000,
     "perfilPsicologico": "💼 Especulador / Tacaño",
