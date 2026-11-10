@@ -34,6 +34,7 @@
 - **Preguntar y pedir confirmación explícita SIEMPRE antes de realizar cualquier cambio, creación o borrado de archivos.**
 - Si Lendo propone una idea, pregunta **"¿qué te parece?"**, solicita opinión o pide analizar una alternativa, **JAMÁS adelantarse modificando el código**.
 - Explicar detalladamente lo entendido, aportar la propuesta o valoración técnica y **esperar el visto bueno explícito de Lendo** antes de tocar cualquier archivo.
+- **Significado Inviolable de «Písale» / «Adelante» / «Hazlo» (Ámbito Estrictamente Local):** La orden de arranque o visto bueno de Lendo (*«písale», «adelante», «hazlo», «dale»*) autoriza **ÚNICA Y EXCLUSIVAMENTE a modificar y crear código en LOCAL**. Queda **terminantemente prohibido** interpretar dicha orden como autorización para hacer `git commit` o `git push` a la red. El despliegue a GitHub exige una segunda orden explícita e independiente de Lendo (*«súbelo a GitHub», «despliega», «haz push»*) emitida **obligatoriamente después** de haber inspeccionado y validado el resultado en el servidor local (`localhost`).
 
 ### 2. Seguridad, Copia y Retorno a Versión Anterior (Rollback con Pregunta Obligatoria de Versión)
 - **Tener siempre presente la versión anterior funcional** antes de aplicar cualquier cambio nuevo.
@@ -45,6 +46,7 @@
 - **Modificación en Local:** Todo cambio aprobado previamente por Lendo se aplica en primer lugar exclusivamente en los archivos locales del proyecto.
 - **Blindaje y Verificación Previa Obligatoria:** Antes de cualquier commit o subida a la red, es obligatorio realizar un chequeo técnico riguroso en local (levantamiento de servidor de pruebas, inspección de errores en consola de JavaScript, validación de sintaxis y respuesta de la interfaz). Estando la app en uso por beta testers o en producción, queda terminantemente prohibido hacer push sin haber comprobado localmente que todo funciona al 100% y no interrumpe el servicio.
 - **Despliegue Remoto Sincronizado:** Solo tras superar el chequeo local y recibir el visto bueno explícito de Lendo, se realizará `git commit` descriptivo y `git push origin main` hacia la cuenta `zeustata`.
+- **Prohibición Absoluta de Push Automático o Encadenado:** Jamás encadenar la programación local con el push a la red en una misma orden o intervención. Al terminar la modificación local y verificarla internamente, la labor se detiene en seco: se levanta el servidor local (`localhost:8080`), se facilita el enlace a Lendo y se espera su orden formal e inequívoca de despliegue.
 
 ### 4. Anti-Caché Obligatorio (Cache-Busting Garantizado)
 - Con cada cambio que afecte a la interfaz web o PWA, es **obligatorio actualizar la cadena de caché** (nombre en `sw.js` y query strings de versión en `index.html` y módulos JS) para que los navegadores y dispositivos móviles nunca queden atrapados en cachés viejas.
